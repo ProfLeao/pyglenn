@@ -2,7 +2,7 @@ include README.md
 include LICENSE
 include pyproject.toml
 
-recursive-include src/pythermo/data *.inp
+recursive-include src/pyglenn/data *.inp
 recursive-include docs *.md *.txt
 
 prune tests

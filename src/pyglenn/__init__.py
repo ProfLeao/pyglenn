@@ -1,5 +1,5 @@
 """
-pythermo — Thermochemical properties calculator.
+pyglenn — Thermochemical properties calculator.
 
 Computes Cp(T), H°(T), S°(T) from NASA polynomial coefficients
 stored in a SQLite database, converted from FORTRAN thermo.inp files.

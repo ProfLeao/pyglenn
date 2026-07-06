@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Tests for pythermo thermochemical calculator."""
+"""Tests for pyglenn thermochemical calculator."""
 
-from pythermo import ThermochemicalCalculator
+from pyglenn import ThermochemicalCalculator
 
 calc = ThermochemicalCalculator()
 calc.connect()

@@ -1,4 +1,4 @@
-{% set name = "pythermo" %}
+{% set name = "pyglenn" %}
 {% set version = "1.0.0" %}
 
 package:
@@ -13,7 +13,7 @@ build:
   noarch: python
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   entry_points:
-    - pythermo = pythermo.cli:main
+    - pyglenn = pyglenn.cli:main
 
 requirements:
   host:
@@ -26,8 +26,8 @@ requirements:
 
 test:
   imports:
-    - pythermo
-    - pythermo.calculator
+    - pyglenn
+    - pyglenn.calculator
     - pythermo.database
     - pythermo.builder
   commands:

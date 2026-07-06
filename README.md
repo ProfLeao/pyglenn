@@ -1,4 +1,4 @@
-# pythermo — Thermochemical Properties Calculator
+# pyglenn — Thermochemical Properties Calculator
 
 Computes **Cp(T)**, **H°(T)**, **S°(T)** from NASA polynomial coefficients stored in a SQLite database, converted from FORTRAN `thermo.inp` files.
 
@@ -17,14 +17,14 @@ Computes **Cp(T)**, **H°(T)**, **S°(T)** from NASA polynomial coefficients sto
 ### From PyPI (pip)
 
 ```bash
-pip install pythermo
+pip install pyglenn
 ```
 
 ### From source
 
 ```bash
-git clone https://github.com/profr/pyglenn_novo.git
-cd pyglenn_novo
+git clone https://github.com/profr/pyglenn.git
+cd pyglenn
 pip install .
 ```
 
@@ -32,7 +32,7 @@ pip install .
 
 ```bash
 conda build conda.recipe/
-conda install --use-local pythermo
+conda install --use-local pyglenn
 ```
 
 ## Quick Start
@@ -40,19 +40,19 @@ conda install --use-local pythermo
 ### Build the database (first time only)
 
 ```bash
-pythermo build -i thermo.inp -o thermo.db
+pyglenn build -i thermo.inp -o thermo.db
 ```
 
 ### Query species and calculate properties
 
 ```bash
-pythermo query -s O2
+pyglenn query -s O2
 ```
 
 ### Python API
 
 ```python
-from pythermo import ThermochemicalCalculator
+from pyglenn import ThermochemicalCalculator
 
 calc = ThermochemicalCalculator("thermo.db")
 calc.connect()

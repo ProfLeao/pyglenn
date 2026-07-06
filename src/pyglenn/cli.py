@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Command-line interface for pythermo.
+Command-line interface for pyglenn.
 
 Usage:
-    pythermo build   – Convert thermo.inp → thermo.db
-    pythermo query   – Run example queries
-    pythermo calc    – Interactive calculator
+    pyglenn build  – Convert thermo.inp → thermo.db
+    pyglenn query  – Run example queries
 """
 
 import argparse
@@ -114,7 +113,7 @@ def cmd_query(args):
 
 def main():
     parser = argparse.ArgumentParser(
-        prog="pythermo",
+        prog="pyglenn",
         description="Thermochemical properties calculator",
     )
     sub = parser.add_subparsers(dest="command", help="Available commands")
