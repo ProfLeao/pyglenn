@@ -1,0 +1,12 @@
+include README.md
+include LICENSE
+include pyproject.toml
+
+recursive-include src/pythermo/data *.inp
+recursive-include docs *.md *.txt
+
+prune tests
+prune conda.recipe
+global-exclude __pycache__
+global-exclude *.pyc
+global-exclude .DS_Store

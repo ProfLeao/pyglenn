@@ -1,0 +1,7997 @@
+======================================================================
+CONVERTING thermo.inp to SQLite3
+======================================================================
+
+Processing species: e-
+  Interval 1: 298.15K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+  Interval 3: 6000.0K - 20000.0K
+
+Processing species: Ag
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+  Interval 3: 6000.0K - 20000.0K
+
+Processing species: Ag+
+  Interval 1: 298.15K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+  Interval 3: 6000.0K - 20000.0K
+
+Processing species: Ag-
+  Interval 1: 298.15K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+  Interval 3: 6000.0K - 20000.0K
+
+Processing species: AL
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+  Interval 3: 6000.0K - 20000.0K
+
+Processing species: AL+
+  Interval 1: 298.15K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+  Interval 3: 6000.0K - 20000.0K
+
+Processing species: AL-
+  Interval 1: 298.15K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+  Interval 3: 6000.0K - 20000.0K
+
+Processing species: ALBr
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALBr2
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALBr3
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALC
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALC2
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALCL
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALCL+
+  Interval 1: 298.15K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALCL2
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALCL3
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALF
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALF+
+  Interval 1: 298.15K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALFCL
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALFCL2
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALF2
+  Interval 1: 200.0K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processing species: ALF2-
+  Interval 1: 298.15K - 1000.0K
+  Interval 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALF2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALF4-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALHCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALHCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALHF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALHFCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALHF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALH2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALH2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALH2F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALH3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALI3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: ALO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALO-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALOCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALOCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALOF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALOF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALOF2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALOHCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALOHCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALOHF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALOHF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALO2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL(OH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL(OH)2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL(OH)2F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL(OH)3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ALS2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2Br6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2C2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2CL6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2F6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2I6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2O+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2O2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2O3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2S
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: AL2S2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ar
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ar+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: B
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: B+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: B-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: BBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BC
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BC2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BCL+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BCLOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BCL(OH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BCL2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BCL2OH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BFCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BFCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BFOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BF(OH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BF2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BF2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BF2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BF2OH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BF4-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BHCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BHCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BHF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BHFCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BHF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BH2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BH2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BH2F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BH3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BH4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BH5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BH3NH3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BI3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: BO-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BOCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BOCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BOF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BOF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BO2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B(OH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BS2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2C
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2CL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2F4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2H
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2H2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2H3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2H3,db
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2H4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2H4,db
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2H5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2H5,db
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2H6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2O3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2(OH)4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2S
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2S2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2S3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B3H7,C2v
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B3H7,Cs
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B3H9
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B3N3H6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B3O3CL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B3O3FCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B3O3F2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B3O3F3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B4H4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B4H10
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B4H12
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B5H9
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ba
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ba+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: BaBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaCL+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaF+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: BaO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: BaOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaOH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ba(OH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BaS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ba2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Be
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Be+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Be++
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: BeBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: BeH2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: BeOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeOH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Be(OH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BeS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Be2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Be2CL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Be2F4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Be2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Be2OF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Be2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Be3O3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Be4O4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Br
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Br+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Br-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: BrCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BrF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BrF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BrF5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BrO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: OBrO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BrOO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BrO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BrBrO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: BrOBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: C+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: C-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CBr4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CCLBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CCL2Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CCL3Br
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CCL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CFBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CFCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CFCLBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CFCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CFCL2Br
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CFCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF2Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF2CLBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF3+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF3Br
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF3CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CF4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CHBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHCLBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHCL2Br
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHFBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHFCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHFCLBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHFCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHF2Br
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHF2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CHI3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2CLBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2FBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2FCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2I2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3Br
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3I
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2OH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2OH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3OH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3OOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CI3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CI4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CN+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CN-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CNN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: COCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: COCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: COFCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: COF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: COHCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: COHF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: COS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CO2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: COOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CP
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CS2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: C2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: C2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2CL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2CL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2CL6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2FCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2FCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2F2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2F3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2F3CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2F4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2F6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2HCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2HCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2HF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2HFCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2HF2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2HF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H2,acetylene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H2,vinylidene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H2FCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2CO,ketene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: O(CH)2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HO(CO)2OH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H3,vinyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2Br-COOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H3CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH2CL-COOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H3F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3CN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3CO,acetyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H4O,ethylen-o
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3CHO,ethanal
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3COOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: OHCH2COOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H5Br
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3N2CH3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2H5OH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3OCH3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3O2CH3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CCN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CNC
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: OCCN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2N2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C2S2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: C3H3,1-propynl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H3,2-propynl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H4,allene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H4,propyne
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H4,cyclo-
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H5,allyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H6,propylene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H6,cyclo-
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H6O,propylox
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H6O,acetone
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H6O,propanal
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H7,n-propyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H7,i-propyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H8
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H8O,1propanol
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3H8O,2propanol
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CNCOCN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3OS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C3S2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: C4H2,butadiyne
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H4,1,3-cyclo-
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H6,butadiene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H6,1butyne
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H6,2butyne
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H6,cyclo-
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H8,1-butene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H8,cis2-buten
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H8,tr2-butene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H8,isobutene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H8,cyclo-
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: (CH3COOH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H9,n-butyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H9,i-butyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H9,s-butyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H9,t-butyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H10,n-butane
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4H10,isobutane
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C4N2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: C5H6,1,3cyclo-
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C5H8,cyclo-
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C5H10,1-pentene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C5H10,cyclo-
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C5H11,pentyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C5H11,t-pentyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C5H12,n-pentane
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C5H12,i-pentane
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CH3C(CH3)2CH3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6D5,phenyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6D6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6H2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6H5,phenyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6H5O,phenoxy
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6H6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6H5OH,phenol
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6H10,cyclo-
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6H12,1-hexene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6H12,cyclo-
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6H13,n-hexyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C6H14,n-hexane
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C7H7,benzyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C7H8
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C7H8O,cresol-mx
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C7H14,1-heptene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C7H15,n-heptyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C7H16,n-heptane
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C7H16,2-methylh
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C8H8,styrene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C8H10,ethylbenz
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C8H16,1-octene
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C8H17,n-octyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C8H18,n-octane
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C8H18,isooctane
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C9H19,n-nonyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C10H8,naphthale
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C10H21,n-decyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C12H9,o-bipheny
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: C12H10,biphenyl
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ca
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ca+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CaBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaCL+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaF+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CaO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CaOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaOH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ca(OH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CaS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ca2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cd
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Cd+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CL+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CL-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CLCN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CLF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CLF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CLF5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CLO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CLO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CL2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Co
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Co+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Co-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Cr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Cr+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Cr-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CrN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CrO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CrO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CrO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CrO3-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Cs+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Cs-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CsBO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsLi
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsNO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsNO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsNa
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CsRb
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs2Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs2CO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs2I2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs2O+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs2O2H2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cs2SO4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cu
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Cu+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Cu-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: CuCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CuF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CuF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CuO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: CuOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cu2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Cu3CL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: D
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: D+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: D-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: DBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: DCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: DF
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: DOCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: DO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: DO2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: D2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: D2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: D2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: D2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: D2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: D2S
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: F+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: F-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: FCN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: FCO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: FO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: FO2,FOO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: FO2,OFO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: F2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: F2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: FS2F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Fe
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Fe+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Fe-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Fe(CO)5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: FeCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: FeCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: FeCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: FeO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Fe(OH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Fe2CL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Fe2CL6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ga+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: GaBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaI3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GaOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2Br4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2Br6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2CL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2CL6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2F4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2F6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2I2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2I4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2I6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ga2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ge
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ge+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ge-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: GeBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeBr4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeCL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeF4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeH4
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: GeS2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ge2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: H+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: H-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: HALO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HALO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HBO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HBO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: HBO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HBS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HBS+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: HBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HCN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HCO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HCO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: HCCN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HCCO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HD
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: HD+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: HDO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HDO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: HI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HNC
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HNCO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HNO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HNO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HNO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HOCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HOF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HO2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HPO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HSO3F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: H2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: H2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HBOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HCHO,formaldehy
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HCOOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H2O+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: H2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H2S
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H2SO4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H2BOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: HB(OH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H3BO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H3B3O3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H3B3O6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H3F3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H3O+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: (HCOOH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H4F4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H5F5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H6F6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: H7F7
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: He
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: He+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Hg
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Hg+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: HgBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: I
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: I+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: I-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: IF5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: IF7
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: I2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: In+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: InBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InI3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: InOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2Br4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2Br6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2CL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2CL6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2F4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2F6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2I2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2I4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2I6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: In2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: K+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: K-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: KALF4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KBO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KCN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KLi
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KNO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KNO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KNa
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: KOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 3000.0K
+
+Processando espÚcie: K2Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2CO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2C2N2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2I2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2O+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2O2H2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: K2SO4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Kr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Kr+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Li
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Li+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Li-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: LiALF4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiBO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiNO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiNO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiOF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiON
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li2Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li2I2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li2O+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li2O2H2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li2SO4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li3+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li3Br3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li3CL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li3F3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Li3I3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Mg
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Mg+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: MgBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgCL+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: MgCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgF+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: MgF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgF2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: MgH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: MgOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgOH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Mg(OH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MgS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Mg2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Mg2F4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Mn
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Mn+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Mo
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Mo+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Mo-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: MoO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: MoO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MoO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: MoO3-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Mo2O6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Mo3O9
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Mo4O12
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Mo5O15
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: N+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: N-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: NCO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ND
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ND2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ND3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: NH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: NHF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NHF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NH2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NH2F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NH3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NH2OH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NH4+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: NO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: NOCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NOF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NOF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NO2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NO2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NO2F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NO3-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NO3F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: N2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: N2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: NCN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N2D2,cis
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N2F4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N2H2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NH2NO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N2H4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N2O+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N2O3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N2O4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N2O5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: N3H
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Na+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Na-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: NaALF4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaBO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaCN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaLi
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaNO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaNO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaOH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Na2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na2Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na2I2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na2O+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na2O2H2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na2SO4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na3CL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Na3F3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Nb
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Nb+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Nb-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: NbCL5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NbO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: NbOCL3
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NbO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ne
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ne+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ni
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ni+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ni-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: NiCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NiCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NiO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NiS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: O+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: O-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: OD
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: OD-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: OH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: OH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: OH-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: O2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: O2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: O3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: P+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: P-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: PCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PCL2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PCL5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PF+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: PF-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: PFCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PFCL-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PFCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PFCL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PF2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PF2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PF2CL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PF3CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PF4CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PF5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PH2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PH2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PH3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PO-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: POCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: POFCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: POF2CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: POF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PO2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P2O3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P2O4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P2O5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P3O6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P4O6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P4O7
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P4O8
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P4O9
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: P4O10
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Pb
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Pb+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Pb-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: PbBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbBr4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbCL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbF4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbI3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbI4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: PbS2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Rb
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Rb+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Rb-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: RbBO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbK
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbLi
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbNO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbNO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbNa
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: RbOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Rb2Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Rb2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Rb2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Rb2I2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Rb2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Rb2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Rb2O2H2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Rb2SO4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Rn
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Rn+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: S
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: S+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: S-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SCL2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SD
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SF+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SF-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SF2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SF2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SF3+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SF3-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SF4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SF4+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SF4-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SF5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SF5+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SF5-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SF6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SF6-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SH-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SO-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SOF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SO2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SO2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SO2FCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SO2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: S2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: S2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: S2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: S2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: S2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: S3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: S4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: S5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: S6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: S7
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: S8
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Sc
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Sc+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Sc-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: ScO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: ScO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: ScO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Sc2O
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Sc2O2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Si
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Si+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Si-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SiBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiBr4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiC
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiC2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiCL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiFCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiF4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiHBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiHCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiHCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiHF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiHF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiHI3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH2Br2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH2I2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH3Br
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH3CL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH3F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH3I
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiH4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SiS2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Si2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Si2C
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Si2F6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Si2N
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Si3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Sn
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Sn+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Sn-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SnBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnBr3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnBr4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnCL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnF4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnI3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnI4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SnS2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Sn2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Sr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Sr+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SrBr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SrBr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SrCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SrCL+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SrCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SrF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SrF+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SrF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SrH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SrI
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SrI2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SrO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SrO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: SrOH
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SrOH+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Sr(OH)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: SrS
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Sr2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ta
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ta+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ta-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: TaCL5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: TaO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: TaO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ti
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ti+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Ti-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: TiCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: TiCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: TiCL3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: TiCL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: TiO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: TiO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: TiOCL
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: TiOCL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: TiO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: U
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF3+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF3-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF4+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF4-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF5+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF5-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UF6-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UOF
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: UOF2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: UOF3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: UOF4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: UO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UO2+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UO2-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UO2F
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: UO2F2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: UO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: UO3-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: V
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: V+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: V-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: VCL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: VN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: VO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: VO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: V4O10
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: W
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: W+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: W-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: WCL6
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: WO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: WOCL4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: WO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: WO2CL2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: WO3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: WO3-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: (WO3)2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: (WO3)3
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: (WO3)4
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: (WO3)5
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Xe
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Xe+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Zn
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Zn+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Zr
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Zr+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: Zr-
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: ZrN
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: ZrO
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: ZrO+
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+  Intervalo 3: 6000.0K - 20000.0K
+
+Processando espÚcie: ZrO2
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: Ag(cr)
+  Intervalo 1: 200.0K - 1235.08K
+
+Processando espÚcie: Ag(L)
+  Intervalo 1: 1235.08K - 6000.0K
+
+Processando espÚcie: AL(cr)
+  Intervalo 1: 200.0K - 933.61K
+
+Processando espÚcie: AL(L)
+  Intervalo 1: 933.61K - 6000.0K
+
+Processando espÚcie: ALBr3(cr)
+  Intervalo 1: 200.0K - 371.16K
+
+Processando espÚcie: ALBr3(L)
+  Intervalo 1: 371.16K - 6000.0K
+
+Processando espÚcie: ALCL3(cr)
+  Intervalo 1: 200.0K - 465.7K
+
+Processando espÚcie: ALCL3(L)
+  Intervalo 1: 465.7K - 6000.0K
+
+Processando espÚcie: ALF3(II)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 728.0K
+
+Processando espÚcie: ALF3(I)
+  Intervalo 1: 728.0K - 2100.0K
+
+Processando espÚcie: ALH3(a)
+  Intervalo 1: 200.0K - 500.0K
+
+Processando espÚcie: ALI3(cr)
+  Intervalo 1: 298.15K - 461.47K
+
+Processando espÚcie: ALI3(L)
+  Intervalo 1: 461.47K - 6000.0K
+
+Processando espÚcie: ALN(cr)
+  Intervalo 1: 100.0K - 300.0K
+  Intervalo 2: 300.0K - 1800.0K
+
+Processando espÚcie: ALN(L)
+  Intervalo 1: 1800.0K - 2700.0K
+  Intervalo 2: 2700.0K - 6000.0K
+
+Processando espÚcie: AL(OH)3(a)
+  Intervalo 1: 100.0K - 500.0K
+
+Processando espÚcie: AL2O3(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1200.0K
+  Intervalo 3: 1200.0K - 2327.0K
+
+Processando espÚcie: AL2O3(L)
+  Intervalo 1: 2327.0K - 6000.0K
+
+Processando espÚcie: AL2S3(a)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 1273.0K
+
+Processando espÚcie: AL2S3(b)
+  Intervalo 1: 1273.0K - 1373.0K
+
+Processando espÚcie: AL2S3(L)
+  Intervalo 1: 1373.0K - 6000.0K
+
+Processando espÚcie: AL2SiO5(an)
+  Intervalo 1: 200.0K - 600.0K
+  Intervalo 2: 600.0K - 1500.0K
+  Intervalo 3: 1500.0K - 3000.0K
+
+Processando espÚcie: AL4C3(cr)
+  Intervalo 1: 100.0K - 300.0K
+  Intervalo 2: 300.0K - 2500.0K
+
+Processando espÚcie: B(b)
+  Intervalo 1: 200.0K - 600.0K
+  Intervalo 2: 600.0K - 2350.0K
+
+Processando espÚcie: B(L)
+  Intervalo 1: 2350.0K - 6000.0K
+
+Processando espÚcie: BN(cr)
+  Intervalo 1: 200.0K - 1200.0K
+  Intervalo 2: 1200.0K - 3240.0K
+
+Processando espÚcie: BN(L)
+  Intervalo 1: 3240.0K - 6000.0K
+
+Processando espÚcie: B2O3(cr)
+  Intervalo 1: 100.0K - 723.0K
+
+Processando espÚcie: B2O3(L)
+  Intervalo 1: 723.0K - 6000.0K
+
+Processando espÚcie: B2S3(cr)
+  Intervalo 1: 298.15K - 840.0K
+
+Processando espÚcie: B2S3(L)
+  Intervalo 1: 840.0K - 6000.0K
+
+Processando espÚcie: B3O3H3(cr)
+  Intervalo 1: 298.15K - 700.0K
+  Intervalo 2: 700.0K - 1400.0K
+  Intervalo 3: 1400.0K - 2000.0K
+
+Processando espÚcie: B4C(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2743.0K
+
+Processando espÚcie: B4C(L)
+  Intervalo 1: 2743.0K - 6000.0K
+
+Processando espÚcie: Ba(cr)
+  Intervalo 1: 80.0K - 298.15K
+  Intervalo 2: 298.15K - 1000.0K
+
+Processando espÚcie: Ba(L)
+  Intervalo 1: 1000.0K - 6000.0K
+
+Processando espÚcie: BaBr2(cr)
+  Intervalo 1: 298.0K - 1130.0K
+
+Processando espÚcie: BaBr2(L)
+  Intervalo 1: 1130.0K - 6000.0K
+
+Processando espÚcie: BaCO3(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1083.0K
+
+Processando espÚcie: BaCO3(b)
+  Intervalo 1: 1083.0K - 1233.0K
+
+Processando espÚcie: BaCO3(c)
+  Intervalo 1: 1233.0K - 1828.0K
+
+Processando espÚcie: BaCO3(L)
+  Intervalo 1: 1828.0K - 6000.0K
+
+Processando espÚcie: BaCL2(a)
+  Intervalo 1: 100.0K - 500.0K
+  Intervalo 2: 500.0K - 1198.0K
+
+Processando espÚcie: BaCL2(b)
+  Intervalo 1: 1198.0K - 1234.0K
+
+Processando espÚcie: BaCL2(L)
+  Intervalo 1: 1234.0K - 6000.0K
+
+Processando espÚcie: BaF2(a)
+  Intervalo 1: 100.0K - 500.0K
+  Intervalo 2: 500.0K - 1240.0K
+
+Processando espÚcie: BaF2(b)
+  Intervalo 1: 1240.0K - 1480.0K
+
+Processando espÚcie: BaF2(c)
+  Intervalo 1: 1480.0K - 1641.0K
+
+Processando espÚcie: BaF2(L)
+  Intervalo 1: 1641.0K - 6000.0K
+
+Processando espÚcie: BaH2(a)
+  Intervalo 1: 298.15K - 871.0K
+
+Processando espÚcie: BaH2(b)
+  Intervalo 1: 871.0K - 1473.0K
+
+Processando espÚcie: BaH2(L)
+  Intervalo 1: 1473.0K - 6000.0K
+
+Processando espÚcie: BaI2(cr)
+  Intervalo 1: 100.0K - 500.0K
+  Intervalo 2: 500.0K - 984.0K
+
+Processando espÚcie: BaI2(L)
+  Intervalo 1: 984.0K - 6000.0K
+
+Processando espÚcie: BaO(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1400.0K
+  Intervalo 3: 1400.0K - 2246.0K
+
+Processando espÚcie: BaO(L)
+  Intervalo 1: 2246.0K - 6000.0K
+
+Processando espÚcie: Ba(OH)2(b)
+  Intervalo 1: 100.0K - 519.0K
+
+Processando espÚcie: Ba(OH)2(a)
+  Intervalo 1: 519.0K - 681.0K
+
+Processando espÚcie: Ba(OH)2(L)
+  Intervalo 1: 681.0K - 6000.0K
+
+Processando espÚcie: BaS(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2500.0K
+
+Processando espÚcie: BaS(L)
+  Intervalo 1: 2500.0K - 6000.0K
+
+Processando espÚcie: BaSO4(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1423.0K
+
+Processando espÚcie: BaSO4(b)
+  Intervalo 1: 1423.0K - 1853.0K
+
+Processando espÚcie: BaSO4(L)
+  Intervalo 1: 1853.0K - 6000.0K
+
+Processando espÚcie: Be(a)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 1543.0K
+
+Processando espÚcie: Be(b)
+  Intervalo 1: 1543.0K - 1563.0K
+
+Processando espÚcie: Be(L)
+  Intervalo 1: 1563.0K - 6000.0K
+
+Processando espÚcie: BeAL2O4(cr)
+  Intervalo 1: 200.0K - 600.0K
+  Intervalo 2: 600.0K - 1200.0K
+  Intervalo 3: 1200.0K - 2146.0K
+
+Processando espÚcie: BeAL2O4(L)
+  Intervalo 1: 2146.0K - 6000.0K
+
+Processando espÚcie: BeBr2(cr)
+  Intervalo 1: 298.15K - 781.0K
+
+Processando espÚcie: BeBr2(L)
+  Intervalo 1: 781.0K - 6000.0K
+
+Processando espÚcie: BeCO3(cr)
+  Intervalo 1: 298.0K - 6000.0K
+
+Processando espÚcie: BeCL2(a)
+  Intervalo 1: 200.0K - 676.0K
+
+Processando espÚcie: BeCL2(b)
+  Intervalo 1: 676.0K - 688.0K
+
+Processando espÚcie: BeCL2(L)
+  Intervalo 1: 688.0K - 6000.0K
+
+Processando espÚcie: BeF2(a)
+  Intervalo 1: 200.0K - 493.0K
+
+Processando espÚcie: BeF2(b)
+  Intervalo 1: 493.0K - 823.0K
+
+Processando espÚcie: BeF2(L)
+  Intervalo 1: 823.0K - 6000.0K
+
+Processando espÚcie: BeI2(cr)
+  Intervalo 1: 298.15K - 763.0K
+
+Processando espÚcie: BeI2(L)
+  Intervalo 1: 763.0K - 6000.0K
+
+Processando espÚcie: BeO(a)
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 2373.0K
+
+Processando espÚcie: BeO(b)
+  Intervalo 1: 2373.0K - 2851.0K
+
+Processando espÚcie: BeO(L)
+  Intervalo 1: 2851.0K - 6000.0K
+
+Processando espÚcie: Be(OH)2(b)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 6000.0K
+
+Processando espÚcie: BeS(cr)
+  Intervalo 1: 298.0K - 6000.0K
+
+Processando espÚcie: BeSO4(a)
+  Intervalo 1: 200.0K - 861.0K
+
+Processando espÚcie: BeSO4(b)
+  Intervalo 1: 861.0K - 912.0K
+
+Processando espÚcie: BeSO4(c)
+  Intervalo 1: 912.0K - 1400.0K
+
+Processando espÚcie: BeSO4(L)
+  Intervalo 1: 1400.0K - 6000.0K
+
+Processando espÚcie: Be2C(cr)
+  Intervalo 1: 298.15K - 2400.0K
+
+Processando espÚcie: Be2C(L)
+  Intervalo 1: 2400.0K - 6000.0K
+
+Processando espÚcie: Be3N2(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1673.0K
+
+Processando espÚcie: Be3N2(b)
+  Intervalo 1: 1673.0K - 2473.0K
+
+Processando espÚcie: Be3N2(L)
+  Intervalo 1: 2473.0K - 6000.0K
+
+Processando espÚcie: Br2(cr)
+  Intervalo 1: 200.0K - 265.9K
+
+Processando espÚcie: Br2(L)
+  Intervalo 1: 265.9K - 332.503K
+  Intervalo 2: 332.503K - 6000.0K
+
+Processando espÚcie: C(gr)
+  Intervalo 1: 200.0K - 600.0K
+  Intervalo 2: 600.0K - 2000.0K
+  Intervalo 3: 2000.0K - 6000.0K
+
+Processando espÚcie: Ca(a)
+  Intervalo 1: 200.0K - 298.15K
+  Intervalo 2: 298.15K - 716.0K
+
+Processando espÚcie: Ca(b)
+  Intervalo 1: 716.0K - 1115.0K
+
+Processando espÚcie: Ca(L)
+  Intervalo 1: 1115.0K - 6000.0K
+
+Processando espÚcie: CaBr2(cr)
+  Intervalo 1: 298.15K - 1015.0K
+
+Processando espÚcie: CaBr2(L)
+  Intervalo 1: 1015.0K - 6000.0K
+
+Processando espÚcie: CaCO3(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1603.0K
+
+Processando espÚcie: CaCO3(L)
+  Intervalo 1: 1603.0K - 6000.0K
+
+Processando espÚcie: CaCL2(cr)
+  Intervalo 1: 100.0K - 500.0K
+  Intervalo 2: 500.0K - 1048.0K
+
+Processando espÚcie: CaCL2(L)
+  Intervalo 1: 1048.0K - 6000.0K
+
+Processando espÚcie: CaF2(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1000.0K
+  Intervalo 3: 1000.0K - 1424.0K
+
+Processando espÚcie: CaF2(b)
+  Intervalo 1: 1424.0K - 1691.0K
+
+Processando espÚcie: CaF2(L)
+  Intervalo 1: 1691.0K - 6000.0K
+
+Processando espÚcie: CaH2(a)
+  Intervalo 1: 298.15K - 1053.0K
+
+Processando espÚcie: CaH2(b)
+  Intervalo 1: 1053.0K - 1273.0K
+
+Processando espÚcie: CaH2(L)
+  Intervalo 1: 1273.0K - 6000.0K
+
+Processando espÚcie: CaI2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1056.0K
+
+Processando espÚcie: CaI2(L)
+  Intervalo 1: 1056.0K - 6000.0K
+
+Processando espÚcie: CaO(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 3172.0K
+
+Processando espÚcie: CaO(L)
+  Intervalo 1: 3172.0K - 6000.0K
+
+Processando espÚcie: Ca(OH)2(cr)
+  Intervalo 1: 100.0K - 500.0K
+  Intervalo 2: 500.0K - 1023.0K
+
+Processando espÚcie: Ca(OH)2(L)
+  Intervalo 1: 1023.0K - 6000.0K
+
+Processando espÚcie: CaS(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2800.0K
+
+Processando espÚcie: CaS(L)
+  Intervalo 1: 2800.0K - 6000.0K
+
+Processando espÚcie: CaSO4(II)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1473.0K
+
+Processando espÚcie: CaSO4(I)
+  Intervalo 1: 1473.0K - 1733.0K
+
+Processando espÚcie: CaSO4(L)
+  Intervalo 1: 1733.0K - 6000.0K
+
+Processando espÚcie: Cd(cr)
+  Intervalo 1: 100.0K - 594.258K
+
+Processando espÚcie: Cd(L)
+  Intervalo 1: 594.258K - 6000.0K
+
+Processando espÚcie: Co(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 700.1K
+
+Processando espÚcie: Co(b)
+  Intervalo 1: 700.1K - 800.0K
+  Intervalo 2: 800.0K - 1394.0K
+
+Processando espÚcie: Co(b)
+    Erro ao inserir intervalo 1: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+    Erro ao inserir intervalo 2: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+
+Processando espÚcie: Co(L)
+  Intervalo 1: 1768.0K - 6000.0K
+
+Processando espÚcie: Cr(cr)
+  Intervalo 1: 200.0K - 311.5K
+
+Processando espÚcie: Cr(cr)
+    Erro ao inserir intervalo 1: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+  Intervalo 2: 1000.0K - 2130.0K
+
+Processando espÚcie: Cr(L)
+  Intervalo 1: 2130.0K - 6000.0K
+
+Processando espÚcie: CrN(cr)
+  Intervalo 1: 200.0K - 298.15K
+  Intervalo 2: 298.15K - 400.0K
+  Intervalo 3: 400.0K - 2500.0K
+
+Processando espÚcie: Cr2N(cr)
+  Intervalo 1: 298.15K - 700.0K
+  Intervalo 2: 700.0K - 1500.0K
+  Intervalo 3: 1500.0K - 2500.0K
+
+Processando espÚcie: Cr2O3(I')
+  Intervalo 1: 200.0K - 306.0K
+
+Processando espÚcie: Cr2O3(I)
+  Intervalo 1: 306.0K - 310.0K
+
+Processando espÚcie: Cr2O3(I)
+    Erro ao inserir intervalo 1: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+
+Processando espÚcie: Cr2O3(I)
+    Erro ao inserir intervalo 1: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+
+Processando espÚcie: Cr2O3(L)
+  Intervalo 1: 2705.0K - 6000.0K
+
+Processando espÚcie: Cs(cr)
+  Intervalo 1: 100.0K - 301.59K
+
+Processando espÚcie: Cs(L)
+  Intervalo 1: 301.59K - 1000.0K
+  Intervalo 2: 1000.0K - 2000.0K
+
+Processando espÚcie: CsBO2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1005.0K
+
+Processando espÚcie: CsBO2(L)
+  Intervalo 1: 1005.0K - 6000.0K
+
+Processando espÚcie: CsBr(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 910.0K
+
+Processando espÚcie: CsBr(L)
+  Intervalo 1: 910.0K - 6000.0K
+
+Processando espÚcie: CsCL(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 743.0K
+
+Processando espÚcie: CsCL(b)
+  Intervalo 1: 743.0K - 919.0K
+
+Processando espÚcie: CsCL(L)
+  Intervalo 1: 919.0K - 6000.0K
+
+Processando espÚcie: CsF(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 976.0K
+
+Processando espÚcie: CsF(L)
+  Intervalo 1: 976.0K - 6000.0K
+
+Processando espÚcie: CsH(cr)
+  Intervalo 1: 298.15K - 801.0K
+
+Processando espÚcie: CsH(L)
+  Intervalo 1: 801.0K - 6000.0K
+
+Processando espÚcie: CsI(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 905.0K
+
+Processando espÚcie: CsI(L)
+  Intervalo 1: 905.0K - 6000.0K
+
+Processando espÚcie: CsNO2(I)
+  Intervalo 1: 298.15K - 679.0K
+
+Processando espÚcie: CsNO2(L)
+  Intervalo 1: 679.0K - 6000.0K
+
+Processando espÚcie: CsNO3(a)
+  Intervalo 1: 200.0K - 427.0K
+
+Processando espÚcie: CsNO3(b)
+  Intervalo 1: 427.0K - 682.0K
+
+Processando espÚcie: CsNO3(L)
+  Intervalo 1: 682.0K - 6000.0K
+
+Processando espÚcie: CsOH(b)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 498.2K
+
+Processando espÚcie: CsOH(c)
+  Intervalo 1: 498.2K - 615.5K
+
+Processando espÚcie: CsOH(L)
+  Intervalo 1: 615.5K - 6000.0K
+
+Processando espÚcie: CsO2(a)
+  Intervalo 1: 298.15K - 403.0K
+
+Processando espÚcie: CsO2(c)
+  Intervalo 1: 403.0K - 723.0K
+
+Processando espÚcie: CsO2(L)
+  Intervalo 1: 723.0K - 6000.0K
+
+Processando espÚcie: Cs2CO3(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1066.0K
+
+Processando espÚcie: Cs2CO3(L)
+  Intervalo 1: 1066.0K - 6000.0K
+
+Processando espÚcie: Cs2O(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 768.0K
+
+Processando espÚcie: Cs2O(L)
+  Intervalo 1: 768.0K - 6000.0K
+
+Processando espÚcie: Cs2O2(cr)
+  Intervalo 1: 298.15K - 867.0K
+
+Processando espÚcie: Cs2O2(L)
+  Intervalo 1: 867.0K - 6000.0K
+
+Processando espÚcie: Cs2SO4(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 920.0K
+
+Processando espÚcie: Cs2SO4(b)
+  Intervalo 1: 920.0K - 1000.0K
+
+Processando espÚcie: Cs2SO4(c)
+  Intervalo 1: 1000.0K - 1288.0K
+
+Processando espÚcie: Cs2SO4(L)
+  Intervalo 1: 1288.0K - 6000.0K
+
+Processando espÚcie: Cu(cr)
+  Intervalo 1: 200.0K - 1358.0K
+
+Processando espÚcie: Cu(L)
+  Intervalo 1: 1358.0K - 6000.0K
+
+Processando espÚcie: CuBr(a)
+  Intervalo 1: 298.15K - 657.0K
+
+Processando espÚcie: CuBr(b)
+  Intervalo 1: 657.0K - 741.0K
+
+Processando espÚcie: CuBr(c)
+  Intervalo 1: 741.0K - 759.0K
+
+Processando espÚcie: CuBr(L)
+  Intervalo 1: 759.0K - 1500.0K
+
+Processando espÚcie: CuBr2(cr)
+  Intervalo 1: 298.15K - 800.0K
+
+Processando espÚcie: CuCL(a)
+  Intervalo 1: 298.15K - 685.0K
+
+Processando espÚcie: CuCL(b)
+  Intervalo 1: 685.0K - 696.0K
+
+Processando espÚcie: CuCL(L)
+  Intervalo 1: 696.0K - 1700.0K
+
+Processando espÚcie: CuCL2(cr)
+  Intervalo 1: 298.15K - 675.0K
+
+Processando espÚcie: CuCL2(L)
+  Intervalo 1: 675.0K - 6000.0K
+
+Processando espÚcie: CuF(cr)
+  Intervalo 1: 298.15K - 1300.0K
+
+Processando espÚcie: CuF2(cr)
+  Intervalo 1: 298.15K - 1109.0K
+
+Processando espÚcie: CuF2(L)
+  Intervalo 1: 1109.0K - 6000.0K
+
+Processando espÚcie: CuI(a)
+  Intervalo 1: 200.0K - 642.0K
+
+Processando espÚcie: CuI(b)
+  Intervalo 1: 642.0K - 680.0K
+
+Processando espÚcie: CuI(c)
+  Intervalo 1: 680.0K - 868.0K
+
+Processando espÚcie: CuI(L)
+  Intervalo 1: 868.0K - 1600.0K
+
+Processando espÚcie: CuO(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1400.0K
+
+Processando espÚcie: Cu(OH)2(cr)
+  Intervalo 1: 298.15K - 2000.0K
+
+Processando espÚcie: CuS(cr)
+  Intervalo 1: 298.15K - 717.824K
+
+Processando espÚcie: CuSO4(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1500.0K
+
+Processando espÚcie: Cu2O(cr)
+  Intervalo 1: 200.0K - 600.0K
+  Intervalo 2: 600.0K - 1516.7K
+
+Processando espÚcie: Cu2O(L)
+  Intervalo 1: 1516.7K - 6000.0K
+
+Processando espÚcie: Cu2S(a)
+  Intervalo 1: 298.15K - 376.0K
+
+Processando espÚcie: Cu2S(b)
+  Intervalo 1: 376.0K - 720.0K
+
+Processando espÚcie: Cu2S(c)
+  Intervalo 1: 720.0K - 1400.0K
+
+Processando espÚcie: Cu2S(L)
+  Intervalo 1: 1400.0K - 6000.0K
+
+Processando espÚcie: Fe(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 800.0K
+  Intervalo 3: 800.0K - 1042.0K
+
+Processando espÚcie: Fe(a)
+    Erro ao inserir intervalo 1: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+
+Processando espÚcie: Fe(c)
+  Intervalo 1: 1184.0K - 1665.0K
+
+Processando espÚcie: Fe(d)
+  Intervalo 1: 1665.0K - 1809.0K
+
+Processando espÚcie: Fe(L)
+  Intervalo 1: 1809.0K - 6000.0K
+
+Processando espÚcie: Fe(CO)5(L)
+  Intervalo 1: 253.1K - 6000.0K
+
+Processando espÚcie: FeCL2(cr)
+  Intervalo 1: 200.0K - 950.0K
+
+Processando espÚcie: FeCL2(L)
+  Intervalo 1: 950.0K - 6000.0K
+
+Processando espÚcie: FeCL3(cr)
+  Intervalo 1: 200.0K - 298.15K
+  Intervalo 2: 298.15K - 577.0K
+
+Processando espÚcie: FeCL3(L)
+  Intervalo 1: 577.0K - 6000.0K
+
+Processando espÚcie: Fe.947O(cr)
+  Intervalo 1: 298.15K - 1652.0K
+
+Processando espÚcie: Fe.947O(L)
+  Intervalo 1: 1652.0K - 6000.0K
+
+Processando espÚcie: FeOCL(cr)
+  Intervalo 1: 200.0K - 298.15K
+  Intervalo 2: 298.15K - 700.0K
+
+Processando espÚcie: Fe(OH)2(cr)
+  Intervalo 1: 298.15K - 800.0K
+  Intervalo 2: 800.0K - 1500.0K
+
+Processando espÚcie: Fe(OH)3(cr)
+  Intervalo 1: 298.15K - 1500.0K
+
+Processando espÚcie: FeS(a)
+  Intervalo 1: 200.0K - 411.0K
+
+Processando espÚcie: FeS(b)
+  Intervalo 1: 411.0K - 598.0K
+
+Processando espÚcie: FeS(c)
+  Intervalo 1: 598.0K - 1465.0K
+
+Processando espÚcie: FeS(L)
+  Intervalo 1: 1465.0K - 6000.0K
+
+Processando espÚcie: FeSO4(cr)
+  Intervalo 1: 200.0K - 700.0K
+  Intervalo 2: 700.0K - 2000.0K
+
+Processando espÚcie: FeS2(cr)
+  Intervalo 1: 200.0K - 600.0K
+  Intervalo 2: 600.0K - 1400.0K
+
+Processando espÚcie: Fe2O3(cr)
+  Intervalo 1: 298.15K - 600.0K
+  Intervalo 2: 600.0K - 960.0K
+
+Processando espÚcie: Fe2O3(cr)
+    Erro ao inserir intervalo 1: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+    Erro ao inserir intervalo 2: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+
+Processando espÚcie: Fe2(SO4)3(cr)
+  Intervalo 1: 298.15K - 700.0K
+  Intervalo 2: 700.0K - 2000.0K
+
+Processando espÚcie: Fe3O4(cr)
+  Intervalo 1: 200.0K - 298.15K
+  Intervalo 2: 298.15K - 800.0K
+  Intervalo 3: 800.0K - 850.0K
+
+Processando espÚcie: Fe3O4(cr)
+    Erro ao inserir intervalo 1: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+
+Processando espÚcie: Fe3O4(L)
+  Intervalo 1: 1870.0K - 6000.0K
+
+Processando espÚcie: Ga(cr)
+  Intervalo 1: 100.0K - 302.92K
+
+Processando espÚcie: Ga(L)
+  Intervalo 1: 302.92K - 6000.0K
+
+Processando espÚcie: GaBr3(cr)
+  Intervalo 1: 298.15K - 397.0K
+
+Processando espÚcie: GaBr3(L)
+  Intervalo 1: 397.0K - 6000.0K
+
+Processando espÚcie: GaCL3(cr)
+  Intervalo 1: 298.15K - 351.0K
+
+Processando espÚcie: GaCL3(L)
+  Intervalo 1: 351.0K - 6000.0K
+
+Processando espÚcie: GaF3(cr)
+  Intervalo 1: 298.15K - 2000.0K
+
+Processando espÚcie: GaI3(cr)
+  Intervalo 1: 298.15K - 485.0K
+
+Processando espÚcie: GaI3(L)
+  Intervalo 1: 485.0K - 6000.0K
+
+Processando espÚcie: Ga2O3(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2080.0K
+
+Processando espÚcie: Ga2O3(L)
+  Intervalo 1: 2080.0K - 6000.0K
+
+Processando espÚcie: Ge(cr)
+  Intervalo 1: 200.0K - 400.0K
+  Intervalo 2: 400.0K - 1211.4K
+
+Processando espÚcie: Ge(L)
+  Intervalo 1: 1211.4K - 6000.0K
+
+Processando espÚcie: GeO2(II)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 1308.0K
+
+Processando espÚcie: GeO2(I)
+  Intervalo 1: 1308.0K - 1388.0K
+
+Processando espÚcie: GeO2(L)
+  Intervalo 1: 1388.0K - 6000.0K
+
+Processando espÚcie: GeS(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 931.0K
+
+Processando espÚcie: GeS(L)
+  Intervalo 1: 931.0K - 6000.0K
+
+Processando espÚcie: GeS2(II)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 1113.0K
+
+Processando espÚcie: GeS2(L)
+  Intervalo 1: 1113.0K - 6000.0K
+
+Processando espÚcie: HBO2(cr)
+  Intervalo 1: 298.15K - 509.0K
+
+Processando espÚcie: HBO2(L)
+  Intervalo 1: 509.0K - 6000.0K
+
+Processando espÚcie: H2O(cr)
+  Intervalo 1: 200.0K - 273.15K
+
+Processando espÚcie: H2O(L)
+  Intervalo 1: 273.15K - 373.15K
+  Intervalo 2: 373.15K - 600.0K
+
+Processando espÚcie: H2SO4(L)
+  Intervalo 1: 283.456K - 1000.0K
+
+Processando espÚcie: H3BO3(cr)
+  Intervalo 1: 200.0K - 444.1K
+
+Processando espÚcie: H3BO3(L)
+  Intervalo 1: 444.1K - 6000.0K
+
+Processando espÚcie: H3PO4(cr)
+  Intervalo 1: 200.0K - 315.5K
+
+Processando espÚcie: H3PO4(L)
+  Intervalo 1: 315.5K - 1000.0K
+
+Processando espÚcie: Hg(cr)
+  Intervalo 1: 100.0K - 234.29K
+
+Processando espÚcie: Hg(L)
+  Intervalo 1: 234.29K - 600.0K
+  Intervalo 2: 600.0K - 2000.0K
+
+Processando espÚcie: HgBr2(cr)
+  Intervalo 1: 298.15K - 514.0K
+
+Processando espÚcie: HgBr2(L)
+  Intervalo 1: 514.0K - 6000.0K
+
+Processando espÚcie: HgO(cr)
+  Intervalo 1: 200.0K - 400.0K
+  Intervalo 2: 400.0K - 1000.0K
+
+Processando espÚcie: I2(cr)
+  Intervalo 1: 200.0K - 386.75K
+
+Processando espÚcie: I2(L)
+  Intervalo 1: 386.75K - 6000.0K
+
+Processando espÚcie: In(cr)
+  Intervalo 1: 100.0K - 429.784K
+
+Processando espÚcie: In(L)
+  Intervalo 1: 429.784K - 6000.0K
+
+Processando espÚcie: InBr(cr)
+  Intervalo 1: 298.15K - 558.0K
+
+Processando espÚcie: InBr(L)
+  Intervalo 1: 558.0K - 6000.0K
+
+Processando espÚcie: InBr3(cr)
+  Intervalo 1: 298.15K - 693.0K
+
+Processando espÚcie: InBr3(L)
+  Intervalo 1: 693.0K - 6000.0K
+
+Processando espÚcie: InCL(crII)
+  Intervalo 1: 298.15K - 387.0K
+
+Processando espÚcie: InCL(crI)
+  Intervalo 1: 387.0K - 484.0K
+
+Processando espÚcie: InCL(L)
+  Intervalo 1: 484.0K - 6000.0K
+
+Processando espÚcie: InCL3(cr)
+  Intervalo 1: 298.15K - 856.0K
+
+Processando espÚcie: InCL3(L)
+  Intervalo 1: 856.0K - 6000.0K
+
+Processando espÚcie: InF3(cr)
+  Intervalo 1: 298.15K - 1445.0K
+
+Processando espÚcie: InF3(L)
+  Intervalo 1: 1445.0K - 6000.0K
+
+Processando espÚcie: InI(cr)
+  Intervalo 1: 200.0K - 637.5K
+
+Processando espÚcie: InI(L)
+  Intervalo 1: 637.5K - 6000.0K
+
+Processando espÚcie: InI2(crII)
+  Intervalo 1: 200.0K - 428.0K
+
+Processando espÚcie: InI2(crI)
+  Intervalo 1: 428.0K - 497.0K
+
+Processando espÚcie: InI2(L)
+  Intervalo 1: 497.0K - 6000.0K
+
+Processando espÚcie: InI3(cr)
+  Intervalo 1: 296.0K - 480.0K
+
+Processando espÚcie: InI3(L)
+  Intervalo 1: 480.0K - 6000.0K
+
+Processando espÚcie: In2O3(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2186.0K
+
+Processando espÚcie: In2O3(L)
+  Intervalo 1: 2186.0K - 6000.0K
+
+Processando espÚcie: K(cr)
+  Intervalo 1: 200.0K - 336.86K
+
+Processando espÚcie: K(L)
+  Intervalo 1: 336.86K - 2200.0K
+
+Processando espÚcie: KALO2(II)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 810.0K
+
+Processando espÚcie: KALO2(I)
+  Intervalo 1: 810.0K - 1986.0K
+
+Processando espÚcie: KALO2(L)
+  Intervalo 1: 1986.0K - 6000.0K
+
+Processando espÚcie: KBO2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1220.0K
+
+Processando espÚcie: KBO2(L)
+  Intervalo 1: 1220.0K - 6000.0K
+
+Processando espÚcie: KBr(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1007.0K
+
+Processando espÚcie: KBr(L)
+  Intervalo 1: 1007.0K - 6000.0K
+
+Processando espÚcie: KCN(II)
+  Intervalo 1: 168.3K - 400.0K
+  Intervalo 2: 400.0K - 895.0K
+
+Processando espÚcie: KCN(L)
+  Intervalo 1: 895.0K - 6000.0K
+
+Processando espÚcie: KCL(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1044.0K
+
+Processando espÚcie: KCL(L)
+  Intervalo 1: 1044.0K - 6000.0K
+
+Processando espÚcie: KF(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1131.0K
+
+Processando espÚcie: KF(L)
+  Intervalo 1: 1131.0K - 6000.0K
+
+Processando espÚcie: KH(cr)
+  Intervalo 1: 298.15K - 892.0K
+
+Processando espÚcie: KH(L)
+  Intervalo 1: 892.0K - 6000.0K
+
+Processando espÚcie: K(HF2)(a)
+  Intervalo 1: 200.0K - 469.85K
+
+Processando espÚcie: K(HF2)(b)
+  Intervalo 1: 469.85K - 511.95K
+
+Processando espÚcie: K(HF2)(L)
+  Intervalo 1: 511.95K - 6000.0K
+
+Processando espÚcie: KI(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 954.0K
+
+Processando espÚcie: KI(L)
+  Intervalo 1: 954.0K - 6000.0K
+
+Processando espÚcie: KNO2(II)
+  Intervalo 1: 200.0K - 314.7K
+
+Processando espÚcie: KNO2(I)
+  Intervalo 1: 314.7K - 711.0K
+
+Processando espÚcie: KNO2(L)
+  Intervalo 1: 711.0K - 6000.0K
+
+Processando espÚcie: KNO3(a)
+  Intervalo 1: 200.0K - 402.0K
+
+Processando espÚcie: KNO3(b)
+  Intervalo 1: 402.0K - 607.7K
+
+Processando espÚcie: KNO3(L)
+  Intervalo 1: 607.7K - 6000.0K
+
+Processando espÚcie: KOH(a)
+  Intervalo 1: 100.0K - 298.15K
+
+Processando espÚcie: KOH(b)
+  Intervalo 1: 298.15K - 517.0K
+
+Processando espÚcie: KOH(c)
+  Intervalo 1: 517.0K - 679.0K
+
+Processando espÚcie: KOH(L)
+  Intervalo 1: 679.0K - 6000.0K
+
+Processando espÚcie: KO2(b)
+  Intervalo 1: 200.0K - 422.0K
+
+Processando espÚcie: KO2(a)
+  Intervalo 1: 422.0K - 808.0K
+
+Processando espÚcie: KO2(L)
+  Intervalo 1: 808.0K - 6000.0K
+
+Processando espÚcie: K2CO3(a)
+  Intervalo 1: 200.0K - 693.0K
+
+Processando espÚcie: K2CO3(b)
+  Intervalo 1: 693.0K - 1173.0K
+
+Processando espÚcie: K2CO3(L)
+  Intervalo 1: 1173.0K - 6000.0K
+
+Processando espÚcie: K2O(c)
+  Intervalo 1: 298.15K - 590.0K
+
+Processando espÚcie: K2O(b)
+  Intervalo 1: 590.0K - 645.0K
+
+Processando espÚcie: K2O(a)
+  Intervalo 1: 645.0K - 1013.0K
+
+Processando espÚcie: K2O(L)
+  Intervalo 1: 1013.0K - 6000.0K
+
+Processando espÚcie: K2O2(cr)
+  Intervalo 1: 298.15K - 818.0K
+
+Processando espÚcie: K2O2(L)
+  Intervalo 1: 818.0K - 6000.0K
+
+Processando espÚcie: K2S(cr)
+  Intervalo 1: 298.15K - 600.0K
+  Intervalo 2: 600.0K - 1050.0K
+
+Processando espÚcie: K2S(cr)
+    Erro ao inserir intervalo 1: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+    Erro ao inserir intervalo 2: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+
+Processando espÚcie: K2S(L)
+  Intervalo 1: 1221.0K - 6000.0K
+
+Processando espÚcie: K2SO4(II)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 857.0K
+
+Processando espÚcie: K2SO4(I)
+  Intervalo 1: 857.0K - 1342.0K
+
+Processando espÚcie: K2SO4(L)
+  Intervalo 1: 1342.0K - 6000.0K
+
+Processando espÚcie: K2SiO3(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1249.0K
+
+Processando espÚcie: K2SiO3(L)
+  Intervalo 1: 1249.0K - 6000.0K
+
+Processando espÚcie: K2Si2O5(a)
+  Intervalo 1: 200.0K - 510.0K
+
+Processando espÚcie: K2Si2O5(b)
+  Intervalo 1: 510.0K - 867.0K
+
+Processando espÚcie: K2Si2O5(c)
+  Intervalo 1: 867.0K - 1318.0K
+
+Processando espÚcie: K2Si2O5(L)
+  Intervalo 1: 1318.0K - 6000.0K
+
+Processando espÚcie: K3ALF6(II)
+  Intervalo 1: 298.15K - 600.0K
+
+Processando espÚcie: K3ALF6(I)
+  Intervalo 1: 600.0K - 1273.0K
+
+Processando espÚcie: K3ALF6(L)
+  Intervalo 1: 1273.0K - 6000.0K
+
+Processando espÚcie: Li(cr)
+  Intervalo 1: 200.0K - 298.15K
+  Intervalo 2: 298.15K - 453.69K
+
+Processando espÚcie: Li(L)
+  Intervalo 1: 453.69K - 6000.0K
+
+Processando espÚcie: LiALO2(cr)
+  Intervalo 1: 200.0K - 700.0K
+  Intervalo 2: 700.0K - 1973.0K
+
+Processando espÚcie: LiALO2(L)
+  Intervalo 1: 1973.0K - 6000.0K
+
+Processando espÚcie: LiBO2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1122.0K
+
+Processando espÚcie: LiBO2(L)
+  Intervalo 1: 1122.0K - 6000.0K
+
+Processando espÚcie: LiBr(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 823.0K
+
+Processando espÚcie: LiBr(L)
+  Intervalo 1: 823.0K - 6000.0K
+
+Processando espÚcie: LiCL(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 883.0K
+
+Processando espÚcie: LiCL(L)
+  Intervalo 1: 883.0K - 6000.0K
+
+Processando espÚcie: LiF(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1122.0K
+
+Processando espÚcie: LiF(L)
+  Intervalo 1: 1122.0K - 6000.0K
+
+Processando espÚcie: LiH(cr)
+  Intervalo 1: 200.0K - 965.0K
+
+Processando espÚcie: LiH(L)
+  Intervalo 1: 965.0K - 6000.0K
+
+Processando espÚcie: LiI(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 742.0K
+
+Processando espÚcie: LiI(L)
+  Intervalo 1: 742.0K - 6000.0K
+
+Processando espÚcie: LiNO2(II)
+  Intervalo 1: 298.15K - 369.0K
+
+Processando espÚcie: LiNO2(I)
+  Intervalo 1: 369.0K - 495.0K
+
+Processando espÚcie: LiNO2(L)
+  Intervalo 1: 495.0K - 6000.0K
+
+Processando espÚcie: LiNO3(cr)
+  Intervalo 1: 298.15K - 526.0K
+
+Processando espÚcie: LiNO3(L)
+  Intervalo 1: 525.0K - 6000.0K
+
+Processando espÚcie: LiOH(cr)
+  Intervalo 1: 200.0K - 746.0K
+
+Processando espÚcie: LiOH(L)
+  Intervalo 1: 746.0K - 6000.0K
+
+Processando espÚcie: Li2CO3(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1005.0K
+
+Processando espÚcie: Li2CO3(L)
+  Intervalo 1: 1005.0K - 6000.0K
+
+Processando espÚcie: Li2O(cr)
+  Intervalo 1: 200.0K - 800.0K
+  Intervalo 2: 800.0K - 1726.0K
+
+Processando espÚcie: Li2O(L)
+  Intervalo 1: 1726.0K - 6000.0K
+
+Processando espÚcie: Li2O2(cr)
+  Intervalo 1: 298.15K - 1000.0K
+
+Processando espÚcie: Li2SO4(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 848.0K
+
+Processando espÚcie: Li2SO4(b)
+  Intervalo 1: 848.0K - 1131.0K
+
+Processando espÚcie: Li2SO4(L)
+  Intervalo 1: 1131.0K - 6000.0K
+
+Processando espÚcie: Li3ALF6(IV)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 788.0K
+
+Processando espÚcie: Li3ALF6(III)
+  Intervalo 1: 788.0K - 873.0K
+
+Processando espÚcie: Li3ALF6(II)
+  Intervalo 1: 873.0K - 978.0K
+
+Processando espÚcie: Li3ALF6(I)
+  Intervalo 1: 978.0K - 1058.0K
+
+Processando espÚcie: Li3ALF6(L)
+  Intervalo 1: 1058.0K - 6000.0K
+
+Processando espÚcie: Li3N(cr)
+  Intervalo 1: 200.0K - 700.0K
+  Intervalo 2: 700.0K - 1300.0K
+
+Processando espÚcie: Mg(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 923.0K
+
+Processando espÚcie: Mg(L)
+  Intervalo 1: 923.0K - 6000.0K
+
+Processando espÚcie: MgAL2O4(cr)
+  Intervalo 1: 200.0K - 800.0K
+  Intervalo 2: 800.0K - 2408.0K
+
+Processando espÚcie: MgAL2O4(L)
+  Intervalo 1: 2408.0K - 6000.0K
+
+Processando espÚcie: MgBr2(cr)
+  Intervalo 1: 298.15K - 984.0K
+
+Processando espÚcie: MgBr2(L)
+  Intervalo 1: 984.0K - 6000.0K
+
+Processando espÚcie: MgCO3(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1263.0K
+
+Processando espÚcie: MgCO3(L)
+  Intervalo 1: 1263.0K - 6000.0K
+
+Processando espÚcie: MgCL2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 987.0K
+
+Processando espÚcie: MgCL2(L)
+  Intervalo 1: 987.0K - 6000.0K
+
+Processando espÚcie: MgF2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1536.0K
+
+Processando espÚcie: MgF2(L)
+  Intervalo 1: 1536.0K - 6000.0K
+
+Processando espÚcie: MgH2(b)
+  Intervalo 1: 200.0K - 600.0K
+
+Processando espÚcie: MgH2(L)
+  Intervalo 1: 600.0K - 6000.0K
+
+Processando espÚcie: MgI2(cr)
+  Intervalo 1: 298.15K - 906.0K
+
+Processando espÚcie: MgI2(L)
+  Intervalo 1: 906.0K - 6000.0K
+
+Processando espÚcie: MgO(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 3100.0K
+
+Processando espÚcie: MgO(L)
+  Intervalo 1: 3100.0K - 6000.0K
+
+Processando espÚcie: Mg(OH)2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1000.0K
+
+Processando espÚcie: Mg(OH)2(L)
+  Intervalo 1: 1100.0K - 6000.0K
+
+Processando espÚcie: MgS(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2500.0K
+
+Processando espÚcie: MgS(L)
+  Intervalo 1: 2500.0K - 6000.0K
+
+Processando espÚcie: MgSO4(II)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1283.0K
+
+Processando espÚcie: MgSO4(I)
+  Intervalo 1: 1283.0K - 1410.0K
+
+Processando espÚcie: MgSO4(L)
+  Intervalo 1: 1410.0K - 6000.0K
+
+Processando espÚcie: MgSiO3(I)
+  Intervalo 1: 200.0K - 903.0K
+
+Processando espÚcie: MgSiO3(II)
+  Intervalo 1: 903.0K - 1258.0K
+
+Processando espÚcie: MgSiO3(III)
+  Intervalo 1: 1258.0K - 1850.0K
+
+Processando espÚcie: MgSiO3(L)
+  Intervalo 1: 1850.0K - 6000.0K
+
+Processando espÚcie: MgTiO3(cr)
+  Intervalo 1: 200.0K - 700.0K
+  Intervalo 2: 700.0K - 1953.0K
+
+Processando espÚcie: MgTiO3(L)
+  Intervalo 1: 1953.0K - 6000.0K
+
+Processando espÚcie: MgTi2O5(cr)
+  Intervalo 1: 200.0K - 800.0K
+  Intervalo 2: 800.0K - 1963.0K
+
+Processando espÚcie: MgTi2O5(L)
+  Intervalo 1: 1963.0K - 6000.0K
+
+Processando espÚcie: Mg2SiO4(cr)
+  Intervalo 1: 200.0K - 800.0K
+  Intervalo 2: 800.0K - 2171.0K
+
+Processando espÚcie: Mg2SiO4(L)
+  Intervalo 1: 2170.0K - 6000.0K
+
+Processando espÚcie: Mg2TiO4(cr)
+  Intervalo 1: 200.0K - 800.0K
+  Intervalo 2: 800.0K - 2013.0K
+
+Processando espÚcie: Mg2TiO4(L)
+  Intervalo 1: 2013.0K - 6000.0K
+
+Processando espÚcie: Mg3N2(cr)
+  Intervalo 1: 298.15K - 6000.0K
+
+Processando espÚcie: Mn(a)
+  Intervalo 1: 200.0K - 980.0K
+
+Processando espÚcie: Mn(b)
+  Intervalo 1: 980.0K - 1361.0K
+
+Processando espÚcie: Mn(c)
+  Intervalo 1: 1361.0K - 1412.0K
+
+Processando espÚcie: Mn(d)
+  Intervalo 1: 1412.0K - 1519.0K
+
+Processando espÚcie: Mn(L)
+  Intervalo 1: 1519.0K - 6000.0K
+
+Processando espÚcie: Mo(cr)
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 2200.0K
+  Intervalo 3: 2200.0K - 2896.0K
+
+Processando espÚcie: Mo(L)
+  Intervalo 1: 2896.0K - 6000.0K
+
+Processando espÚcie: MoO2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 6000.0K
+
+Processando espÚcie: MoO3(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1075.0K
+
+Processando espÚcie: MoO3(L)
+  Intervalo 1: 1075.0K - 6000.0K
+
+Processando espÚcie: NH4CL(II)
+  Intervalo 1: 298.15K - 457.7K
+
+Processando espÚcie: NH4CL(III)
+  Intervalo 1: 457.7K - 1000.0K
+  Intervalo 2: 1000.0K - 1500.0K
+
+Processando espÚcie: NH4F(cr)
+  Intervalo 1: 200.0K - 298.15K
+  Intervalo 2: 298.15K - 511.0K
+
+Processando espÚcie: NH4F(L)
+  Intervalo 1: 511.0K - 6000.0K
+
+Processando espÚcie: Na(cr)
+  Intervalo 1: 200.0K - 371.01K
+
+Processando espÚcie: Na(L)
+  Intervalo 1: 371.01K - 2300.0K
+
+Processando espÚcie: NaALO2(a)
+  Intervalo 1: 200.0K - 740.0K
+
+Processando espÚcie: NaALO2(b)
+  Intervalo 1: 740.0K - 3000.0K
+
+Processando espÚcie: NaBO2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1239.0K
+
+Processando espÚcie: NaBO2(L)
+  Intervalo 1: 1239.0K - 6000.0K
+
+Processando espÚcie: NaBr(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1020.0K
+
+Processando espÚcie: NaBr(L)
+  Intervalo 1: 1020.0K - 6000.0K
+
+Processando espÚcie: NaCN(II)
+  Intervalo 1: 197.7K - 245.9K
+  Intervalo 2: 245.9K - 273.1K
+  Intervalo 3: 273.1K - 284.2K
+  Intervalo 4: 284.2K - 286.3K
+  Intervalo 5: 286.3K - 287.7K
+  Intervalo 6: 287.7K - 288.5K
+
+Processando espÚcie: NaCN(III)
+  Intervalo 1: 288.5K - 290.4K
+  Intervalo 2: 290.4K - 293.15K
+  Intervalo 3: 293.15K - 835.0K
+
+Processando espÚcie: NaCN(L)
+  Intervalo 1: 835.0K - 6000.0K
+
+Processando espÚcie: NaCL(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1074.0K
+
+Processando espÚcie: NaCL(L)
+  Intervalo 1: 1074.0K - 6000.0K
+
+Processando espÚcie: NaF(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1269.0K
+
+Processando espÚcie: NaF(L)
+  Intervalo 1: 1269.0K - 6000.0K
+
+Processando espÚcie: NaH(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 911.0K
+
+Processando espÚcie: NaH(L)
+  Intervalo 1: 911.0K - 6000.0K
+
+Processando espÚcie: NaI(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 934.0K
+
+Processando espÚcie: NaI(L)
+  Intervalo 1: 934.0K - 6000.0K
+
+Processando espÚcie: NaNO2(I)
+  Intervalo 1: 298.15K - 400.0K
+  Intervalo 2: 400.0K - 436.7K
+
+Processando espÚcie: NaNO2(I')
+  Intervalo 1: 436.7K - 557.0K
+
+Processando espÚcie: NaNO2(L)
+  Intervalo 1: 557.0K - 6000.0K
+
+Processando espÚcie: NaNO3(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 549.0K
+
+Processando espÚcie: NaNO3(b)
+  Intervalo 1: 549.0K - 579.6K
+
+Processando espÚcie: NaNO3(L)
+  Intervalo 1: 579.6K - 6000.0K
+
+Processando espÚcie: NaOH(a)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 514.0K
+
+Processando espÚcie: NaOH(b)
+  Intervalo 1: 514.0K - 568.0K
+
+Processando espÚcie: NaOH(c)
+  Intervalo 1: 568.0K - 594.0K
+
+Processando espÚcie: NaOH(L)
+  Intervalo 1: 594.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: NaO2(cr)
+  Intervalo 1: 223.3K - 825.0K
+
+Processando espÚcie: NaO2(L)
+  Intervalo 1: 825.0K - 6000.0K
+
+Processando espÚcie: Na2CO3(a)
+  Intervalo 1: 200.0K - 623.0K
+
+Processando espÚcie: Na2CO3(b)
+  Intervalo 1: 623.0K - 752.0K
+
+Processando espÚcie: Na2CO3(c)
+  Intervalo 1: 752.0K - 1131.0K
+
+Processando espÚcie: Na2CO3(L)
+  Intervalo 1: 1131.0K - 6000.0K
+
+Processando espÚcie: Na2O(c)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1023.0K
+
+Processando espÚcie: Na2O(b)
+  Intervalo 1: 1023.0K - 1243.0K
+
+Processando espÚcie: Na2O(a)
+  Intervalo 1: 1243.0K - 1405.0K
+
+Processando espÚcie: Na2O(L)
+  Intervalo 1: 1405.0K - 6000.0K
+
+Processando espÚcie: Na2O2(b)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 785.0K
+
+Processando espÚcie: Na2O2(a)
+  Intervalo 1: 785.0K - 948.0K
+
+Processando espÚcie: Na2O2(L)
+  Intervalo 1: 948.0K - 6000.0K
+
+Processando espÚcie: Na2S(cr)
+  Intervalo 1: 298.15K - 700.0K
+  Intervalo 2: 700.0K - 1276.0K
+
+Processando espÚcie: Na2S(cr)
+    Erro ao inserir intervalo 1: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+
+Processando espÚcie: Na2S(L)
+  Intervalo 1: 1445.0K - 6000.0K
+
+Processando espÚcie: Na2SO3(cr)
+  Intervalo 1: 298.15K - 1184.0K
+
+Processando espÚcie: Na2SO3(L)
+  Intervalo 1: 1184.0K - 6000.0K
+
+Processando espÚcie: Na2SO4(V)
+  Intervalo 1: 200.0K - 458.0K
+
+Processando espÚcie: Na2SO4(IV)
+  Intervalo 1: 458.0K - 514.0K
+
+Processando espÚcie: Na2SO4(I)
+  Intervalo 1: 514.0K - 1157.0K
+
+Processando espÚcie: Na2SO4(L)
+  Intervalo 1: 1157.0K - 6000.0K
+
+Processando espÚcie: Na3ALF6(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 838.0K
+
+Processando espÚcie: Na3ALF6(b)
+  Intervalo 1: 838.0K - 1286.0K
+
+Processando espÚcie: Na3ALF6(L)
+  Intervalo 1: 1286.0K - 6000.0K
+
+Processando espÚcie: Na5AL3F14(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1010.0K
+
+Processando espÚcie: Na5AL3F14(L)
+  Intervalo 1: 1010.0K - 6000.0K
+
+Processando espÚcie: Nb(cr)
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 2000.0K
+  Intervalo 3: 2000.0K - 2750.0K
+
+Processando espÚcie: Nb(L)
+  Intervalo 1: 2750.0K - 6000.0K
+
+Processando espÚcie: NbO(cr)
+  Intervalo 1: 298.15K - 2217.0K
+
+Processando espÚcie: NbO(L)
+  Intervalo 1: 2217.0K - 6000.0K
+
+Processando espÚcie: NbOCL3(cr)
+  Intervalo 1: 298.15K - 702.0K
+
+Processando espÚcie: NbO2(II)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1082.0K
+
+Processando espÚcie: NbO2(I)
+  Intervalo 1: 1082.0K - 2360.0K
+
+Processando espÚcie: NbO2(L)
+  Intervalo 1: 2360.0K - 6000.0K
+
+Processando espÚcie: Nb2O5(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1783.0K
+
+Processando espÚcie: Nb2O5(L)
+  Intervalo 1: 1783.0K - 6000.0K
+
+Processando espÚcie: Ni(cr)
+  Intervalo 1: 200.0K - 400.0K
+  Intervalo 2: 400.0K - 631.0K
+
+Processando espÚcie: Ni(cr)
+    Erro ao inserir intervalo 1: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+    Erro ao inserir intervalo 2: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+
+Processando espÚcie: Ni(L)
+  Intervalo 1: 1728.0K - 6000.0K
+
+Processando espÚcie: NiS(b)
+  Intervalo 1: 200.0K - 652.0K
+
+Processando espÚcie: NiS(a)
+  Intervalo 1: 652.0K - 1249.0K
+
+Processando espÚcie: NiS(L)
+  Intervalo 1: 1249.0K - 6000.0K
+
+Processando espÚcie: NiS2(cr)
+  Intervalo 1: 298.15K - 1280.0K
+
+Processando espÚcie: NiS2(L)
+  Intervalo 1: 1280.0K - 6000.0K
+
+Processando espÚcie: Ni3S2(a)
+  Intervalo 1: 200.0K - 834.0K
+
+Processando espÚcie: Ni3S2(b)
+  Intervalo 1: 834.0K - 1064.0K
+
+Processando espÚcie: Ni3S2(L)
+  Intervalo 1: 1064.0K - 6000.0K
+
+Processando espÚcie: Ni3S4(cr)
+  Intervalo 1: 298.15K - 1100.0K
+
+Processando espÚcie: P(cr)
+  Intervalo 1: 195.4K - 317.3K
+
+Processando espÚcie: P(L)
+  Intervalo 1: 317.3K - 6000.0K
+
+Processando espÚcie: P4O10(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 699.0K
+
+Processando espÚcie: P4O10(L)
+  Intervalo 1: 699.0K - 6000.0K
+
+Processando espÚcie: Pb(cr)
+  Intervalo 1: 200.0K - 600.65K
+
+Processando espÚcie: Pb(L)
+  Intervalo 1: 600.65K - 3600.0K
+
+Processando espÚcie: PbBr2(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 644.0K
+
+Processando espÚcie: PbBr2(L)
+  Intervalo 1: 644.0K - 6000.0K
+
+Processando espÚcie: PbCL2(cr)
+  Intervalo 1: 200.0K - 774.0K
+
+Processando espÚcie: PbCL2(L)
+  Intervalo 1: 774.0K - 6000.0K
+
+Processando espÚcie: PbF2(II)
+  Intervalo 1: 298.15K - 583.0K
+
+Processando espÚcie: PbF2(I)
+  Intervalo 1: 583.0K - 716.0K
+  Intervalo 2: 716.0K - 1103.0K
+
+Processando espÚcie: PbF2(L)
+  Intervalo 1: 1103.0K - 6000.0K
+
+Processando espÚcie: PbI2(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 683.0K
+
+Processando espÚcie: PbI2(L)
+  Intervalo 1: 683.0K - 6000.0K
+
+Processando espÚcie: PbO(II-r)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 762.0K
+
+Processando espÚcie: PbO(I-y)
+  Intervalo 1: 762.0K - 1160.0K
+
+Processando espÚcie: PbO(L)
+  Intervalo 1: 1160.0K - 6000.0K
+
+Processando espÚcie: PbO2(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 1000.0K
+
+Processando espÚcie: PbS(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 1386.5K
+
+Processando espÚcie: PbS(L)
+  Intervalo 1: 1386.5K - 6000.0K
+
+Processando espÚcie: Pb2O3(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 1000.0K
+
+Processando espÚcie: Pb3O4(cr)
+  Intervalo 1: 200.0K - 1000.0K
+
+Processando espÚcie: Rb(cr)
+  Intervalo 1: 100.0K - 312.47K
+
+Processando espÚcie: Rb(L)
+  Intervalo 1: 312.47K - 1000.0K
+  Intervalo 2: 1000.0K - 2100.0K
+
+Processando espÚcie: RbBO2(b)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 968.0K
+
+Processando espÚcie: RbBO2(a)
+  Intervalo 1: 968.0K - 1133.0K
+
+Processando espÚcie: RbBO2(L)
+  Intervalo 1: 1133.0K - 6000.0K
+
+Processando espÚcie: RbBr(cr)
+  Intervalo 1: 200.0K - 965.0K
+
+Processando espÚcie: RbBr(L)
+  Intervalo 1: 965.0K - 6000.0K
+
+Processando espÚcie: RbCL(cr)
+  Intervalo 1: 200.0K - 997.0K
+
+Processando espÚcie: RbCL(L)
+  Intervalo 1: 997.0K - 6000.0K
+
+Processando espÚcie: RbF(cr)
+  Intervalo 1: 298.15K - 1068.0K
+
+Processando espÚcie: RbF(L)
+  Intervalo 1: 1068.0K - 6000.0K
+
+Processando espÚcie: RbH(cr)
+  Intervalo 1: 298.15K - 858.0K
+
+Processando espÚcie: RbH(L)
+  Intervalo 1: 858.0K - 6000.0K
+
+Processando espÚcie: RbI(cr)
+  Intervalo 1: 200.0K - 929.0K
+
+Processando espÚcie: RbI(L)
+  Intervalo 1: 929.0K - 6000.0K
+
+Processando espÚcie: RbNO2(I)
+  Intervalo 1: 298.15K - 695.0K
+
+Processando espÚcie: RbNO2(L)
+  Intervalo 1: 695.0K - 6000.0K
+
+Processando espÚcie: RbNO3(IV)
+  Intervalo 1: 200.0K - 437.0K
+
+Processando espÚcie: RbNO3(III)
+  Intervalo 1: 437.0K - 493.0K
+
+Processando espÚcie: RbNO3(II)
+  Intervalo 1: 493.0K - 556.0K
+
+Processando espÚcie: RbNO3(I)
+  Intervalo 1: 556.0K - 583.0K
+
+Processando espÚcie: RbNO3(L)
+  Intervalo 1: 583.0K - 6000.0K
+
+Processando espÚcie: RbOH(b)
+  Intervalo 1: 298.15K - 508.0K
+
+Processando espÚcie: RbOH(c)
+  Intervalo 1: 508.0K - 658.0K
+
+Processando espÚcie: RbOH(L)
+  Intervalo 1: 658.0K - 6000.0K
+
+Processando espÚcie: RbO2(b)
+  Intervalo 1: 200.0K - 423.0K
+
+Processando espÚcie: RbO2(a)
+  Intervalo 1: 423.0K - 813.0K
+
+Processando espÚcie: RbO2(L)
+  Intervalo 1: 813.0K - 6000.0K
+
+Processando espÚcie: Rb2CO3(a)
+  Intervalo 1: 200.0K - 576.0K
+
+Processando espÚcie: Rb2CO3(b)
+  Intervalo 1: 576.0K - 1146.0K
+
+Processando espÚcie: Rb2CO3(L)
+  Intervalo 1: 1146.0K - 6000.0K
+
+Processando espÚcie: Rb2O(c)
+  Intervalo 1: 298.15K - 543.0K
+
+Processando espÚcie: Rb2O(b)
+  Intervalo 1: 543.0K - 613.0K
+
+Processando espÚcie: Rb2O(a)
+  Intervalo 1: 613.0K - 778.0K
+
+Processando espÚcie: Rb2O(L)
+  Intervalo 1: 778.0K - 6000.0K
+
+Processando espÚcie: Rb2O2(b)
+  Intervalo 1: 298.15K - 398.0K
+
+Processando espÚcie: Rb2O2(a)
+  Intervalo 1: 398.0K - 843.0K
+
+Processando espÚcie: Rb2O2(L)
+  Intervalo 1: 843.0K - 6000.0K
+
+Processando espÚcie: Rb2SO4(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 800.0K
+  Intervalo 3: 800.0K - 931.0K
+
+Processando espÚcie: Rb2SO4(b)
+  Intervalo 1: 931.0K - 1343.0K
+
+Processando espÚcie: Rb2SO4(L)
+  Intervalo 1: 1343.0K - 6000.0K
+
+Processando espÚcie: S(a)
+  Intervalo 1: 200.0K - 368.3K
+
+Processando espÚcie: S(b)
+  Intervalo 1: 368.3K - 388.36K
+
+Processando espÚcie: S(L)
+  Intervalo 1: 388.36K - 428.15K
+  Intervalo 2: 428.15K - 432.25K
+  Intervalo 3: 432.25K - 453.15K
+  Intervalo 4: 453.15K - 717.0K
+  Intervalo 5: 717.0K - 6000.0K
+
+Processando espÚcie: SCL2(L)
+  Intervalo 1: 298.15K - 6000.0K
+
+Processando espÚcie: S2CL2(L)
+  Intervalo 1: 298.15K - 6000.0K
+
+Processando espÚcie: Sc(a)
+  Intervalo 1: 100.0K - 400.0K
+  Intervalo 2: 400.0K - 1609.0K
+
+Processando espÚcie: Sc(b)
+  Intervalo 1: 1609.0K - 1814.0K
+
+Processando espÚcie: Sc(L)
+  Intervalo 1: 1814.0K - 6000.0K
+
+Processando espÚcie: Sc2O3(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2762.0K
+
+Processando espÚcie: Sc2O3(L)
+  Intervalo 1: 2762.0K - 6000.0K
+
+Processando espÚcie: Si(cr)
+  Intervalo 1: 200.0K - 298.15K
+  Intervalo 2: 298.15K - 1690.0K
+
+Processando espÚcie: Si(L)
+  Intervalo 1: 1690.0K - 6000.0K
+
+Processando espÚcie: SiC(b)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 3105.0K
+
+Processando espÚcie: SiC(L)
+  Intervalo 1: 3103.0K - 6000.0K
+
+Processando espÚcie: SiO2(a-qz)
+  Intervalo 1: 200.0K - 848.0K
+
+Processando espÚcie: SiO2(b-qz)
+  Intervalo 1: 848.0K - 1200.0K
+
+Processando espÚcie: SiO2(b-crt)
+  Intervalo 1: 1200.0K - 1996.0K
+
+Processando espÚcie: SiO2(L)
+  Intervalo 1: 1996.0K - 6000.0K
+
+Processando espÚcie: SiS(cr)
+  Intervalo 1: 298.15K - 1363.0K
+
+Processando espÚcie: SiS(L)
+  Intervalo 1: 1363.0K - 6000.0K
+
+Processando espÚcie: SiS2(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 1363.0K
+
+Processando espÚcie: SiS2(L)
+  Intervalo 1: 1363.0K - 6000.0K
+
+Processando espÚcie: Si2N2O(cr)
+  Intervalo 1: 298.15K - 1000.0K
+  Intervalo 2: 1000.0K - 2500.0K
+
+Processando espÚcie: Si3N4(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 4000.0K
+
+Processando espÚcie: Sn(cr)
+  Intervalo 1: 200.0K - 505.118K
+
+Processando espÚcie: Sn(L)
+  Intervalo 1: 505.118K - 4700.0K
+
+Processando espÚcie: SnBr2(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 503.4K
+
+Processando espÚcie: SnBr2(L)
+  Intervalo 1: 503.4K - 860.0K
+  Intervalo 2: 860.0K - 6000.0K
+
+Processando espÚcie: SnBr4(cr)
+  Intervalo 1: 200.0K - 302.25K
+
+Processando espÚcie: SnBr4(L)
+  Intervalo 1: 302.25K - 470.0K
+  Intervalo 2: 470.0K - 6000.0K
+
+Processando espÚcie: SnCL2(cr)
+  Intervalo 1: 200.0K - 520.2K
+
+Processando espÚcie: SnCL2(L)
+  Intervalo 1: 520.2K - 6000.0K
+
+Processando espÚcie: SnCL4(L)
+  Intervalo 1: 239.05K - 350.0K
+  Intervalo 2: 350.0K - 6000.0K
+
+Processando espÚcie: SnF2(cr)
+  Intervalo 1: 298.15K - 488.2K
+
+Processando espÚcie: SnF2(L)
+  Intervalo 1: 488.2K - 6000.0K
+
+Processando espÚcie: SnI2(cr)
+  Intervalo 1: 200.0K - 595.7K
+
+Processando espÚcie: SnI2(L)
+  Intervalo 1: 595.7K - 960.0K
+  Intervalo 2: 960.0K - 6000.0K
+
+Processando espÚcie: SnI4(cr)
+  Intervalo 1: 200.0K - 418.0K
+
+Processando espÚcie: SnI4(L)
+  Intervalo 1: 418.0K - 580.0K
+  Intervalo 2: 580.0K - 6000.0K
+
+Processando espÚcie: SnO(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 1250.0K
+
+Processando espÚcie: SnO(L)
+  Intervalo 1: 1250.0K - 6000.0K
+
+Processando espÚcie: SnO2(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 1903.0K
+
+Processando espÚcie: SnO2(L)
+  Intervalo 1: 1903.0K - 6000.0K
+
+Processando espÚcie: SnS(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 875.0K
+
+Processando espÚcie: SnS(cr)
+    Erro ao inserir intervalo 1: UNIQUE constraint failed: temperature_intervals.species_id, temperature_intervals.interval_number
+
+Processando espÚcie: SnS(L)
+  Intervalo 1: 1154.0K - 6000.0K
+
+Processando espÚcie: SnS2(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 1143.0K
+
+Processando espÚcie: Sr(a)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 820.0K
+
+Processando espÚcie: Sr(b)
+  Intervalo 1: 820.0K - 1041.0K
+
+Processando espÚcie: Sr(L)
+  Intervalo 1: 1041.0K - 6000.0K
+
+Processando espÚcie: SrBr2(a)
+  Intervalo 1: 200.0K - 918.0K
+
+Processando espÚcie: SrBr2(b)
+  Intervalo 1: 918.0K - 930.0K
+
+Processando espÚcie: SrBr2(L)
+  Intervalo 1: 930.0K - 6000.0K
+
+Processando espÚcie: SrCO3(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1198.0K
+
+Processando espÚcie: SrCO3(b)
+  Intervalo 1: 1198.0K - 1689.0K
+
+Processando espÚcie: SrCO3(c)
+  Intervalo 1: 1689.0K - 1767.0K
+
+Processando espÚcie: SrCO3(L)
+  Intervalo 1: 1767.0K - 6000.0K
+
+Processando espÚcie: SrCL2(a)
+  Intervalo 1: 200.0K - 700.0K
+  Intervalo 2: 700.0K - 990.0K
+
+Processando espÚcie: SrCL2(b)
+  Intervalo 1: 900.0K - 1147.0K
+
+Processando espÚcie: SrCL2(L)
+  Intervalo 1: 1147.0K - 6000.0K
+
+Processando espÚcie: SrF2(a)
+  Intervalo 1: 200.0K - 800.0K
+  Intervalo 2: 800.0K - 1484.0K
+
+Processando espÚcie: SrF2(b)
+  Intervalo 1: 1484.0K - 1750.0K
+
+Processando espÚcie: SrF2(L)
+  Intervalo 1: 1750.0K - 6000.0K
+
+Processando espÚcie: SrH2(a)
+  Intervalo 1: 298.0K - 1128.0K
+
+Processando espÚcie: SrH2(b)
+  Intervalo 1: 1128.0K - 1323.0K
+
+Processando espÚcie: SrH2(L)
+  Intervalo 1: 1323.0K - 6000.0K
+
+Processando espÚcie: SrI2(cr)
+  Intervalo 1: 200.0K - 811.0K
+
+Processando espÚcie: SrI2(L)
+  Intervalo 1: 811.0K - 6000.0K
+
+Processando espÚcie: SrO(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1800.0K
+  Intervalo 3: 1800.0K - 2805.0K
+
+Processando espÚcie: SrO(L)
+  Intervalo 1: 2805.0K - 6000.0K
+
+Processando espÚcie: Sr(OH)2(b)
+  Intervalo 1: 200.0K - 753.0K
+
+Processando espÚcie: Sr(OH)2(a)
+  Intervalo 1: 753.0K - 808.0K
+
+Processando espÚcie: Sr(OH)2(L)
+  Intervalo 1: 808.0K - 6000.0K
+
+Processando espÚcie: SrS(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2500.0K
+
+Processando espÚcie: SrS(L)
+  Intervalo 1: 2500.0K - 6000.0K
+
+Processando espÚcie: SrSO4(a)
+  Intervalo 1: 298.15K - 1430.0K
+
+Processando espÚcie: SrSO4(b)
+  Intervalo 1: 1430.0K - 1880.0K
+
+Processando espÚcie: SrSO4(L)
+  Intervalo 1: 1880.0K - 6000.0K
+
+Processando espÚcie: Ta(cr)
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 2000.0K
+  Intervalo 3: 2000.0K - 3258.0K
+
+Processando espÚcie: Ta(L)
+  Intervalo 1: 3258.0K - 6000.0K
+
+Processando espÚcie: TaC(cr)
+  Intervalo 1: 200.0K - 800.0K
+  Intervalo 2: 800.0K - 4273.0K
+
+Processando espÚcie: TaC(L)
+  Intervalo 1: 4273.0K - 6000.0K
+
+Processando espÚcie: Ta2O5(II)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1633.0K
+
+Processando espÚcie: Ta2O5(I)
+  Intervalo 1: 1633.0K - 2150.0K
+
+Processando espÚcie: Ta2O5(L)
+  Intervalo 1: 2150.0K - 6000.0K
+
+Processando espÚcie: Th(a)
+  Intervalo 1: 200.0K - 1650.0K
+
+Processando espÚcie: Th(b)
+  Intervalo 1: 1650.0K - 2023.0K
+
+Processando espÚcie: Th(L)
+  Intervalo 1: 2023.0K - 6000.0K
+
+Processando espÚcie: Ti(a)
+  Intervalo 1: 200.0K - 900.0K
+  Intervalo 2: 900.0K - 1156.0K
+
+Processando espÚcie: Ti(b)
+  Intervalo 1: 1156.0K - 1944.0K
+
+Processando espÚcie: Ti(L)
+  Intervalo 1: 1944.0K - 6000.0K
+
+Processando espÚcie: TiB(cr)
+  Intervalo 1: 298.15K - 1100.0K
+  Intervalo 2: 1100.0K - 4000.0K
+
+Processando espÚcie: TiB2(cr)
+  Intervalo 1: 200.0K - 2300.0K
+  Intervalo 2: 2300.0K - 3193.0K
+
+Processando espÚcie: TiB2(L)
+  Intervalo 1: 3193.0K - 6000.0K
+
+Processando espÚcie: TiC(cr)
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 3290.0K
+
+Processando espÚcie: TiC(L)
+  Intervalo 1: 3290.0K - 6000.0K
+
+Processando espÚcie: TiCL2(cr)
+  Intervalo 1: 200.0K - 800.0K
+  Intervalo 2: 800.0K - 2000.0K
+
+Processando espÚcie: TiCL3(cr)
+  Intervalo 1: 298.15K - 1500.0K
+
+Processando espÚcie: TiCL4(L)
+  Intervalo 1: 249.046K - 700.0K
+  Intervalo 2: 700.0K - 2000.0K
+
+Processando espÚcie: TiN(cr)
+  Intervalo 1: 200.0K - 800.0K
+  Intervalo 2: 800.0K - 3220.0K
+
+Processando espÚcie: TiN(L)
+  Intervalo 1: 3220.0K - 6000.0K
+
+Processando espÚcie: TiO(a)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1265.0K
+
+Processando espÚcie: TiO(b)
+  Intervalo 1: 1265.0K - 1810.0K
+
+Processando espÚcie: TiO(c)
+  Intervalo 1: 1810.0K - 2030.0K
+
+Processando espÚcie: TiO(L)
+  Intervalo 1: 2030.0K - 6000.0K
+
+Processando espÚcie: TiO2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2185.0K
+
+Processando espÚcie: TiO2(L)
+  Intervalo 1: 2185.0K - 6000.0K
+
+Processando espÚcie: Ti2O3(I)
+  Intervalo 1: 200.0K - 400.0K
+  Intervalo 2: 400.0K - 464.0K
+
+Processando espÚcie: Ti2O3(I')
+  Intervalo 1: 464.0K - 580.0K
+  Intervalo 2: 580.0K - 2110.0K
+
+Processando espÚcie: Ti2O3(L)
+  Intervalo 1: 2110.0K - 6000.0K
+
+Processando espÚcie: Ti3O5(a)
+  Intervalo 1: 200.0K - 298.15K
+  Intervalo 2: 298.15K - 448.0K
+
+Processando espÚcie: Ti3O5(b)
+  Intervalo 1: 448.0K - 2050.0K
+
+Processando espÚcie: Ti3O5(L)
+  Intervalo 1: 2050.0K - 6000.0K
+
+Processando espÚcie: Ti4O7(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1960.0K
+
+Processando espÚcie: Ti4O7(L)
+  Intervalo 1: 1960.0K - 6000.0K
+
+Processando espÚcie: U(a)
+  Intervalo 1: 200.0K - 942.0K
+
+Processando espÚcie: U(b)
+  Intervalo 1: 942.0K - 1049.0K
+
+Processando espÚcie: U(c)
+  Intervalo 1: 1049.0K - 1408.0K
+
+Processando espÚcie: U(L)
+  Intervalo 1: 1408.0K - 4000.0K
+
+Processando espÚcie: UF3(cr)
+  Intervalo 1: 298.15K - 1768.0K
+
+Processando espÚcie: UF3(L)
+  Intervalo 1: 1768.0K - 6000.0K
+
+Processando espÚcie: UF4(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1309.0K
+
+Processando espÚcie: UF4(L)
+  Intervalo 1: 1309.0K - 6000.0K
+
+Processando espÚcie: UF5(b)
+  Intervalo 1: 298.15K - 398.0K
+
+Processando espÚcie: UF5(a)
+  Intervalo 1: 398.0K - 621.0K
+
+Processando espÚcie: UF5(L)
+  Intervalo 1: 621.0K - 6000.0K
+
+Processando espÚcie: UF6(cr)
+  Intervalo 1: 100.0K - 337.21K
+
+Processando espÚcie: UF6(L)
+  Intervalo 1: 337.21K - 1000.0K
+
+Processando espÚcie: UO2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 3123.0K
+
+Processando espÚcie: UO2(L)
+  Intervalo 1: 3123.0K - 6000.0K
+
+Processando espÚcie: UO2F2(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2100.0K
+
+Processando espÚcie: UO3(c)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 3000.0K
+
+Processando espÚcie: U3O8(II)
+  Intervalo 1: 200.0K - 300.0K
+  Intervalo 2: 300.0K - 483.0K
+
+Processando espÚcie: U3O8(I)
+  Intervalo 1: 483.0K - 6000.0K
+
+Processando espÚcie: U4O9(III)
+  Intervalo 1: 298.15K - 348.0K
+
+Processando espÚcie: U4O9(II)
+  Intervalo 1: 348.0K - 380.0K
+  Intervalo 2: 380.0K - 1398.0K
+
+Processando espÚcie: U4O9(I)
+  Intervalo 1: 1398.0K - 6000.0K
+
+Processando espÚcie: V(cr)
+  Intervalo 1: 200.0K - 600.0K
+  Intervalo 2: 600.0K - 1400.0K
+  Intervalo 3: 1400.0K - 2190.0K
+
+Processando espÚcie: V(L)
+  Intervalo 1: 2190.0K - 6000.0K
+
+Processando espÚcie: VCL2(cr)
+  Intervalo 1: 298.0K - 1300.0K
+
+Processando espÚcie: VCL3(cr)
+  Intervalo 1: 298.0K - 1000.0K
+
+Processando espÚcie: VN(cr)
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 3500.0K
+
+Processando espÚcie: VO(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2063.0K
+
+Processando espÚcie: VO(L)
+  Intervalo 1: 2063.0K - 6000.0K
+
+Processando espÚcie: V2O3(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 2230.0K
+
+Processando espÚcie: V2O3(L)
+  Intervalo 1: 2230.0K - 6000.0K
+
+Processando espÚcie: V2O4(II)
+  Intervalo 1: 200.0K - 338.7K
+
+Processando espÚcie: V2O4(I)
+  Intervalo 1: 338.7K - 1818.0K
+
+Processando espÚcie: V2O4(L)
+  Intervalo 1: 1818.0K - 6000.0K
+
+Processando espÚcie: V2O5(cr)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 954.0K
+
+Processando espÚcie: V2O5(L)
+  Intervalo 1: 954.0K - 6000.0K
+
+Processando espÚcie: W(cr)
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 2600.0K
+  Intervalo 3: 2600.0K - 3200.0K
+  Intervalo 4: 3200.0K - 3680.0K
+
+Processando espÚcie: W(L)
+  Intervalo 1: 3680.0K - 6000.0K
+
+Processando espÚcie: WC(cr)
+  Intervalo 1: 298.15K - 2500.0K
+
+Processando espÚcie: WCL6(I)
+  Intervalo 1: 298.15K - 450.0K
+
+Processando espÚcie: WCL6(II)
+  Intervalo 1: 450.0K - 503.0K
+
+Processando espÚcie: WCL6(III)
+  Intervalo 1: 503.0K - 555.0K
+
+Processando espÚcie: WCL6(L)
+  Intervalo 1: 555.0K - 6000.0K
+
+Processando espÚcie: WOCL4(cr)
+  Intervalo 1: 298.15K - 484.0K
+
+Processando espÚcie: WOCL4(L)
+  Intervalo 1: 484.0K - 6000.0K
+
+Processando espÚcie: WO2(cr)
+  Intervalo 1: 100.0K - 298.15K
+  Intervalo 2: 298.15K - 6000.0K
+
+Processando espÚcie: WO2CL2(cr)
+  Intervalo 1: 298.15K - 1000.0K
+
+Processando espÚcie: WO3(III)
+  Intervalo 1: 100.0K - 325.0K
+
+Processando espÚcie: WO3(III,II)
+  Intervalo 1: 325.0K - 1013.0K
+
+Processando espÚcie: WO3(I)
+Traceback (most recent call last):
+  Intervalo 1: 1013.0K - 1747.0K
+
+Processando espÚcie: WO3(L)
+  Intervalo 1: 1747.0K - 6000.0K
+
+Processando espÚcie: Zn(cr)
+  Intervalo 1: 200.0K - 692.73K
+
+Processando espÚcie: Zn(L)
+  Intervalo 1: 692.73K - 6000.0K
+
+Processando espÚcie: ZnSO4(a)
+  Intervalo 1: 200.0K - 540.0K
+
+Processando espÚcie: ZnSO4(a')
+  Intervalo 1: 540.0K - 1013.0K
+
+Processando espÚcie: ZnSO4(b)
+  Intervalo 1: 1013.0K - 6000.0K
+
+Processando espÚcie: Zr(a)
+  Intervalo 1: 200.0K - 1135.0K
+
+Processando espÚcie: Zr(b)
+  Intervalo 1: 1135.0K - 2125.0K
+
+Processando espÚcie: Zr(L)
+  Intervalo 1: 2125.0K - 6000.0K
+
+Processando espÚcie: ZrC(cr)
+  Intervalo 1: 200.0K - 800.0K
+  Intervalo 2: 800.0K - 3805.0K
+
+Processando espÚcie: ZrC(L)
+  Intervalo 1: 3805.0K - 6000.0K
+
+Processando espÚcie: ZrN(cr)
+  Intervalo 1: 200.0K - 800.0K
+  Intervalo 2: 800.0K - 3225.0K
+
+Processando espÚcie: ZrN(L)
+  Intervalo 1: 3225.0K - 6000.0K
+
+Processando espÚcie: ZrO2(III)
+  Intervalo 1: 200.0K - 500.0K
+  Intervalo 2: 500.0K - 1445.0K
+
+  File "C:\Users\profr\GitHub\pyglenn_novo\thermo_to_sqlite.py", line 406, in <module>
+Processando espÚcie: ZrO2(II)
+  Intervalo 1: 1445.0K - 2620.0K
+
+Processando espÚcie: ZrO2(I)
+  Intervalo 1: 2620.0K - 2983.0K
+
+Processando espÚcie: ZrO2(L)
+  Intervalo 1: 2983.0K - 6000.0K
+
+Processando espÚcie: Air
+  Intervalo 1: 200.0K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: B2H6(L)
+
+Processando espÚcie: 180.590
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 111.643
+
+Processando espÚcie: -1.302004763D+06
+
+Processando espÚcie: CH6N2(L)
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 192.350
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 169.420
+
+Processando espÚcie: 283.650
+
+Processando espÚcie: 184.559
+
+Processando espÚcie: 4.501115940D+05
+
+Processando espÚcie: C2H8N2(L),UDMH
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 252.050
+
+Processando espÚcie: 225.460
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 231.076
+
+Processando espÚcie: 266.920
+
+Processando espÚcie: 272.638
+
+Processando espÚcie: 261.361
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: -2.291003940D+06
+
+Processando espÚcie: C6H5NH2(L)
+  Intervalo 1: 267.13K - 460.0K
+
+Processando espÚcie: C6H14(L),n-hexa
+  Intervalo 1: 177.86K - 300.0K
+
+Processando espÚcie: C7H8(L)
+  Intervalo 1: 178.15K - 500.0K
+
+Processando espÚcie: C7H16(L),n-hept
+  Intervalo 1: 182.58K - 380.0K
+
+Processando espÚcie: C8H18(L),n-octa
+  Intervalo 1: 216.37K - 400.0K
+
+Processando espÚcie: C8H18(L),isooct
+  Intervalo 1: 165.79K - 380.0K
+
+Processando espÚcie: CLF3(L)
+
+Processando espÚcie: 284.890
+
+Processando espÚcie: 4.461077310D+04
+  Intervalo 1: 1000.0K - 6000.0K
+
+Processando espÚcie: CLO3F(L)
+
+Processando espÚcie: 226.400
+
+Processando espÚcie: 239.120
+
+Processando espÚcie: 85.020
+
+Processando espÚcie: 128.400
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 20.270
+
+Processando espÚcie: 0.000000000D+00
+
+Processando espÚcie: IRFNA
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: -7.310769440D+05
+  Intervalo 1: 1000.0K - 6000.0K
+
+Processando espÚcie: Jet-A(L)
+  Intervalo 1: 220.0K - 550.0K
+
+Processando espÚcie: Jet-A(g)
+  Intervalo 1: 273.15K - 1000.0K
+  Intervalo 2: 1000.0K - 6000.0K
+
+Processando espÚcie: LiCLO4(cr)
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 144.090
+
+Processando espÚcie: 239.720
+
+Processando espÚcie: -3.075344900D+03
+
+Processando espÚcie: NH4CLO4(II)
+  Intervalo 1: 513.15K - 1000.0K
+  Intervalo 2: 1000.0K - 1500.0K
+
+Processando espÚcie: NH4NO3(IV)
+  Intervalo 1: 256.2K - 298.15K
+  Intervalo 2: 298.15K - 305.38K
+
+Processando espÚcie: NH4NO3(III)
+  Intervalo 1: 305.38K - 357.25K
+
+Processando espÚcie: NH4NO3(II)
+  Intervalo 1: 357.25K - 399.0K
+
+Processando espÚcie: NH4NO3(I)
+  Intervalo 1: 399.0K - 442.85K
+
+Processando espÚcie: NH4NO3(L)
+  Intervalo 1: 442.85K - 900.0K
+
+Processando espÚcie: N2(L)
+
+Processando espÚcie: 77.352
+
+Processando espÚcie: 2.080965738D+04
+
+Processando espÚcie: N2O4(L)
+
+Processando espÚcie: 298.150
+
+Processando espÚcie: 90.170
+
+Processing species: 161.850
+
+Processing species: 298.150
+
+======================================================================
+Total species loaded: 2030
+Skipped lines: 100
+Database: thermo.db
+
+Database Statistics:
+  Species: 2030
+  Temperature Intervals: 3772
+  Coefficient Sets: 3772
+    main()
+  File "C:\Users\profr\GitHub\pyglenn_novo\thermo_to_sqlite.py", line 400, in main
+    print(f"\n\u2713 ConversÒo concluÝda com sucesso!")
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 2: character maps to <undefined>

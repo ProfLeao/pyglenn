@@ -1,0 +1,156 @@
+================================================================================
+SQLite3 DATABASE - DOCUMENTATION
+File: thermo.db
+================================================================================
+
+DESCRIPTION:
+This database contains thermochemical data in structured format,
+converted from the thermo.inp file (NASA FORTRAN format) following the
+record logic defined in TABLE C1 (Appendix C).
+
+================================================================================
+
+TABLE STRUCTURE:
+
+1. file_metadata
+   ├─ id (INTEGER PRIMARY KEY)
+   ├─ temp_min_global (REAL) - Global minimum temperature
+   ├─ temp_500_K (REAL) - Temperature at 500K
+   ├─ temp_1500_K (REAL) - Temperature at 1500K
+   ├─ temp_max_global (REAL) - Global maximum temperature
+   ├─ reference_date (TEXT) - File reference date
+   └─ total_species (INTEGER) - Total number of species
+
+2. species
+   ├─ id (INTEGER PRIMARY KEY AUTOINCREMENT)
+   ├─ name (TEXT UNIQUE) - Species name or formula
+   ├─ formula (TEXT) - Extracted chemical formula
+   ├─ comments (TEXT) - Comments and data sources
+   ├─ reference_code (TEXT) - Reference code (g, j, tpis, n, bar, etc.)
+   ├─ phase (TEXT) - Phase: 'gas' or 'condensed'
+   ├─ molecular_weight (REAL) - Molecular weight in g/mol
+   ├─ heat_of_formation_298K (REAL) - Heat of formation at 298.15 K in J/mol
+   ├─ num_intervals (INTEGER) - Number of temperature intervals
+   └─ created_at (TIMESTAMP) - Record creation date/time
+
+3. temperature_intervals
+   ├─ id (INTEGER PRIMARY KEY AUTOINCREMENT)
+   ├─ species_id (INTEGER FK) - Reference to species table
+   ├─ interval_number (INTEGER) - Interval number (1, 2, 3...)
+   ├─ temp_min (REAL NOT NULL) - Minimum temperature in K
+   ├─ temp_max (REAL NOT NULL) - Maximum temperature in K
+   └─ h_298_to_0 (REAL) - H(298.15) - H(0) in J/mol (if available)
+
+4. coefficients
+   ├─ id (INTEGER PRIMARY KEY AUTOINCREMENT)
+   ├─ interval_id (INTEGER FK UNIQUE) - Reference to temperature_intervals table
+   ├─ a1 (REAL) - Coefficient a1
+   ├─ a2 (REAL) - Coefficient a2
+   ├─ a3 (REAL) - Coefficient a3
+   ├─ a4 (REAL) - Coefficient a4
+   ├─ a5 (REAL) - Coefficient a5
+   ├─ a6 (REAL) - Coefficient a6
+   ├─ a7 (REAL) - Coefficient a7
+   ├─ b1 (REAL) - Integration constant b1 (enthalpy)
+   └─ b2 (REAL) - Integration constant b2 (entropy)
+
+================================================================================
+
+RELATIONSHIPS:
+
+species (1) ──────── (N) temperature_intervals ──────── (1) coefficients
+   id                  species_id                        interval_id
+
+================================================================================
+
+POLYNOMIAL EQUATIONS USED:
+
+Heat Capacity:
+  Cp(T)/R = a1·T⁻² + a2·T⁻¹ + a3 + a4·T + a5·T² + a6·T³ + a7·T⁴
+
+Relative Enthalpy:
+  H°(T)/RT = -a1·T⁻² + a2·ln(T) + a3 + a4·T/2 + a5·T²/3 + a6·T³/4 + a7·T⁴/5 + b1/T
+
+Relative Entropy:
+  S°(T)/R = -a1·T⁻²/2 - a2·T⁻¹ + a3·ln(T) + a4·T + a5·T²/2 + a6·T³/3 + a7·T⁴/4 + b2
+
+================================================================================
+
+SQL QUERY EXAMPLES:
+
+1. List all species:
+   SELECT id, name, phase, molecular_weight, heat_of_formation_298K 
+   FROM species 
+   LIMIT 10;
+
+2. Search species by name:
+   SELECT s.*, ti.temp_min, ti.temp_max, c.*
+   FROM species s
+   JOIN temperature_intervals ti ON s.id = ti.species_id
+   JOIN coefficients c ON ti.id = c.interval_id
+   WHERE s.name = 'O2'
+   ORDER BY ti.interval_number;
+
+3. Find species in a temperature range:
+   SELECT DISTINCT s.name, s.phase, ti.temp_min, ti.temp_max
+   FROM species s
+   JOIN temperature_intervals ti ON s.id = ti.species_id
+   WHERE ti.temp_min <= 1000 AND ti.temp_max >= 1000
+   ORDER BY s.name;
+
+4. Count species by phase:
+   SELECT phase, COUNT(*) as count
+   FROM species
+   GROUP BY phase;
+
+5. Database statistics:
+   SELECT 
+     (SELECT COUNT(*) FROM species) as total_species,
+     (SELECT COUNT(*) FROM temperature_intervals) as total_intervals,
+     (SELECT COUNT(*) FROM coefficients) as total_coeff_sets,
+     (SELECT AVG(molecular_weight) FROM species) as avg_molecular_weight
+   FROM file_metadata;
+
+================================================================================
+
+LOADING INFORMATION:
+
+• Total Species Loaded: 2030
+• Total Temperature Intervals: 3772
+• Total Coefficient Sets: 3772
+• Skipped Data Lines: 100 (malformed or inconsistent lines)
+
+================================================================================
+
+IMPORTANT NOTES:
+
+1. The database uses Foreign Key (FOREIGN KEY) with DELETE CASCADE
+   to maintain referential integrity.
+
+2. Each species can have multiple temperature intervals for better
+   accuracy in polynomial equations across different ranges.
+
+3. Coefficients with NULL value indicate absence of data in that field.
+
+4. Phase is classified as:
+   - 'gas': for gaseous species (code = 0)
+   - 'condensed': for condensed species (code ≠ 0)
+
+5. To convert between coefficient notation, all numbers
+   in FORTRAN notation (e.g., 1.5D+03) were converted to Python float.
+
+6. Temperature in Kelvin (K), Energy in Joules (J), Heat Capacity in J/(mol·K)
+
+================================================================================
+
+DATA REFERENCE CODES:
+
+  g  - Glenn Research Center
+  j  - NIST-JANAF Thermochemical Tables (Chase, 1998)
+  tpis - Thermodynamic Properties of Individual Substances (Gurvich, 1978-1996)
+  n  - TRC Thermodynamic Tables (NIST)
+  bar - Barin: Thermochemical Data of Pure Substances (Barin, 1989)
+  coda - CODATA Key Values for Thermodynamics (Cox, 1989)
+  srd - Standard Reference Data (J. Phys. Chem. Ref. Data journal)
+
+================================================================================
