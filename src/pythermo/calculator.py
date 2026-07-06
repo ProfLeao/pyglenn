@@ -13,10 +13,7 @@ All values returned as floats in standard units:
 
 from typing import Dict, Optional, Tuple
 
-from .database import ThermoDBQuery
-
-# Physical constant: Gas constant
-R = 8.314  # J/(mol·K)
+from .database import ThermoDBQuery, R
 
 
 class ThermochemicalCalculator:

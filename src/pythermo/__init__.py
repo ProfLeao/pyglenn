@@ -9,11 +9,12 @@ __version__ = "1.0.0"
 __author__ = "Glenn"
 
 from .calculator import ThermochemicalCalculator
-from .database import ThermoDBQuery
+from .database import ThermoDBQuery, R
 from .builder import ThermoDBBuilder
 
 __all__ = [
     "ThermochemicalCalculator",
     "ThermoDBQuery",
     "ThermoDBBuilder",
+    "R",
 ]
