@@ -155,6 +155,7 @@ class ThermochemicalCalculator:
               - temp_interval: [T_min, T_max]
               - species_name:  Species name
               - phase:         Phase ('gas' or 'condensed')
+
             Or None if calculation fails.
         """
         if not self._connected:
