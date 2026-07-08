@@ -52,6 +52,12 @@ Features
 - CLI interface for quick lookups
 - Temperature range validation
 
+----
+
+:Author: **Dr. Reginaldo G. Leão Jr.** — `prof.reginaldo.leao@gmail.com <mailto:prof.reginaldo.leao@gmail.com>`_
+:GitHub: `github.com/ProfLeao/pyglenn <https://github.com/ProfLeao/pyglenn>`_
+:Documentation: `profleao.github.io/pyglenn <https://profleao.github.io/pyglenn>`_
+
 Indices and tables
 ==================
 

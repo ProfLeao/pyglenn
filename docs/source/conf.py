@@ -9,8 +9,8 @@ sys.path.insert(0, os.path.abspath('../../src'))
 
 # -- Project information ---------------------------------------------------
 project = 'pyglenn'
-copyright = '2025, Glenn'
-author = 'Glenn'
+copyright = '2025, Dr. Reginaldo G. Leão Jr.'
+author = 'Dr. Reginaldo G. Leão Jr.'
 release = '1.0.0'
 
 # -- General configuration -------------------------------------------------
@@ -48,14 +48,25 @@ language = 'en'
 # -- Options for HTML output -----------------------------------------------
 html_theme = 'renku'
 
+html_logo = '_static/logo_pyglenn.png'
+
 html_theme_options = {
-    'logo_only': True,
+    'logo_only': False,
     'prev_next_buttons_location': 'bottom',
     'collapse_navigation': True,
     'sticky_navigation': True,
     'navigation_depth': 3,
     'includehidden': True,
     'titles_only': False,
+}
+
+html_context = {
+    'display_github': True,
+    'github_user': 'ProfLeao',
+    'github_repo': 'pyglenn',
+    'github_version': 'main',
+    'conf_py_path': '/docs/source/',
+    'vcs_pageview_mode': 'blob',
 }
 
 html_static_path = ['_static']

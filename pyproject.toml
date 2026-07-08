@@ -9,7 +9,7 @@ description = "Thermochemical properties calculator — computes Cp(T), H°(T), 
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "Glenn", email = "profr@users.noreply.github.com"}
+    {name = "Dr. Reginaldo G. Leão Jr.", email = "prof.reginaldo.leao@gmail.com"}
 ]
 keywords = ["thermochemistry", "thermodynamics", "NASA-polynomials", "heat-capacity", "enthalpy", "entropy"]
 classifiers = [
@@ -43,9 +43,9 @@ doc = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/profr/pyglenn"
-Repository = "https://github.com/profr/pyglenn"
-Issues = "https://github.com/profr/pyglenn/issues"
+Homepage = "https://profleao.github.io/pyglenn"
+Repository = "https://github.com/ProfLeao/pyglenn"
+Issues = "https://github.com/ProfLeao/pyglenn/issues"
 
 [project.scripts]
 pyglenn = "pyglenn.cli:main"

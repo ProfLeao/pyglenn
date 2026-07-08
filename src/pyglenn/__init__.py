@@ -6,7 +6,7 @@ stored in a SQLite database, converted from FORTRAN thermo.inp files.
 """
 
 __version__ = '1.0.0'
-__author__ = 'Glenn'
+__author__ = 'Dr. Reginaldo G. Leão Jr.'
 
 from .builder import ThermoDBBuilder
 from .calculator import (
