@@ -33,7 +33,7 @@ class ThermoDBQuery:
             True if connection succeeded, False otherwise.
         """
         if not self.db_file.exists():
-            logger.error("Database file not found: %s", self.db_file)
+            logger.error('Database file not found: %s', self.db_file)
             return False
 
         self.conn = sqlite3.connect(str(self.db_file))
@@ -58,26 +58,24 @@ class ThermoDBQuery:
             Dict with total_species, total_intervals, total_coeff_sets,
             species_by_phase, avg_molecular_weight.
         """
-        assert self.cursor is not None, "Database not connected"
+        assert self.cursor is not None, 'Database not connected'
         stats: dict[str, Any] = {}
 
-        self.cursor.execute("SELECT COUNT(*) FROM species")
+        self.cursor.execute('SELECT COUNT(*) FROM species')
         stats['total_species'] = self.cursor.fetchone()[0]
 
-        self.cursor.execute("SELECT COUNT(*) FROM temperature_intervals")
+        self.cursor.execute('SELECT COUNT(*) FROM temperature_intervals')
         stats['total_intervals'] = self.cursor.fetchone()[0]
 
-        self.cursor.execute("SELECT COUNT(*) FROM coefficients")
+        self.cursor.execute('SELECT COUNT(*) FROM coefficients')
         stats['total_coeff_sets'] = self.cursor.fetchone()[0]
 
-        self.cursor.execute(
-            "SELECT phase, COUNT(*) FROM species GROUP BY phase"
-        )
+        self.cursor.execute('SELECT phase, COUNT(*) FROM species GROUP BY phase')
         stats['species_by_phase'] = dict(self.cursor.fetchall())
 
         self.cursor.execute(
-            "SELECT AVG(molecular_weight) FROM species "
-            "WHERE molecular_weight IS NOT NULL"
+            'SELECT AVG(molecular_weight) FROM species '
+            'WHERE molecular_weight IS NOT NULL'
         )
         stats['avg_molecular_weight'] = self.cursor.fetchone()[0]
 
@@ -95,8 +93,8 @@ class ThermoDBQuery:
         Returns:
             List of matching species dicts (max 20).
         """
-        assert self.cursor is not None, "Database not connected"
-        pattern = f"%{name}%"
+        assert self.cursor is not None, 'Database not connected'
+        pattern = f'%{name}%'
         self.cursor.execute(
             """
             SELECT id, name, formula, phase, molecular_weight,
@@ -121,17 +119,13 @@ class ThermoDBQuery:
         Returns:
             Species dict with 'intervals' list, or None if not found.
         """
-        assert self.cursor is not None, "Database not connected"
-        self.cursor.execute(
-            "SELECT * FROM species WHERE id = ?", (species_id,)
-        )
+        assert self.cursor is not None, 'Database not connected'
+        self.cursor.execute('SELECT * FROM species WHERE id = ?', (species_id,))
         row = self.cursor.fetchone()
         if not row:
             return None
 
-        species_data = dict(
-            zip([d[0] for d in self.cursor.description], row)
-        )
+        species_data = dict(zip([d[0] for d in self.cursor.description], row))
 
         self.cursor.execute(
             """
@@ -154,9 +148,15 @@ class ThermoDBQuery:
                 'temp_max': row[2],
                 'h_298_to_0': row[3],
                 'coefficients': {
-                    'a1': row[4], 'a2': row[5], 'a3': row[6], 'a4': row[7],
-                    'a5': row[8], 'a6': row[9], 'a7': row[10],
-                    'b1': row[11], 'b2': row[12],
+                    'a1': row[4],
+                    'a2': row[5],
+                    'a3': row[6],
+                    'a4': row[7],
+                    'a5': row[8],
+                    'a6': row[9],
+                    'a7': row[10],
+                    'b1': row[11],
+                    'b2': row[12],
                 },
             }
             intervals.append(interval)
@@ -177,7 +177,7 @@ class ThermoDBQuery:
             Dict with interval_number, temp_min, temp_max, coefficients,
             or None if temperature is out of range.
         """
-        assert self.cursor is not None, "Database not connected"
+        assert self.cursor is not None, 'Database not connected'
         self.cursor.execute(
             """
             SELECT ti.interval_number, ti.temp_min, ti.temp_max,
@@ -201,9 +201,15 @@ class ThermoDBQuery:
             'temp_min': row[1],
             'temp_max': row[2],
             'coefficients': {
-                'a1': row[3], 'a2': row[4], 'a3': row[5], 'a4': row[6],
-                'a5': row[7], 'a6': row[8], 'a7': row[9],
-                'b1': row[10], 'b2': row[11],
+                'a1': row[3],
+                'a2': row[4],
+                'a3': row[5],
+                'a4': row[6],
+                'a5': row[7],
+                'a6': row[8],
+                'a7': row[9],
+                'b1': row[10],
+                'b2': row[11],
             },
         }
 
@@ -219,8 +225,8 @@ class ThermoDBQuery:
         Returns:
             Tuple of (species_list, total_pages).
         """
-        assert self.cursor is not None, "Database not connected"
-        self.cursor.execute("SELECT COUNT(*) FROM species")
+        assert self.cursor is not None, 'Database not connected'
+        self.cursor.execute('SELECT COUNT(*) FROM species')
         total = self.cursor.fetchone()[0]
 
         offset = (page - 1) * page_size
@@ -258,13 +264,13 @@ class ThermoDBQuery:
         T = temperature
         a = coeffs
         return (
-            a['a1'] / T ** 2
+            a['a1'] / T**2
             + a['a2'] / T
             + a['a3']
             + a['a4'] * T
-            + a['a5'] * T ** 2
-            + a['a6'] * T ** 3
-            + a['a7'] * T ** 4
+            + a['a5'] * T**2
+            + a['a6'] * T**3
+            + a['a7'] * T**4
         )
 
     @staticmethod
@@ -281,13 +287,13 @@ class ThermoDBQuery:
         T = temperature
         a = coeffs
         return (
-            -a['a1'] / T ** 2
+            -a['a1'] / T**2
             + a['a2'] * math.log(T) / T
             + a['a3']
             + a['a4'] * T / 2
-            + a['a5'] * T ** 2 / 3
-            + a['a6'] * T ** 3 / 4
-            + a['a7'] * T ** 4 / 5
+            + a['a5'] * T**2 / 3
+            + a['a6'] * T**3 / 4
+            + a['a7'] * T**4 / 5
             + a['b1'] / T
         )
 
@@ -305,12 +311,12 @@ class ThermoDBQuery:
         T = temperature
         a = coeffs
         return (
-            -a['a1'] / (2 * T ** 2)
+            -a['a1'] / (2 * T**2)
             - a['a2'] / T
             + a['a3'] * math.log(T)
             + a['a4'] * T
-            + a['a5'] * T ** 2 / 2
-            + a['a6'] * T ** 3 / 3
-            + a['a7'] * T ** 4 / 4
+            + a['a5'] * T**2 / 2
+            + a['a6'] * T**3 / 3
+            + a['a7'] * T**4 / 4
             + a['b2']
         )

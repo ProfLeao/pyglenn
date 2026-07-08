@@ -42,8 +42,8 @@ class ThermoDBBuilder:
         """Connect to (or create) the SQLite database."""
         self.conn = sqlite3.connect(str(self.db_file))
         self.cursor = self.conn.cursor()
-        self.cursor.execute("PRAGMA foreign_keys = ON")
-        self.cursor.execute("PRAGMA journal_mode = WAL")
+        self.cursor.execute('PRAGMA foreign_keys = ON')
+        self.cursor.execute('PRAGMA journal_mode = WAL')
 
     def close(self) -> None:
         """Close the database connection."""
@@ -58,7 +58,7 @@ class ThermoDBBuilder:
     # ------------------------------------------------------------------
     def create_tables(self) -> None:
         """Create the normalised table structure."""
-        assert self.cursor is not None, "Database not connected"
+        assert self.cursor is not None, 'Database not connected'
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS species (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -145,7 +145,7 @@ class ThermoDBBuilder:
             Tuple of (species_name, comments).
         """
         name = line[0:16].strip() if len(line) > 16 else line.strip()
-        comments = line[18:80].strip() if len(line) > 18 else ""
+        comments = line[18:80].strip() if len(line) > 18 else ''
         return name, comments
 
     def parse_general_info_record(self, line: str) -> dict[str, Any]:
@@ -161,25 +161,21 @@ class ThermoDBBuilder:
         data: dict[str, Any] = {}
 
         try:
-            num_int_str = line[0:2].strip() if len(line) > 2 else ""
-            data['num_intervals'] = (
-                int(num_int_str) if num_int_str.isdigit() else 0
-            )
+            num_int_str = line[0:2].strip() if len(line) > 2 else ''
+            data['num_intervals'] = int(num_int_str) if num_int_str.isdigit() else 0
 
-            data['ref_code'] = line[3:9].strip() if len(line) > 9 else ""
+            data['ref_code'] = line[3:9].strip() if len(line) > 9 else ''
 
-            phase_code = line[50:52].strip() if len(line) > 52 else "0"
-            data['phase'] = (
-                'condensed' if phase_code and phase_code != '0' else 'gas'
-            )
+            phase_code = line[50:52].strip() if len(line) > 52 else '0'
+            data['phase'] = 'condensed' if phase_code and phase_code != '0' else 'gas'
 
-            mw_str = line[52:65].strip() if len(line) > 65 else ""
+            mw_str = line[52:65].strip() if len(line) > 65 else ''
             data['molecular_weight'] = self.parse_float(mw_str)
 
-            hf_str = line[65:80].strip() if len(line) > 80 else ""
+            hf_str = line[65:80].strip() if len(line) > 80 else ''
             data['heat_of_formation'] = self.parse_float(hf_str)
         except Exception as e:
-            logger.warning("Error parsing RECORD 2: %s", e)
+            logger.warning('Error parsing RECORD 2: %s', e)
 
         return data
 
@@ -195,9 +191,9 @@ class ThermoDBBuilder:
         """
         data: dict[str, Any] = {}
 
-        temp_min_str = line[0:11].strip() if len(line) > 11 else ""
-        temp_max_str = line[11:22].strip() if len(line) > 22 else ""
-        h298_str = line[65:80].strip() if len(line) > 80 else ""
+        temp_min_str = line[0:11].strip() if len(line) > 11 else ''
+        temp_max_str = line[11:22].strip() if len(line) > 22 else ''
+        h298_str = line[65:80].strip() if len(line) > 80 else ''
 
         data['temp_min'] = ThermoDBBuilder.parse_float(temp_min_str)
         data['temp_max'] = ThermoDBBuilder.parse_float(temp_max_str)
@@ -217,14 +213,14 @@ class ThermoDBBuilder:
         """
         coeffs: dict[str, Any] = {}
 
-        line4 = lines[0] if len(lines) > 0 else ""
+        line4 = lines[0] if len(lines) > 0 else ''
         coeffs['a1'] = ThermoDBBuilder.parse_float(line4[0:16])
         coeffs['a2'] = ThermoDBBuilder.parse_float(line4[16:32])
         coeffs['a3'] = ThermoDBBuilder.parse_float(line4[32:48])
         coeffs['a4'] = ThermoDBBuilder.parse_float(line4[48:64])
         coeffs['a5'] = ThermoDBBuilder.parse_float(line4[64:80])
 
-        line5 = lines[1] if len(lines) > 1 else ""
+        line5 = lines[1] if len(lines) > 1 else ''
         coeffs['a6'] = ThermoDBBuilder.parse_float(line5[0:16])
         coeffs['a7'] = ThermoDBBuilder.parse_float(line5[16:32])
         coeffs['b1'] = ThermoDBBuilder.parse_float(line5[48:64])
@@ -268,11 +264,7 @@ class ThermoDBBuilder:
         try:
             t1 = ThermoDBBuilder.parse_float(line[0:11])
             t2 = ThermoDBBuilder.parse_float(line[11:22])
-            return (
-                t1 is not None
-                and t2 is not None
-                and t1 < t2
-            )
+            return t1 is not None and t2 is not None and t1 < t2
         except Exception:
             return False
 
@@ -297,15 +289,15 @@ class ThermoDBBuilder:
     # ------------------------------------------------------------------
     def parse_and_load(self) -> None:
         """Parse the thermo.inp file and populate the database."""
-        assert self.cursor is not None, "Database not connected"
+        assert self.cursor is not None, 'Database not connected'
         lines = self.read_thermo_file()
 
         if not lines:
-            logger.warning("Empty thermo.inp file!")
+            logger.warning('Empty thermo.inp file!')
             return
 
         # --- Global metadata (line index 1) ---
-        metadata_line = lines[1] if len(lines) > 1 else ""
+        metadata_line = lines[1] if len(lines) > 1 else ''
         parts = metadata_line.split()
         if len(parts) >= 4:
             self.cursor.execute(
@@ -346,7 +338,7 @@ class ThermoDBBuilder:
                     skipped += 1
                     continue
 
-                logger.info("Processing species: %s", species_name)
+                logger.info('Processing species: %s', species_name)
                 i += 1
 
                 # RECORD 2 – general info
@@ -383,7 +375,7 @@ class ThermoDBBuilder:
                     species_count += 1
                 except sqlite3.IntegrityError:
                     self.cursor.execute(
-                        "SELECT id FROM species WHERE name = ?",
+                        'SELECT id FROM species WHERE name = ?',
                         (species_name,),
                     )
                     result = self.cursor.fetchone()
@@ -414,9 +406,7 @@ class ThermoDBBuilder:
                     ):
                         break
 
-                    coeffs = self.parse_coefficients_record(
-                        [lines[i], lines[i + 1]]
-                    )
+                    coeffs = self.parse_coefficients_record([lines[i], lines[i + 1]])
                     i += 2
 
                     if (
@@ -465,29 +455,30 @@ class ThermoDBBuilder:
                         )
 
                         logger.debug(
-                            "  Interval %d: %sK - %sK",
+                            '  Interval %d: %sK - %sK',
                             interval_num + 1,
                             temp_interval.get('temp_min'),
                             temp_interval.get('temp_max'),
                         )
                     except Exception as e:
                         logger.warning(
-                            "Error inserting interval %d: %s",
-                            interval_num + 1, e,
+                            'Error inserting interval %d: %s',
+                            interval_num + 1,
+                            e,
                         )
 
             except Exception as e:
-                logger.warning("Error processing line %d: %s", i, e)
+                logger.warning('Error processing line %d: %s', i, e)
                 i += 1
 
         # Final metadata update
         self.cursor.execute(
-            "UPDATE file_metadata SET total_species = ? WHERE id = 1",
+            'UPDATE file_metadata SET total_species = ? WHERE id = 1',
             (species_count,),
         )
         self.conn.commit()
 
-        logger.info("=" * 70)
-        logger.info("Total species loaded: %d", species_count)
-        logger.info("Skipped lines: %d", skipped)
-        logger.info("Database: %s", self.db_file)
+        logger.info('=' * 70)
+        logger.info('Total species loaded: %d', species_count)
+        logger.info('Skipped lines: %d', skipped)
+        logger.info('Database: %s', self.db_file)

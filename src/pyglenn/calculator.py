@@ -112,7 +112,7 @@ class ThermochemicalCalculator:
             List of species dicts with id, name, phase, molecular_weight.
         """
         if not self._connected:
-            logger.warning("get_available_species called without connection")
+            logger.warning('get_available_species called without connection')
             return []
 
         if search_pattern:
@@ -159,21 +159,19 @@ class ThermochemicalCalculator:
             Or None if calculation fails.
         """
         if not self._connected:
-            logger.error("calculate_properties called without database connection")
+            logger.error('calculate_properties called without database connection')
             return None
 
         species_data = self.db.get_species_data(species_id)
         if not species_data or 'intervals' not in species_data:
-            logger.error("Species ID %d not found in database", species_id)
+            logger.error('Species ID %d not found in database', species_id)
             return None
 
-        interval_data = self.db.get_species_for_temperature(
-            species_id, temperature
-        )
+        interval_data = self.db.get_species_for_temperature(species_id, temperature)
         if not interval_data:
             logger.error(
                 "Temperature %.1f K out of valid range for species '%s'. "
-                "Available intervals: %s",
+                'Available intervals: %s',
                 temperature,
                 species_data['name'],
                 [(i['temp_min'], i['temp_max']) for i in species_data['intervals']],
@@ -205,9 +203,7 @@ class ThermochemicalCalculator:
             'phase': species_data['phase'],
         }
 
-    def calculate_formation_enthalpy(
-        self, species_id: int
-    ) -> float | None:
+    def calculate_formation_enthalpy(self, species_id: int) -> float | None:
         """
         Get enthalpy of formation at 298.15 K in J/mol.
 
@@ -218,9 +214,7 @@ class ThermochemicalCalculator:
             Enthalpy of formation in J/mol, or None if not available.
         """
         if not self._connected:
-            logger.warning(
-                "calculate_formation_enthalpy called without connection"
-            )
+            logger.warning('calculate_formation_enthalpy called without connection')
             return None
 
         species_data = self.db.get_species_data(species_id)
@@ -246,9 +240,7 @@ class ThermochemicalCalculator:
             Enthalpy change in J/mol, or None if calculation fails.
         """
         if not self._connected:
-            logger.warning(
-                "calculate_enthalpy_change called without connection"
-            )
+            logger.warning('calculate_enthalpy_change called without connection')
             return None
 
         props_t1 = self.calculate_properties(species_id, T1)
@@ -273,9 +265,7 @@ class ThermochemicalCalculator:
             Dict mapping temperature → property dict, or None if all fail.
         """
         if not self._connected:
-            logger.warning(
-                "get_properties_range called without connection"
-            )
+            logger.warning('get_properties_range called without connection')
             return None
 
         results: dict[float, dict[str, Any]] = {}

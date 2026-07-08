@@ -24,6 +24,7 @@ from pyglenn import (
 # Fixtures
 # ---------------------------------------------------------------------------
 
+
 @pytest.fixture
 def sample_db_path() -> Generator[Path, None, None]:
     """Create a temporary SQLite database with known test data."""
@@ -31,7 +32,7 @@ def sample_db_path() -> Generator[Path, None, None]:
         db_path = Path(f.name)
 
     conn = sqlite3.connect(str(db_path))
-    conn.execute("PRAGMA foreign_keys = ON")
+    conn.execute('PRAGMA foreign_keys = ON')
     cur = conn.cursor()
 
     cur.execute("""
@@ -74,28 +75,28 @@ def sample_db_path() -> Generator[Path, None, None]:
 
     # Insert O2 with known NASA-7 coefficients (200-1000 K interval)
     cur.execute(
-        "INSERT INTO species (name, formula, phase, molecular_weight, "
-        "heat_of_formation_298K, num_intervals) "
+        'INSERT INTO species (name, formula, phase, molecular_weight, '
+        'heat_of_formation_298K, num_intervals) '
         "VALUES ('O2', 'O2', 'gas', 31.9988, 0.0, 1)"
     )
     species_id = cur.lastrowid
 
     cur.execute(
-        "INSERT INTO temperature_intervals "
-        "(species_id, interval_number, temp_min, temp_max, h_298_to_0) "
-        "VALUES (?, 1, 200.0, 1000.0, 8680.0)",
+        'INSERT INTO temperature_intervals '
+        '(species_id, interval_number, temp_min, temp_max, h_298_to_0) '
+        'VALUES (?, 1, 200.0, 1000.0, 8680.0)',
         (species_id,),
     )
     interval_id = cur.lastrowid
 
     # Known coefficients for O2
     cur.execute(
-        "INSERT INTO coefficients "
-        "(interval_id, a1, a2, a3, a4, a5, a6, a7, b1, b2) "
-        "VALUES (?, "
-        "-3.42556342E+04, 4.84700097E+02, 1.11901096E+00, "
-        "4.29388924E-02, -6.83630052E-05, 5.51320286E-08, "
-        "-1.76439230E-11, -3.39145487E+03, 1.84969947E+01)",
+        'INSERT INTO coefficients '
+        '(interval_id, a1, a2, a3, a4, a5, a6, a7, b1, b2) '
+        'VALUES (?, '
+        '-3.42556342E+04, 4.84700097E+02, 1.11901096E+00, '
+        '4.29388924E-02, -6.83630052E-05, 5.51320286E-08, '
+        '-1.76439230E-11, -3.39145487E+03, 1.84969947E+01)',
         (interval_id,),
     )
 
@@ -121,9 +122,11 @@ def calc(sample_db_path: Path) -> Generator[ThermochemicalCalculator, None, None
 # Test: version and package metadata
 # ---------------------------------------------------------------------------
 
+
 def test_version() -> None:
     """Verify package version is a valid string."""
     from pyglenn import __version__
+
     assert isinstance(__version__, str)
     assert len(__version__) > 0
 
@@ -144,6 +147,7 @@ def test_imports() -> None:
 # Test: Gas constant
 # ---------------------------------------------------------------------------
 
+
 def test_gas_constant_value() -> None:
     """Verify R is close to the CODATA 2018 value."""
     assert math.isclose(R, 8.314462618, rel_tol=1e-9)
@@ -152,6 +156,7 @@ def test_gas_constant_value() -> None:
 # ---------------------------------------------------------------------------
 # Test: Database connection
 # ---------------------------------------------------------------------------
+
 
 def test_connect_to_valid_db(sample_db_path: Path) -> None:
     """Test connecting to a valid database."""
@@ -162,7 +167,7 @@ def test_connect_to_valid_db(sample_db_path: Path) -> None:
 
 def test_connect_to_nonexistent_db() -> None:
     """Test connecting to a nonexistent database returns False."""
-    q = ThermoDBQuery("nonexistent_file.db")
+    q = ThermoDBQuery('nonexistent_file.db')
     assert q.connect() is False
 
 
@@ -173,7 +178,7 @@ def test_calculator_connect(calc: ThermochemicalCalculator) -> None:
 
 def test_calculator_not_connected() -> None:
     """Test calculator not connected returns empty results."""
-    c = ThermochemicalCalculator("nonexistent.db")
+    c = ThermochemicalCalculator('nonexistent.db')
     assert c.connected is False
     assert c.get_available_species() == []
     assert c.calculate_properties(1, 300.0) is None
@@ -185,6 +190,7 @@ def test_calculator_not_connected() -> None:
 # ---------------------------------------------------------------------------
 # Test: Context manager
 # ---------------------------------------------------------------------------
+
 
 def test_context_manager(sample_db_path: Path) -> None:
     """Test context manager connects and disconnects automatically."""
@@ -198,6 +204,7 @@ def test_context_manager(sample_db_path: Path) -> None:
 # ---------------------------------------------------------------------------
 # Test: Species lookup
 # ---------------------------------------------------------------------------
+
 
 def test_get_all_species(calc: ThermochemicalCalculator) -> None:
     """Test retrieving all species."""
@@ -222,6 +229,7 @@ def test_find_nonexistent_species(calc: ThermochemicalCalculator) -> None:
 # ---------------------------------------------------------------------------
 # Test: Thermochemical calculations
 # ---------------------------------------------------------------------------
+
 
 def test_calculate_properties_o2_298K(calc: ThermochemicalCalculator) -> None:
     """Test O2 properties at 298.15 K — verifies structure and correctness."""
@@ -289,6 +297,7 @@ def test_calculate_properties_invalid_species(calc: ThermochemicalCalculator) ->
 # Test: Formation enthalpy
 # ---------------------------------------------------------------------------
 
+
 def test_formation_enthalpy(calc: ThermochemicalCalculator) -> None:
     """Test formation enthalpy retrieval."""
     species = calc.get_available_species('O2')
@@ -303,6 +312,7 @@ def test_formation_enthalpy(calc: ThermochemicalCalculator) -> None:
 # ---------------------------------------------------------------------------
 # Test: Enthalpy change
 # ---------------------------------------------------------------------------
+
 
 def test_enthalpy_change(calc: ThermochemicalCalculator) -> None:
     """Test enthalpy change between two temperatures."""
@@ -331,6 +341,7 @@ def test_enthalpy_change_zero_delta(calc: ThermochemicalCalculator) -> None:
 # Test: Properties range
 # ---------------------------------------------------------------------------
 
+
 def test_get_properties_range(calc: ThermochemicalCalculator) -> None:
     """Test calculating properties at multiple temperatures."""
     species = calc.get_available_species('O2')
@@ -351,6 +362,7 @@ def test_get_properties_range(calc: ThermochemicalCalculator) -> None:
 # Test: Database statistics
 # ---------------------------------------------------------------------------
 
+
 def test_database_statistics(calc: ThermochemicalCalculator) -> None:
     """Test database statistics retrieval."""
     stats = calc.db.get_statistics()
@@ -364,6 +376,7 @@ def test_database_statistics(calc: ThermochemicalCalculator) -> None:
 # ---------------------------------------------------------------------------
 # Test: ThermoDBQuery standalone
 # ---------------------------------------------------------------------------
+
 
 def test_thermodbquery_find_species(sample_db_path: Path) -> None:
     """Test ThermoDBQuery species search."""
@@ -397,6 +410,7 @@ def test_thermodbquery_get_species_data(sample_db_path: Path) -> None:
 # ---------------------------------------------------------------------------
 # Test: NASA polynomial calculation consistency
 # ---------------------------------------------------------------------------
+
 
 def test_polynomial_consistency(calc: ThermochemicalCalculator) -> None:
     """Verify that H/RT integration is consistent with Cp/R.
@@ -433,6 +447,7 @@ def test_polynomial_consistency(calc: ThermochemicalCalculator) -> None:
 # Test: Builder parse utilities
 # ---------------------------------------------------------------------------
 
+
 def test_parse_float_normal() -> None:
     """Test parse_float with normal float notation."""
     assert ThermoDBBuilder.parse_float('3.14159') == 3.14159
@@ -456,4 +471,3 @@ def test_is_coefficient_line() -> None:
     assert ThermoDBBuilder.is_coefficient_line(' 1.0D0 2.0D+01')
     assert not ThermoDBBuilder.is_coefficient_line('O2')
     assert not ThermoDBBuilder.is_coefficient_line('200.000  1000.000')
-
