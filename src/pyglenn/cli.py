@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Command-line interface for pyglenn.
 
@@ -8,13 +7,31 @@ Usage:
     pyglenn query  – Run example queries
 """
 
+from __future__ import annotations
+
 import argparse
+import logging
+import sys
 
 from .builder import ThermoDBBuilder
 from .calculator import ThermochemicalCalculator
 
 
-def cmd_build(args):
+def _setup_logging(verbose: bool = False) -> None:
+    """Configure logging for CLI output.
+
+    Args:
+        verbose: If True, enable DEBUG level logging.
+    """
+    level = logging.DEBUG if verbose else logging.INFO
+    logging.basicConfig(
+        level=level,
+        format="%(levelname)-8s %(message)s",
+        stream=sys.stderr,
+    )
+
+
+def cmd_build(args: argparse.Namespace) -> None:
     """Build the SQLite database from thermo.inp."""
     print("=" * 70)
     print("CONVERTING thermo.inp → SQLite3")
@@ -33,16 +50,16 @@ def cmd_build(args):
         builder.cursor.execute("SELECT COUNT(*) FROM coefficients")
         num_coeffs = builder.cursor.fetchone()[0]
 
-        print(f"\nDatabase Statistics:")
+        print("\nDatabase Statistics:")
         print(f"  Species: {num_species}")
         print(f"  Temperature Intervals: {num_intervals}")
         print(f"  Coefficient Sets: {num_coeffs}")
-        print(f"\n[SUCCESS] Conversion completed!")
+        print("\n[SUCCESS] Conversion completed!")
     finally:
         builder.close()
 
 
-def cmd_query(args):
+def cmd_query(args: argparse.Namespace) -> None:
     """Run example queries against the database."""
     print("=" * 70)
     print("THERMO.DB QUERY EXAMPLES")
@@ -111,7 +128,8 @@ def cmd_query(args):
         calc.close()
 
 
-def main():
+def main() -> None:
+    """Entry point for the pyglenn CLI."""
     parser = argparse.ArgumentParser(
         prog="pyglenn",
         description="Thermochemical properties calculator",
@@ -120,6 +138,10 @@ def main():
 
     # build
     p_build = sub.add_parser("build", help="Build database from thermo.inp")
+    p_build.add_argument(
+        "-v", "--verbose", action="store_true",
+        help="Enable verbose (DEBUG) logging"
+    )
     p_build.add_argument(
         "-i", "--input", default="thermo.inp",
         help="Input FORTRAN file (default: thermo.inp)"
@@ -132,6 +154,10 @@ def main():
 
     # query
     p_query = sub.add_parser("query", help="Run example queries")
+    p_query.add_argument(
+        "-v", "--verbose", action="store_true",
+        help="Enable verbose (DEBUG) logging"
+    )
     p_query.add_argument(
         "-d", "--database", default="thermo.db",
         help="SQLite database file (default: thermo.db)"
@@ -146,6 +172,7 @@ def main():
     if args.command is None:
         parser.print_help()
     else:
+        _setup_logging(verbose=getattr(args, 'verbose', False))
         args.func(args)
 
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Database builder: converts thermo.inp (NASA FORTRAN format) → SQLite3.
 
@@ -13,39 +12,53 @@ FORTRAN Record Structure (Appendix C):
 Records 3–5 repeat for each temperature interval.
 """
 
+from __future__ import annotations
+
+import logging
+import re
 import sqlite3
 from pathlib import Path
-from typing import List, Tuple, Dict, Optional
+from typing import Any
+
+logger = logging.getLogger(__name__)
+
+# Regex: match FORTRAN double-precision scientific notation (e.g. 1.234D+05)
+_FORTRAN_D_RE = re.compile(r'\d\.\d{0,8}D[+\-]\d{1,2}', re.IGNORECASE)
 
 
 class ThermoDBBuilder:
     """Build a SQLite database from a thermo.inp file."""
 
-    def __init__(self, inp_file: str, db_file: str):
-        self.inp_file = Path(inp_file)
-        self.db_file = Path(db_file)
-        self.conn = None
-        self.cursor = None
+    def __init__(self, inp_file: str, db_file: str) -> None:
+        self.inp_file: Path = Path(inp_file)
+        self.db_file: Path = Path(db_file)
+        self.conn: sqlite3.Connection | None = None
+        self.cursor: sqlite3.Cursor | None = None
 
     # ------------------------------------------------------------------
     # Database lifecycle
     # ------------------------------------------------------------------
-    def connect(self):
+    def connect(self) -> None:
         """Connect to (or create) the SQLite database."""
         self.conn = sqlite3.connect(str(self.db_file))
         self.cursor = self.conn.cursor()
         self.cursor.execute("PRAGMA foreign_keys = ON")
+        self.cursor.execute("PRAGMA journal_mode = WAL")
 
-    def close(self):
+    def close(self) -> None:
         """Close the database connection."""
         if self.conn:
+            self.conn.commit()
             self.conn.close()
+            self.conn = None
+            self.cursor = None
 
     # ------------------------------------------------------------------
     # Schema
     # ------------------------------------------------------------------
-    def create_tables(self):
+    def create_tables(self) -> None:
         """Create the normalised table structure."""
+        assert self.cursor is not None, "Database not connected"
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS species (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -105,25 +118,47 @@ class ThermoDBBuilder:
     # Low-level parsers
     # ------------------------------------------------------------------
     @staticmethod
-    def parse_float(value: str) -> Optional[float]:
-        """Parse a FORTRAN-style float ('D' → 'E')."""
+    def parse_float(value: str) -> float | None:
+        """Parse a FORTRAN-style float ('D' → 'E').
+
+        Args:
+            value: String possibly in FORTRAN D notation.
+
+        Returns:
+            Float value or None if parsing fails.
+        """
         if not value or not value.strip():
             return None
         try:
-            return float(value.strip().replace('D', 'E'))
+            return float(value.strip().replace('D', 'E').replace('d', 'e'))
         except ValueError:
             return None
 
     @staticmethod
-    def parse_species_record(line: str) -> Tuple[str, str]:
-        """Extract species name (cols 1-16) and comments (cols 19-80)."""
+    def parse_species_record(line: str) -> tuple[str, str]:
+        """Extract species name (cols 1-16) and comments (cols 19-80).
+
+        Args:
+            line: RECORD 1 line from thermo.inp.
+
+        Returns:
+            Tuple of (species_name, comments).
+        """
         name = line[0:16].strip() if len(line) > 16 else line.strip()
         comments = line[18:80].strip() if len(line) > 18 else ""
         return name, comments
 
-    def parse_general_info_record(self, line: str) -> Dict:
-        """Parse RECORD 2 – general information."""
-        data: Dict = {}
+    def parse_general_info_record(self, line: str) -> dict[str, Any]:
+        """Parse RECORD 2 – general information.
+
+        Args:
+            line: RECORD 2 line from thermo.inp.
+
+        Returns:
+            Dict with num_intervals, ref_code, phase, molecular_weight,
+            heat_of_formation.
+        """
+        data: dict[str, Any] = {}
 
         try:
             num_int_str = line[0:2].strip() if len(line) > 2 else ""
@@ -144,14 +179,21 @@ class ThermoDBBuilder:
             hf_str = line[65:80].strip() if len(line) > 80 else ""
             data['heat_of_formation'] = self.parse_float(hf_str)
         except Exception as e:
-            print(f"    Warning parsing RECORD 2: {e}")
+            logger.warning("Error parsing RECORD 2: %s", e)
 
         return data
 
     @staticmethod
-    def parse_temp_interval_record(line: str) -> Dict:
-        """Parse RECORD 3 – temperature interval."""
-        data: Dict = {}
+    def parse_temp_interval_record(line: str) -> dict[str, Any]:
+        """Parse RECORD 3 – temperature interval.
+
+        Args:
+            line: RECORD 3 line from thermo.inp.
+
+        Returns:
+            Dict with temp_min, temp_max, h_298_to_0.
+        """
+        data: dict[str, Any] = {}
 
         temp_min_str = line[0:11].strip() if len(line) > 11 else ""
         temp_max_str = line[11:22].strip() if len(line) > 22 else ""
@@ -164,9 +206,16 @@ class ThermoDBBuilder:
         return data
 
     @staticmethod
-    def parse_coefficients_record(lines: List[str]) -> Dict:
-        """Parse RECORDS 4-5 – polynomial coefficients."""
-        coeffs: Dict = {}
+    def parse_coefficients_record(lines: list[str]) -> dict[str, Any]:
+        """Parse RECORDS 4-5 – polynomial coefficients.
+
+        Args:
+            lines: Two lines containing a1-a7 and b1-b2.
+
+        Returns:
+            Dict with keys a1-a7, b1, b2.
+        """
+        coeffs: dict[str, Any] = {}
 
         line4 = lines[0] if len(lines) > 0 else ""
         coeffs['a1'] = ThermoDBBuilder.parse_float(line4[0:16])
@@ -186,9 +235,13 @@ class ThermoDBBuilder:
     # ------------------------------------------------------------------
     # File reading & line-type detection
     # ------------------------------------------------------------------
-    def read_thermo_file(self) -> List[str]:
-        """Read thermo.inp, stripping comments and blank lines."""
-        with open(self.inp_file, 'r', encoding='utf-8', errors='ignore') as f:
+    def read_thermo_file(self) -> list[str]:
+        """Read thermo.inp, stripping comments and blank lines.
+
+        Returns:
+            List of non-empty, non-comment lines.
+        """
+        with open(self.inp_file, encoding='utf-8', errors='ignore') as f:
             lines = f.readlines()
 
         return [
@@ -199,7 +252,17 @@ class ThermoDBBuilder:
 
     @staticmethod
     def is_temperature_line(line: str) -> bool:
-        """Detect RECORD 3 (temperature interval)."""
+        """Detect RECORD 3 (temperature interval).
+
+        A temperature line has two valid floats in cols 0-11 and 11-22
+        where the first is strictly less than the second.
+
+        Args:
+            line: A line from thermo.inp.
+
+        Returns:
+            True if the line appears to be a temperature interval record.
+        """
         if len(line) < 22:
             return False
         try:
@@ -215,18 +278,30 @@ class ThermoDBBuilder:
 
     @staticmethod
     def is_coefficient_line(line: str) -> bool:
-        """Detect coefficient lines (contain FORTRAN 'D' notation)."""
-        return 'D+' in line or 'D-' in line or 'D0' in line
+        """Detect coefficient lines containing FORTRAN D notation.
+
+        Uses regex to match the standard FORTRAN double-precision format
+        (e.g. ``1.23456789D+01``), which is more robust than substring
+        matching.
+
+        Args:
+            line: A line from thermo.inp.
+
+        Returns:
+            True if the line contains at least one FORTRAN D-format number.
+        """
+        return bool(_FORTRAN_D_RE.search(line))
 
     # ------------------------------------------------------------------
     # Main parse & load
     # ------------------------------------------------------------------
-    def parse_and_load(self):
+    def parse_and_load(self) -> None:
         """Parse the thermo.inp file and populate the database."""
+        assert self.cursor is not None, "Database not connected"
         lines = self.read_thermo_file()
 
         if not lines:
-            print("Empty file!")
+            logger.warning("Empty thermo.inp file!")
             return
 
         # --- Global metadata (line index 1) ---
@@ -271,7 +346,7 @@ class ThermoDBBuilder:
                     skipped += 1
                     continue
 
-                print(f"\nProcessing species: {species_name}")
+                logger.info("Processing species: %s", species_name)
                 i += 1
 
                 # RECORD 2 – general info
@@ -389,19 +464,20 @@ class ThermoDBBuilder:
                             ),
                         )
 
-                        print(
-                            f"  Interval {interval_num + 1}: "
-                            f"{temp_interval.get('temp_min')}K - "
-                            f"{temp_interval.get('temp_max')}K"
+                        logger.debug(
+                            "  Interval %d: %sK - %sK",
+                            interval_num + 1,
+                            temp_interval.get('temp_min'),
+                            temp_interval.get('temp_max'),
                         )
                     except Exception as e:
-                        print(
-                            f"    Error inserting interval "
-                            f"{interval_num + 1}: {e}"
+                        logger.warning(
+                            "Error inserting interval %d: %s",
+                            interval_num + 1, e,
                         )
 
             except Exception as e:
-                print(f"Error processing line {i}: {e}")
+                logger.warning("Error processing line %d: %s", i, e)
                 i += 1
 
         # Final metadata update
@@ -411,7 +487,7 @@ class ThermoDBBuilder:
         )
         self.conn.commit()
 
-        print(f"\n{'=' * 70}")
-        print(f"Total species loaded: {species_count}")
-        print(f"Skipped lines: {skipped}")
-        print(f"Database: {self.db_file}")
+        logger.info("=" * 70)
+        logger.info("Total species loaded: %d", species_count)
+        logger.info("Skipped lines: %d", skipped)
+        logger.info("Database: %s", self.db_file)

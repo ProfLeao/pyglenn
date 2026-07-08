@@ -1,48 +1,65 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Database query interface for thermochemical data.
 Provides SQLite access, species lookup, and NASA polynomial calculations.
 """
 
+from __future__ import annotations
+
+import logging
 import math
 import sqlite3
 from pathlib import Path
-from typing import List, Dict, Tuple, Optional
+from typing import Any
 
-# Physical constant: Gas constant
-R = 8.314  # J/(mol·K)
+logger = logging.getLogger(__name__)
+
+# Physical constant: Universal gas constant
+R: float = 8.314462618  # J/(mol·K) — CODATA 2018 value
 
 
 class ThermoDBQuery:
     """Class for querying thermochemical database."""
 
-    def __init__(self, db_file: str = 'thermo.db'):
-        self.db_file = Path(db_file)
-        self.conn = None
-        self.cursor = None
+    def __init__(self, db_file: str = 'thermo.db') -> None:
+        self.db_file: Path = Path(db_file)
+        self.conn: sqlite3.Connection | None = None
+        self.cursor: sqlite3.Cursor | None = None
 
     def connect(self) -> bool:
-        """Connect to database."""
+        """Connect to database.
+
+        Returns:
+            True if connection succeeded, False otherwise.
+        """
         if not self.db_file.exists():
-            print(f"Error: File {self.db_file} not found")
+            logger.error("Database file not found: %s", self.db_file)
             return False
 
         self.conn = sqlite3.connect(str(self.db_file))
+        self.conn.row_factory = sqlite3.Row
         self.cursor = self.conn.cursor()
         return True
 
-    def close(self):
+    def close(self) -> None:
         """Close connection."""
         if self.conn:
             self.conn.close()
+            self.conn = None
+            self.cursor = None
 
     # ------------------------------------------------------------------
     # Statistics
     # ------------------------------------------------------------------
-    def get_statistics(self) -> Dict:
-        """Get database statistics."""
-        stats = {}
+    def get_statistics(self) -> dict[str, Any]:
+        """Get database statistics.
+
+        Returns:
+            Dict with total_species, total_intervals, total_coeff_sets,
+            species_by_phase, avg_molecular_weight.
+        """
+        assert self.cursor is not None, "Database not connected"
+        stats: dict[str, Any] = {}
 
         self.cursor.execute("SELECT COUNT(*) FROM species")
         stats['total_species'] = self.cursor.fetchone()[0]
@@ -69,8 +86,16 @@ class ThermoDBQuery:
     # ------------------------------------------------------------------
     # Species lookup
     # ------------------------------------------------------------------
-    def find_species(self, name: str) -> List[Dict]:
-        """Find species by name (supports partial search)."""
+    def find_species(self, name: str) -> list[dict[str, Any]]:
+        """Find species by name (supports partial search).
+
+        Args:
+            name: Search pattern (substring match).
+
+        Returns:
+            List of matching species dicts (max 20).
+        """
+        assert self.cursor is not None, "Database not connected"
         pattern = f"%{name}%"
         self.cursor.execute(
             """
@@ -87,8 +112,16 @@ class ThermoDBQuery:
         columns = [d[0] for d in self.cursor.description]
         return [dict(zip(columns, row)) for row in self.cursor.fetchall()]
 
-    def get_species_data(self, species_id: int) -> Optional[Dict]:
-        """Get complete data for a species with all its intervals."""
+    def get_species_data(self, species_id: int) -> dict[str, Any] | None:
+        """Get complete data for a species with all its intervals.
+
+        Args:
+            species_id: Database ID of the species.
+
+        Returns:
+            Species dict with 'intervals' list, or None if not found.
+        """
+        assert self.cursor is not None, "Database not connected"
         self.cursor.execute(
             "SELECT * FROM species WHERE id = ?", (species_id,)
         )
@@ -133,8 +166,18 @@ class ThermoDBQuery:
 
     def get_species_for_temperature(
         self, species_id: int, temperature: float
-    ) -> Optional[Dict]:
-        """Get valid coefficients for a specific temperature."""
+    ) -> dict[str, Any] | None:
+        """Get valid coefficients for a specific temperature.
+
+        Args:
+            species_id: Database ID of the species.
+            temperature: Temperature in Kelvin.
+
+        Returns:
+            Dict with interval_number, temp_min, temp_max, coefficients,
+            or None if temperature is out of range.
+        """
+        assert self.cursor is not None, "Database not connected"
         self.cursor.execute(
             """
             SELECT ti.interval_number, ti.temp_min, ti.temp_max,
@@ -166,8 +209,17 @@ class ThermoDBQuery:
 
     def list_species_page(
         self, page: int = 1, page_size: int = 20
-    ) -> Tuple[List[Dict], int]:
-        """List species with pagination."""
+    ) -> tuple[list[dict[str, Any]], int]:
+        """List species with pagination.
+
+        Args:
+            page: Page number (1-based).
+            page_size: Number of species per page.
+
+        Returns:
+            Tuple of (species_list, total_pages).
+        """
+        assert self.cursor is not None, "Database not connected"
         self.cursor.execute("SELECT COUNT(*) FROM species")
         total = self.cursor.fetchone()[0]
 
@@ -193,8 +245,16 @@ class ThermoDBQuery:
     # NASA polynomial calculations (Cp/R, H/RT, S/R)
     # ------------------------------------------------------------------
     @staticmethod
-    def calculate_cp(coeffs: Dict, temperature: float) -> float:
-        """Calculate Cp(T)/R using NASA-7 polynomial coefficients."""
+    def calculate_cp(coeffs: dict[str, float], temperature: float) -> float:
+        """Calculate Cp(T)/R using NASA-7 polynomial coefficients.
+
+        Args:
+            coeffs: Dict with keys a1-a7.
+            temperature: Temperature in Kelvin.
+
+        Returns:
+            Dimensionless Cp/R.
+        """
         T = temperature
         a = coeffs
         return (
@@ -208,8 +268,16 @@ class ThermoDBQuery:
         )
 
     @staticmethod
-    def calculate_h(coeffs: Dict, temperature: float) -> float:
-        """Calculate H°(T)/RT using NASA-7 polynomial coefficients."""
+    def calculate_h(coeffs: dict[str, float], temperature: float) -> float:
+        """Calculate H°(T)/RT using NASA-7 polynomial coefficients.
+
+        Args:
+            coeffs: Dict with keys a1-a7, b1.
+            temperature: Temperature in Kelvin.
+
+        Returns:
+            Dimensionless H/(RT).
+        """
         T = temperature
         a = coeffs
         return (
@@ -224,8 +292,16 @@ class ThermoDBQuery:
         )
 
     @staticmethod
-    def calculate_s(coeffs: Dict, temperature: float) -> float:
-        """Calculate S°(T)/R using NASA-7 polynomial coefficients."""
+    def calculate_s(coeffs: dict[str, float], temperature: float) -> float:
+        """Calculate S°(T)/R using NASA-7 polynomial coefficients.
+
+        Args:
+            coeffs: Dict with keys a1-a7, b2.
+            temperature: Temperature in Kelvin.
+
+        Returns:
+            Dimensionless S/R.
+        """
         T = temperature
         a = coeffs
         return (
