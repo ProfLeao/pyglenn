@@ -1,0 +1,17 @@
+/* Logo sizing in sidebar */
+.wy-side-nav-search .logo,
+.wy-side-nav-search a .logo-name {
+    max-width: 180px;
+    margin: 0 auto;
+}
+
+.wy-side-nav-search .logo img {
+    max-width: 100%;
+    height: auto;
+}
+
+.wy-side-nav-search a.image-reference {
+    display: block;
+    max-width: 180px;
+    margin: 0 auto;
+}

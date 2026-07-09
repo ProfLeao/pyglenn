@@ -71,6 +71,11 @@ html_context = {
 
 html_static_path = ['_static']
 
+# Custom CSS files (loaded after theme CSS, so they take precedence)
+html_css_files = [
+    'custom.css',
+]
+
 # -- Intersphinx -----------------------------------------------------------
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
