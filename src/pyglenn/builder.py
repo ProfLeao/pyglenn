@@ -100,6 +100,7 @@ class ThermoDBBuilder:
             )
         """)
 
+        assert self.cursor is not None
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS file_metadata (
                 id INTEGER PRIMARY KEY,
@@ -112,6 +113,7 @@ class ThermoDBBuilder:
             )
         """)
 
+        assert self.conn is not None
         self.conn.commit()
 
     # ------------------------------------------------------------------
@@ -472,10 +474,12 @@ class ThermoDBBuilder:
                 i += 1
 
         # Final metadata update
+        assert self.cursor is not None
         self.cursor.execute(
             'UPDATE file_metadata SET total_species = ? WHERE id = 1',
             (species_count,),
         )
+        assert self.conn is not None
         self.conn.commit()
 
         logger.info('=' * 70)

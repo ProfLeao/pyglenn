@@ -256,7 +256,7 @@ class ThermochemicalCalculator:
         if not props_t1 or not props_t2:
             return None
 
-        return props_t2['h_relative'] - props_t1['h_relative']
+        return float(props_t2['h_relative'] - props_t1['h_relative'])
 
     def get_properties_range(
         self, species_id: int, temps: list[float]

@@ -43,6 +43,7 @@ def cmd_build(args: argparse.Namespace) -> None:
         builder.create_tables()
         builder.parse_and_load()
 
+        assert builder.cursor is not None
         builder.cursor.execute('SELECT COUNT(*) FROM species')
         num_species = builder.cursor.fetchone()[0]
         builder.cursor.execute('SELECT COUNT(*) FROM temperature_intervals')
