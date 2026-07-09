@@ -1,6 +1,14 @@
 # pyglenn — Thermochemical Properties Calculator
 
+[![CI](https://github.com/ProfLeao/pyglenn/actions/workflows/ci.yml/badge.svg)](https://github.com/ProfLeao/pyglenn/actions/workflows/ci.yml)
+[![Docs](https://github.com/ProfLeao/pyglenn/actions/workflows/docs.yml/badge.svg)](https://profleao.github.io/pyglenn)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
 Computes **Cp(T)**, **H°(T)**, **S°(T)** from NASA polynomial coefficients stored in a SQLite database, converted from FORTRAN `thermo.inp` files.
+
+**Author:** Dr. Reginaldo G. Leão Jr. — [prof.reginaldo.leao@gmail.com](mailto:prof.reginaldo.leao@gmail.com)
+
+📖 **Documentation:** [profleao.github.io/pyglenn](https://profleao.github.io/pyglenn)
 
 ## Features
 
@@ -23,7 +31,7 @@ pip install pyglenn
 ### From source
 
 ```bash
-git clone https://github.com/profr/pyglenn.git
+git clone https://github.com/ProfLeao/pyglenn.git
 cd pyglenn
 pip install .
 ```
