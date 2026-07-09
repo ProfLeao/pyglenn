@@ -13,6 +13,7 @@ All values returned as floats in standard units:
 from __future__ import annotations
 
 import logging
+from importlib import resources
 from typing import Any
 
 from .database import R, ThermoDBQuery
@@ -47,13 +48,19 @@ class TemperatureOutOfRangeError(ThermoCalcError):
 class ThermochemicalCalculator:
     """High-level interface for calculating thermochemical properties.
 
+    Uses the bundled ``thermo.db`` by default — no manual build step needed.
+
     Supports context-manager protocol for automatic connection management::
 
-        with ThermochemicalCalculator("thermo.db") as calc:
+        with ThermochemicalCalculator() as calc:
             props = calc.calculate_properties(species_id, 1000.0)
     """
 
-    def __init__(self, db_file: str = 'thermo.db') -> None:
+    def __init__(self, db_file: str | None = None) -> None:
+        if db_file is None:
+            # Use the bundled thermo.db shipped with the package
+            db_path = resources.files('pyglenn.data') / 'thermo.db'
+            db_file = str(db_path)
         self.db: ThermoDBQuery = ThermoDBQuery(db_file)
         self._connected: bool = False
 

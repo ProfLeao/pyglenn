@@ -28,27 +28,25 @@ Installation
 Basic Usage
 ===========
 
+The database is **bundled** — no manual setup required:
+
 .. code-block:: python
 
    from pyglenn import ThermochemicalCalculator
 
-   calc = ThermochemicalCalculator()
-   calc.connect()
-
-   # Look up methane (CH₄)
-   result = calc.calculate('CH4', 298.15)
-
-   print(f"Cp = {result.cp:.3f} J/mol·K")
-   print(f"H° = {result.enthalpy:.3f} kJ/mol")
-   print(f"S° = {result.entropy:.3f} J/mol·K")
-
-   calc.close()
+   with ThermochemicalCalculator() as calc:
+       result = calc.calculate_properties(
+           calc.get_available_species('CH4')[0]['id'], 298.15
+       )
+       print(f"Cp = {result['cp']:.3f} J/mol·K")
+       print(f"H° = {result['h_relative']:.3f} J/mol")
+       print(f"S° = {result['s']:.3f} J/mol·K")
 
 Features
 ========
 
 - Compute :math:`C_p(T)`, :math:`H^\circ(T)`, :math:`S^\circ(T)` for any species
-- SQLite database built from NASA-7 or NASA-9 polynomial format
+- SQLite database bundled with **~2030 species, 3772 temperature intervals** — no setup needed
 - CLI interface for quick lookups
 - Temperature range validation
 

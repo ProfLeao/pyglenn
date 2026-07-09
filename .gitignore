@@ -11,8 +11,8 @@ build/
 venv/
 env/
 
-# Database (generated)
-thermo.db
+# Database (generated at root only — bundled DB in package is tracked)
+/thermo.db
 
 # IDE
 .vscode/

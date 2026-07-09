@@ -45,28 +45,19 @@ conda install --use-local pyglenn
 
 ## Quick Start
 
-### Build the database (first time only)
-
-```bash
-pyglenn build -i thermo.inp -o thermo.db
-```
-
-### Query species and calculate properties
-
-```bash
-pyglenn query -s O2
-```
+The database is **bundled with the package** — no manual build step needed.
 
 ### Python API
 
 ```python
 from pyglenn import ThermochemicalCalculator
 
-calc = ThermochemicalCalculator("thermo.db")
+# No need to specify a DB file — uses the bundled thermo.db
+calc = ThermochemicalCalculator()
 calc.connect()
 
 # Find O2
-species = calc.get_available_species("O2")
+species = calc.get_available_species('O2')
 o2 = species[0]
 
 # Calculate properties at 1000 K
@@ -76,6 +67,31 @@ print(f"H° = {props['h_relative']:.1f} J/mol")
 print(f"S° = {props['s']:.3f} J/(mol·K)")
 
 calc.close()
+```
+
+Or use the **context manager** for automatic cleanup:
+
+```python
+from pyglenn import ThermochemicalCalculator
+
+with ThermochemicalCalculator() as calc:
+    species = calc.get_available_species('CH4')
+    props = calc.calculate_properties(species[0]['id'], 500.0)
+    print(f"Cp = {props['cp']:.2f} J/(mol·K)")
+```
+
+### CLI
+
+```bash
+pyglenn query -s O2
+```
+
+### Rebuilding the database
+
+Only needed if the database is corrupted or you modify ``thermo.inp`` manually:
+
+```bash
+pyglenn build -i thermo.inp -o thermo.db
 ```
 
 ## Database Structure

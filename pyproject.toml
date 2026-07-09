@@ -58,7 +58,7 @@ include-package-data = true
 where = ["src"]
 
 [tool.setuptools.package-data]
-pyglenn = ["data/thermo.inp"]
+pyglenn = ["data/thermo.inp", "data/thermo.db"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

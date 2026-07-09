@@ -22,8 +22,8 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-# Regex: match FORTRAN double-precision scientific notation (e.g. 1.234D+05)
-_FORTRAN_D_RE = re.compile(r'\d\.\d{0,8}D[+\-]\d{1,2}', re.IGNORECASE)
+# Regex: match FORTRAN double-precision scientific notation (e.g. 1.234567890D+05)
+_FORTRAN_D_RE = re.compile(r'\d\.\d{0,9}D[+\-]\d{1,2}', re.IGNORECASE)
 
 
 class ThermoDBBuilder:
