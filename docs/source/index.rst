@@ -11,6 +11,7 @@ FORTRAN ``thermo.inp`` files.
    :caption: Contents
 
    usage
+   examples
    api
    database
 

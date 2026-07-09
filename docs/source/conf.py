@@ -1,11 +1,32 @@
 """Sphinx configuration for pyglenn documentation."""
 
 import os
+import shutil
 import sys
 
 # -- Path setup -----------------------------------------------------------
 # Add the src directory to sys.path so autodoc can find the package
 sys.path.insert(0, os.path.abspath('../../src'))
+
+# -- Notebook examples -----------------------------------------------------
+# The example notebooks live in the top-level ``examples/`` folder (single
+# source of truth, runnable standalone and visible on GitHub). Copy them into
+# the docs source tree at build time so myst-nb can render them. The copy is
+# git-ignored — never edit the notebooks under ``docs/source/examples/``.
+_HERE = os.path.dirname(__file__)
+_EXAMPLES_SRC = os.path.abspath(os.path.join(_HERE, '../../examples'))
+_EXAMPLES_DST = os.path.join(_HERE, 'examples')
+if os.path.isdir(_EXAMPLES_SRC):
+    shutil.rmtree(_EXAMPLES_DST, ignore_errors=True)
+    os.makedirs(_EXAMPLES_DST, exist_ok=True)
+    # Copy only the notebooks — auxiliary files (README.md, notes) stay in the
+    # repo and are intentionally kept out of the rendered documentation.
+    for _name in sorted(os.listdir(_EXAMPLES_SRC)):
+        if _name.endswith('.ipynb'):
+            shutil.copy2(
+                os.path.join(_EXAMPLES_SRC, _name),
+                os.path.join(_EXAMPLES_DST, _name),
+            )
 
 # -- Project information ---------------------------------------------------
 project = 'pyglenn'
@@ -19,8 +40,16 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
-    'myst_parser',
+    'myst_nb',
 ]
+
+# -- myst-nb / MyST configuration ------------------------------------------
+# Execute notebooks at build time so their outputs are rendered.
+# 'auto' runs a notebook only when it has no stored outputs.
+nb_execution_mode = 'auto'
+nb_execution_timeout = 120
+nb_execution_raise_on_error = True
+myst_enable_extensions = ['dollarmath', 'colon_fence']
 
 # Napoleon settings (Google/NumPy docstring style)
 napoleon_google_docstring = True
@@ -39,7 +68,8 @@ exclude_patterns = []
 # Support both .rst and .md files
 source_suffix = {
     '.rst': 'restructuredtext',
-    '.md': 'markdown',
+    '.md': 'myst-nb',
+    '.ipynb': 'myst-nb',
 }
 
 master_doc = 'index'

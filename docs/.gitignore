@@ -1,1 +1,5 @@
 build/
+
+# Example notebooks copied from the top-level examples/ folder at build time
+# (conf.py handles the copy). Source of truth lives in /examples.
+source/examples/
