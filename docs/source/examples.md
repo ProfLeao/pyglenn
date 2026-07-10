@@ -9,5 +9,4 @@ at the repository root and can be run locally with `jupyter lab examples/`.
 :glob:
 
 examples/*
-examples/extra/*
 ```
