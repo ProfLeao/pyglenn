@@ -1,0 +1,59 @@
+# .github/workflows/publish-conda.yml
+name: Publish to Anaconda
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-conda:
+    name: Build — ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          channels: conda-forge,defaults
+
+      - name: Build conda package
+        shell: bash -el {0}
+        run: |
+          conda install -y conda-build
+          conda build conda.recipe/ --output-folder ./build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: conda-package-${{ matrix.os }}
+          path: ./build/noarch/*.conda
+
+  publish:
+    needs: build-conda
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: conda-package-ubuntu-latest
+          path: ./dist
+
+      - name: Publish to Anaconda.org
+        uses: anaconda/actions/upload-package@v0
+        with:
+          token: ${{ secrets.ANACONDA_ORG_TOKEN }}
+          channel: profleao
+          packages: ./dist/*.conda
+          package-type: conda
