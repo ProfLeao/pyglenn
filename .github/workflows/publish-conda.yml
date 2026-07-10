@@ -24,7 +24,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
-          channels: conda-forge,defaults
+          channels: conda-forge
 
       - name: Build conda package
         shell: bash -el {0}
