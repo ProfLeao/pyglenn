@@ -32,7 +32,12 @@ if os.path.isdir(_EXAMPLES_SRC):
 project = 'pyglenn'
 copyright = '2025, Dr. Reginaldo G. Leão Jr.'
 author = 'Dr. Reginaldo G. Leão Jr.'
-release = '1.0.0'
+
+# Read version from the package itself (single source of truth)
+from pyglenn import __version__ as _pyglenn_version
+
+release = _pyglenn_version
+version = '.'.join(release.split('.')[:2])  # e.g. "1.0"
 
 # -- General configuration -------------------------------------------------
 extensions = [

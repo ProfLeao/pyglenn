@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyglenn"
-version = "1.0.0"
+dynamic = ["version"]
 description = "Thermochemical properties calculator — computes Cp(T), H°(T), S°(T) from NASA polynomial coefficients stored in SQLite"
 readme = "README.md"
 license = {text = "MIT"}
@@ -58,6 +58,9 @@ pyglenn = "pyglenn.cli:main"
 [tool.setuptools]
 package-dir = {"" = "src"}
 include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "pyglenn.__version__"}
 
 [tool.setuptools.packages.find]
 where = ["src"]

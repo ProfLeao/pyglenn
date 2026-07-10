@@ -28,20 +28,20 @@ test:
   imports:
     - pyglenn
     - pyglenn.calculator
-    - pythermo.database
-    - pythermo.builder
+    - pyglenn.database
+    - pyglenn.builder
   commands:
-    - pythermo --help
+    - pyglenn --help
 
 about:
-  home: https://github.com/profr/pyglenn_novo
+  home: https://github.com/ProfLeao/pyglenn
   license: MIT
   license_file: LICENSE
   summary: >
     Thermochemical properties calculator — computes Cp(T), H°(T), S°(T)
     from NASA polynomial coefficients stored in SQLite.
   description: >
-    pythermo is a Python package for calculating thermochemical properties
+    pyglenn is a Python package for calculating thermochemical properties
     (heat capacity, enthalpy, entropy) of chemical species using NASA-7
     polynomial coefficients.  It converts FORTRAN thermo.inp files into
     a normalized SQLite3 database and provides both a Python API and a
