@@ -26,11 +26,13 @@ jobs:
           auto-update-conda: true
           channels: conda-forge
 
+      - name: Install conda-build
+        shell: bash -el {0}
+        run: conda install -y conda-build
+
       - name: Build conda package
         shell: bash -el {0}
-        run: |
-          conda install -y conda-build
-          conda build conda.recipe/ --output-folder ./build
+        run: conda build conda.recipe/ --output-folder ./build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
