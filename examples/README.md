@@ -35,5 +35,5 @@ em `sys.path`.
 
 | Notebook | Descrição |
 |----------|-----------|
-| [`01_uso_basico.ipynb`](01_uso_basico.ipynb) | Primeiros passos: buscar espécies e calcular $C_p$, $H^\circ$, $S^\circ$. |
-| [`02_comparacao_combustiveis.ipynb`](02_comparacao_combustiveis.ipynb) | Compara CH4, etanol e propano com gráficos de $C_p(T)$, $S^\circ(T)$ e entalpia sensível (requer matplotlib). |
+| [`01_basic_usage.ipynb`](01_basic_usage.ipynb) | First steps: look up species and compute $C_p$, $H^\circ$, $S^\circ$. |
+| [`02_fuel_comparison.ipynb`](02_fuel_comparison.ipynb) | Compares CH4, ethanol, and propane with plots of $C_p(T)$, $S^\circ(T)$ and sensible enthalpy (requires matplotlib). |
