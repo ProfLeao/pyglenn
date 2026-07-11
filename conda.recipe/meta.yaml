@@ -1,5 +1,5 @@
 {% set name = "pyglenn" %}
-{% set version = "0.1.7rc2" %}
+{% set version = "0.1.7rc3" %}
 
 package:
   name: {{ name }}
