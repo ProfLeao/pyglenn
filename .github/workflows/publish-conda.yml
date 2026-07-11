@@ -55,18 +55,9 @@ jobs:
           name: conda-package-ubuntu-latest
           path: ./dist
 
-      - name: Setup miniconda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          channels: conda-forge
-          activate-environment: base
-
-      - name: Install anaconda-client
-        shell: bash -el {0}
-        run: conda install -y -c conda-forge anaconda-client
-
       - name: Publish to Anaconda.org
-        shell: bash -el {0}
-        run: anaconda upload ./dist/*.conda
-        env:
-          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_ORG_TOKEN }}
+        uses: anaconda/actions/upload-package@v0
+        with:
+          token: ${{ secrets.ANACONDA_ORG_TOKEN }}
+          channel: prof_reginaldo_leao
+          packages: ./dist/*.conda
