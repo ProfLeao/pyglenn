@@ -67,6 +67,6 @@ jobs:
 
       - name: Publish to Anaconda.org
         shell: bash -el {0}
-        run: anaconda upload --user prof_reginaldo_leao ./dist/*.conda
+        run: anaconda --token $ANACONDA_API_TOKEN upload --user prof_reginaldo_leao ./dist/*.conda
         env:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_ORG_TOKEN }}
