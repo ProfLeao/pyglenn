@@ -39,8 +39,7 @@ pip install .
 ### Conda
 
 ```bash
-conda build conda.recipe/
-conda install --use-local pyglenn
+conda install conda-forge::pyglenn
 ```
 
 ## Quick Start

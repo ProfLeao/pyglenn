@@ -26,6 +26,12 @@ Installation
 
    pip install pyglenn
 
+Or via conda:
+
+.. code-block:: bash
+
+   conda install conda-forge::pyglenn
+
 Basic Usage
 ===========
 
