@@ -57,6 +57,24 @@ Features
 - CLI interface for quick lookups
 - Temperature range validation
 
+Citing
+======
+
+If you use pyglenn in your research, please cite it as:
+
+.. code-block:: bibtex
+
+   @software{goncalves_leao_junior_2026_21324586,
+     author    = {Gonçalves Leão Junior, Reginaldo},
+     title     = {pyglenn: A Python Toolkit for Thermochemical
+                  Properties Calculation from NASA Polynomials},
+     month     = jul,
+     year      = 2026,
+     publisher = {Zenodo},
+     doi       = {10.5281/zenodo.21324586},
+     url       = {https://doi.org/10.5281/zenodo.21324586},
+   }
+
 ----
 
 :Author: **Dr. Reginaldo G. Leão Jr.** — `prof.reginaldo.leao@gmail.com <mailto:prof.reginaldo.leao@gmail.com>`_

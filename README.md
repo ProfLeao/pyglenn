@@ -102,6 +102,23 @@ pyglenn build -i thermo.inp -o thermo.db
 | `coefficients` | NASA-7 polynomial coefficients (a1–a7, b1, b2) |
 | `file_metadata` | Global file metadata |
 
+## Citing
+
+If you use pyglenn in your research, please cite it as:
+
+```bibtex
+@software{goncalves_leao_junior_2026_21324586,
+  author    = {Gonçalves Leão Junior, Reginaldo},
+  title     = {pyglenn: A Python Toolkit for Thermochemical
+               Properties Calculation from NASA Polynomials},
+  month     = jul,
+  year      = 2026,
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.21324586},
+  url       = {https://doi.org/10.5281/zenodo.21324586},
+}
+```
+
 ## Requirements
 
 - Python ≥ 3.9
