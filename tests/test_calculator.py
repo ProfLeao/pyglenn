@@ -616,12 +616,11 @@ def test_calculate_s_standalone() -> None:
 
 def test_cli_main_no_args(capsys: pytest.CaptureFixture[str]) -> None:
     """Test CLI with no arguments prints help."""
+    import sys
+
     from pyglenn.cli import main
 
     # Simulate no command
-    import argparse
-    import sys
-
     original_argv = sys.argv
     try:
         sys.argv = ['pyglenn']
@@ -647,7 +646,8 @@ def test_cli_build_smoke(tmp_path: Path) -> None:
         "   300.000   1000.000   5000.000\n"
         "O2               Ref-1 O2 gas                                      \n"
         " 1  g 2/99O   2   1   2    0    0G200.000 3500.000 1000.000    1\n"
-        " 2.00000000E+02 1.00000000E+03 0.00000000E+00 0.00000000E+00 0.00000000E+00 0\n"
+        " 2.00000000E+02 1.00000000E+03 0.00000000E+00"
+        " 0.00000000E+00 0.00000000E+00 0\n"
         " 3.21225000E+00 1.12749000E-03-5.75615000E-07 1.31388000E-09-8.76854000E-13\n"
         "-1.00524900E+03 6.03473800E+00 0.00000000E+00 3.69757819E+00 6.13519689E-01\n"
     )
@@ -664,7 +664,9 @@ def test_cli_build_smoke(tmp_path: Path) -> None:
     assert db_path.stat().st_size > 0
 
 
-def test_cli_query_smoke(sample_db_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+def test_cli_query_smoke(
+    sample_db_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
     """Test query command runs without errors."""
     import argparse
 
