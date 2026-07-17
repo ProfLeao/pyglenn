@@ -476,19 +476,13 @@ def test_is_coefficient_line() -> None:
 def test_is_temperature_line() -> None:
     """Test temperature interval line detection."""
     # FORTRAN format: 10-char fields at cols 0-10 and 11-21
-    assert ThermoDBBuilder.is_temperature_line(
-        ' 2.0000E+02 1.0000E+03'
-    )
+    assert ThermoDBBuilder.is_temperature_line(' 2.0000E+02 1.0000E+03')
     # First value greater than second → not a valid interval
-    assert not ThermoDBBuilder.is_temperature_line(
-        ' 1.0000E+03 2.0000E+02'
-    )
+    assert not ThermoDBBuilder.is_temperature_line(' 1.0000E+03 2.0000E+02')
     # Too short
     assert not ThermoDBBuilder.is_temperature_line('short')
     # Equal values
-    assert not ThermoDBBuilder.is_temperature_line(
-        ' 5.0000E+02 5.0000E+02'
-    )
+    assert not ThermoDBBuilder.is_temperature_line(' 5.0000E+02 5.0000E+02')
 
 
 def test_parse_species_record() -> None:
@@ -506,8 +500,7 @@ def test_parse_general_info_record() -> None:
     builder = ThermoDBBuilder('dummy.inp', 'dummy.db')
     # Phase code '0' at cols 50-51 means gas
     info = builder.parse_general_info_record(
-        ' 1  g 2/99O   2   1   2    0    0'
-        '0G200.000 3500.000 1000.000    1'
+        ' 1  g 2/99O   2   1   2    0    00G200.000 3500.000 1000.000    1'
     )
     assert info['num_intervals'] == 1
     assert info['phase'] == 'gas'
@@ -531,15 +524,17 @@ def test_parse_coefficients_record() -> None:
     Line 4: a1[0:16] a2[16:32] a3[32:48] a4[48:64] a5[64:80]
     Line 5: a6[0:16] a7[16:32] (skip 32:48) b1[48:64] b2[64:80]
     """
-    coeffs = ThermoDBBuilder.parse_coefficients_record([
-        '  3.21225000E+00  1.12749000E-03 -5.75615000E-07'
-        '  1.31388000E-09 -8.76854000E-13',
-        ' -1.00524900E+03  6.03473800E+00  0.00000000E+00'
-        '  3.69757819E+00  6.13519689E-01',
-    ])
+    coeffs = ThermoDBBuilder.parse_coefficients_record(
+        [
+            '  3.21225000E+00  1.12749000E-03 -5.75615000E-07'
+            '  1.31388000E-09 -8.76854000E-13',
+            ' -1.00524900E+03  6.03473800E+00  0.00000000E+00'
+            '  3.69757819E+00  6.13519689E-01',
+        ]
+    )
     assert math.isclose(coeffs['a1'], 3.21225000, rel_tol=1e-6)
     assert math.isclose(coeffs['a2'], 1.12749000e-03, rel_tol=1e-6)
-    assert math.isclose(coeffs['a6'], -1.00524900e+03, rel_tol=1e-6)
+    assert math.isclose(coeffs['a6'], -1.00524900e03, rel_tol=1e-6)
     assert math.isclose(coeffs['b1'], 3.69757819, rel_tol=1e-6)
     assert math.isclose(coeffs['b2'], 6.13519689e-01, rel_tol=1e-6)
 
@@ -575,9 +570,12 @@ def test_list_species_page(sample_db_path: Path) -> None:
 def test_calculate_cp_standalone() -> None:
     """Test Cp/R calculation directly with known coefficients."""
     coeffs = {
-        'a1': -3.42556342e04, 'a2': 4.84700097e02,
-        'a3': 1.11901096,     'a4': 4.29388924e-02,
-        'a5': -6.83630052e-05, 'a6': 5.51320286e-08,
+        'a1': -3.42556342e04,
+        'a2': 4.84700097e02,
+        'a3': 1.11901096,
+        'a4': 4.29388924e-02,
+        'a5': -6.83630052e-05,
+        'a6': 5.51320286e-08,
         'a7': -1.76439230e-11,
     }
     cp_r = ThermoDBQuery.calculate_cp(coeffs, 298.15)
@@ -588,10 +586,14 @@ def test_calculate_cp_standalone() -> None:
 def test_calculate_h_standalone() -> None:
     """Test H/RT calculation directly with known coefficients."""
     coeffs = {
-        'a1': -3.42556342e04, 'a2': 4.84700097e02,
-        'a3': 1.11901096,     'a4': 4.29388924e-02,
-        'a5': -6.83630052e-05, 'a6': 5.51320286e-08,
-        'a7': -1.76439230e-11, 'b1': -3.39145487e03,
+        'a1': -3.42556342e04,
+        'a2': 4.84700097e02,
+        'a3': 1.11901096,
+        'a4': 4.29388924e-02,
+        'a5': -6.83630052e-05,
+        'a6': 5.51320286e-08,
+        'a7': -1.76439230e-11,
+        'b1': -3.39145487e03,
     }
     h_rt = ThermoDBQuery.calculate_h(coeffs, 298.15)
     assert math.isfinite(h_rt)
@@ -600,10 +602,14 @@ def test_calculate_h_standalone() -> None:
 def test_calculate_s_standalone() -> None:
     """Test S/R calculation directly with known coefficients."""
     coeffs = {
-        'a1': -3.42556342e04, 'a2': 4.84700097e02,
-        'a3': 1.11901096,     'a4': 4.29388924e-02,
-        'a5': -6.83630052e-05, 'a6': 5.51320286e-08,
-        'a7': -1.76439230e-11, 'b2': 1.84969947e01,
+        'a1': -3.42556342e04,
+        'a2': 4.84700097e02,
+        'a3': 1.11901096,
+        'a4': 4.29388924e-02,
+        'a5': -6.83630052e-05,
+        'a6': 5.51320286e-08,
+        'a7': -1.76439230e-11,
+        'b2': 1.84969947e01,
     }
     s_r = ThermoDBQuery.calculate_s(coeffs, 298.15)
     assert math.isfinite(s_r)
@@ -642,22 +648,20 @@ def test_cli_build_smoke(tmp_path: Path) -> None:
 
     # Create a minimal thermo.inp
     inp_content = (
-        "THERMO\n"
-        "   300.000   1000.000   5000.000\n"
-        "O2               Ref-1 O2 gas                                      \n"
-        " 1  g 2/99O   2   1   2    0    0G200.000 3500.000 1000.000    1\n"
-        " 2.00000000E+02 1.00000000E+03 0.00000000E+00"
-        " 0.00000000E+00 0.00000000E+00 0\n"
-        " 3.21225000E+00 1.12749000E-03-5.75615000E-07 1.31388000E-09-8.76854000E-13\n"
-        "-1.00524900E+03 6.03473800E+00 0.00000000E+00 3.69757819E+00 6.13519689E-01\n"
+        'THERMO\n'
+        '   300.000   1000.000   5000.000\n'
+        'O2               Ref-1 O2 gas                                      \n'
+        ' 1  g 2/99O   2   1   2    0    0G200.000 3500.000 1000.000    1\n'
+        ' 2.00000000E+02 1.00000000E+03 0.00000000E+00'
+        ' 0.00000000E+00 0.00000000E+00 0\n'
+        ' 3.21225000E+00 1.12749000E-03-5.75615000E-07 1.31388000E-09-8.76854000E-13\n'
+        '-1.00524900E+03 6.03473800E+00 0.00000000E+00 3.69757819E+00 6.13519689E-01\n'
     )
     inp_path = tmp_path / 'test_thermo.inp'
     db_path = tmp_path / 'test_thermo.db'
     inp_path.write_text(inp_content)
 
-    args = argparse.Namespace(
-        input=str(inp_path), output=str(db_path), verbose=False
-    )
+    args = argparse.Namespace(input=str(inp_path), output=str(db_path), verbose=False)
     cmd_build(args)
 
     assert db_path.exists()
@@ -672,9 +676,7 @@ def test_cli_query_smoke(
 
     from pyglenn.cli import cmd_query
 
-    args = argparse.Namespace(
-        database=str(sample_db_path), species='O2', verbose=False
-    )
+    args = argparse.Namespace(database=str(sample_db_path), species='O2', verbose=False)
     cmd_query(args)
 
     captured = capsys.readouterr()
