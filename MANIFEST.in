@@ -5,6 +5,7 @@ include pyproject.toml
 recursive-include src/pyglenn/data *.inp
 recursive-include docs *.md *.txt
 
+prune docs/build
 prune tests
 prune conda.recipe
 global-exclude __pycache__

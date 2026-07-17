@@ -28,6 +28,20 @@ if os.path.isdir(_EXAMPLES_SRC):
                 os.path.join(_EXAMPLES_DST, _name),
             )
 
+# -- Audit/validation assets -----------------------------------------------
+# Copy audit images and data files so they are accessible to the validation
+# RST page.  The originals live in ``docs/audit/`` (outside the Sphinx
+# source tree) and are copied into the source directory at build time.
+_AUDIT_SRC = os.path.abspath(os.path.join(_HERE, '../audit'))
+_AUDIT_DST = os.path.join(_HERE, 'audit')
+if os.path.isdir(_AUDIT_SRC):
+    shutil.rmtree(_AUDIT_DST, ignore_errors=True)
+    os.makedirs(_AUDIT_DST, exist_ok=True)
+    for _name in sorted(os.listdir(_AUDIT_SRC)):
+        _src = os.path.join(_AUDIT_SRC, _name)
+        if os.path.isfile(_src):
+            shutil.copy2(_src, os.path.join(_AUDIT_DST, _name))
+
 # -- Project information ---------------------------------------------------
 project = 'pyglenn'
 copyright = '2025, Dr. Reginaldo G. Leão Jr.'

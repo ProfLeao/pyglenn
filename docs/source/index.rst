@@ -14,6 +14,7 @@ FORTRAN ``thermo.inp`` files.
    examples
    api
    database
+   validation
 
 ----------------
 Quick Start

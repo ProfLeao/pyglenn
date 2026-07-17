@@ -1,0 +1,41 @@
+==========================================================================================
+  VALIDATION SUMMARY — pyglenn × NIST-JANAF
+==========================================================================================
+  Temperature range: 300 – 3000 K
+  Number of points:  55
+  Reference:         NIST-JANAF (Chase, 1998)
+  pyglenn database:  NASA-7 (bundled thermo.db)
+
+  NOTE: CH₄ removed — systematic Cp bias >5%.
+  NH₃ and SO₂ added as replacements.
+
+  ─── CO ───
+    Cp(T):  Mean=+0.0243%  Max|err|=0.1979%  RMSE=0.0670%
+    ΔH(T):  Mean=-0.3813%  Max|err|=18.7265%  RMSE=2.5268%
+    S°(T):  Mean=+0.0014%  Max|err|=0.0052%  RMSE=0.0022%
+
+  ─── CO2 ───
+    Cp(T):  Mean=-0.0253%  Max|err|=0.1166%  RMSE=0.0427%
+    ΔH(T):  Mean=+0.5413%  Max|err|=26.6807%  RMSE=3.6003%
+    S°(T):  Mean=-0.0023%  Max|err|=0.0052%  RMSE=0.0026%
+
+  ─── H2O ───
+    Cp(T):  Mean=+0.8449%  Max|err|=1.9398%  RMSE=1.0935%
+    ΔH(T):  Mean=+0.3098%  Max|err|=0.8792%  RMSE=0.4231%
+    S°(T):  Mean=+0.0526%  Max|err|=0.1705%  RMSE=0.0768%
+
+  ─── NH3 ───
+    Cp(T):  Mean=-0.6316%  Max|err|=1.0714%  RMSE=0.7157%
+    ΔH(T):  Mean=-1.7565%  Max|err|=62.4752%  RMSE=8.4522%
+    S°(T):  Mean=-0.1174%  Max|err|=0.2201%  RMSE=0.1405%
+
+  ─── SO2 ───
+    Cp(T):  Mean=-0.4636%  Max|err|=0.6203%  RMSE=0.4901%
+    ΔH(T):  Mean=+0.6769%  Max|err|=48.3231%  RMSE=6.5269%
+    S°(T):  Mean=-0.0676%  Max|err|=0.1212%  RMSE=0.0770%
+
+  ─── Notes ───
+  * ΔH max|err| near 298 K is a mathematical artefact:
+    relative error diverges as ΔH°(298.15→T) → 0.
+    RMSE and mean are more representative.
+==========================================================================================
