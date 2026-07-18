@@ -76,13 +76,6 @@ Validated Species
      - Sulfur dioxide
      - SO\ :sub:`2`
 
-.. note::
-
-   CH₄ was removed from this audit due to a systematic bias
-   > 5% in :math:`C_p(T)`.  NH₃ and SO₂ were included as
-   replacements.
-
-
 Graphical Results
 =================
 
