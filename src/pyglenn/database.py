@@ -84,28 +84,51 @@ class ThermoDBQuery:
     # ------------------------------------------------------------------
     # Species lookup
     # ------------------------------------------------------------------
-    def find_species(self, name: str) -> list[dict[str, Any]]:
-        """Find species by name (supports partial search).
+    def find_species(
+        self, name: str, exact_match: bool = False
+    ) -> list[dict[str, Any]]:
+        """Find species by name.
 
         Args:
-            name: Search pattern (substring match).
+            name: Search pattern.
+            exact_match: If True, use case-insensitive exact match.
+                         If False (default), use substring match (LIKE).
 
         Returns:
             List of matching species dicts (max 20).
         """
         assert self.cursor is not None, 'Database not connected'
-        pattern = f'%{name}%'
-        self.cursor.execute(
-            """
-            SELECT id, name, formula, phase, molecular_weight,
-                   heat_of_formation_298K, num_intervals, comments
-            FROM species
-            WHERE name LIKE ? OR formula LIKE ?
-            ORDER BY name
-            LIMIT 20
-            """,
-            (pattern, pattern),
-        )
+
+        if exact_match:
+            # Case-insensitive exact match — returns only the
+            # species whose name matches the pattern exactly.
+            self.cursor.execute(
+                """
+                SELECT id, name, formula, phase, molecular_weight,
+                       heat_of_formation_298K, num_intervals, comments
+                FROM species
+                WHERE UPPER(name) = UPPER(?)
+                ORDER BY name
+                LIMIT 20
+                """,
+                (name,),
+            )
+        else:
+            # Substring search with exact matches prioritised first,
+            # followed by alphabetical ordering of the remainder.
+            self.cursor.execute(
+                """
+                SELECT id, name, formula, phase, molecular_weight,
+                       heat_of_formation_298K, num_intervals, comments
+                FROM species
+                WHERE name LIKE ? OR formula LIKE ?
+                ORDER BY
+                    CASE WHEN UPPER(name) = UPPER(?) THEN 0 ELSE 1 END,
+                    name
+                LIMIT 20
+                """,
+                (f'%{name}%', f'%{name}%', name),
+            )
 
         columns = [d[0] for d in self.cursor.description]
         return [dict(zip(columns, row)) for row in self.cursor.fetchall()]
@@ -178,6 +201,11 @@ class ThermoDBQuery:
             or None if temperature is out of range.
         """
         assert self.cursor is not None, 'Database not connected'
+        # A small tolerance (1e-9 K) is added to temp_max so that
+        # temperatures exactly on an interval boundary are accepted
+        # in either adjacent interval.  ORDER BY interval_number
+        # guarantees deterministic selection when both intervals
+        # cover the same temperature (prefers the lower interval).
         self.cursor.execute(
             """
             SELECT ti.interval_number, ti.temp_min, ti.temp_max,
@@ -186,7 +214,8 @@ class ThermoDBQuery:
             LEFT JOIN coefficients c ON ti.id = c.interval_id
             WHERE ti.species_id = ?
               AND ti.temp_min <= ?
-              AND ti.temp_max >= ?
+              AND ti.temp_max + 1e-9 >= ?
+            ORDER BY ti.interval_number
             LIMIT 1
             """,
             (species_id, temperature, temperature),
