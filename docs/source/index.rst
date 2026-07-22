@@ -44,7 +44,7 @@ The database is **bundled** — no manual setup required:
 
    with ThermochemicalCalculator() as calc:
        result = calc.calculate_properties(
-           calc.get_available_species('CH4')[0]['id'], 298.15
+           calc.get_available_species('CH4', exact_match=True)[0]['id'], 298.15
        )
        print(f"Cp = {result['cp']:.3f} J/mol·K")
        print(f"H° = {result['h_relative']:.3f} J/mol")

@@ -40,8 +40,9 @@ Simply instantiate with no arguments — the bundled database is used automatica
    from pyglenn import ThermochemicalCalculator
 
    with ThermochemicalCalculator() as calc:
-       # Find methane
-       species = calc.get_available_species('CH4')
+       # Find methane — exact_match=True avoids confusion with
+       # species like CH3CHCH4 or C2H4 that contain 'CH4'
+       species = calc.get_available_species('CH4', exact_match=True)
        result = calc.calculate_properties(species[0]['id'], 500.0)
        print(f"Cp  = {result['cp']:.3f} J/(mol·K)")
        print(f"H°  = {result['h_relative']:.3f} J/mol")

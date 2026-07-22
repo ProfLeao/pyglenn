@@ -257,7 +257,13 @@ class ThermochemicalCalculator:
             T2: Final temperature in Kelvin.
 
         Returns:
-            Enthalpy change in J/mol, or None if calculation fails.
+            Enthalpy change in J/mol.
+
+        Raises:
+            DatabaseNotConnectedError: If not connected to database.
+            SpeciesNotFoundError: If species_id is not in the database.
+            TemperatureOutOfRangeError: If either T1 or T2 is outside
+                valid intervals.
         """
         if not self._connected:
             logger.warning('calculate_enthalpy_change called without connection')
