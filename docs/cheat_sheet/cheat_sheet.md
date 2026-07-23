@@ -90,24 +90,24 @@ except ThermoCalcError as e:
 
 pyglenn uses the **alternate (Gordon–McBride)** form:
 
-.. math::
+$$
+\frac{C_p^\circ}{R}
+= \frac{a_1}{T^2} + \frac{a_2}{T} + a_3 + a_4 T + a_5 T^2 + a_6 T^3 + a_7 T^4
+$$
 
-   \frac{C_p^\circ}{R}
-   = \frac{a_1}{T^2} + \frac{a_2}{T} + a_3 + a_4 T + a_5 T^2 + a_6 T^3 + a_7 T^4
+$$
+\frac{H^\circ}{RT}
+= -\frac{a_1}{T^2} + a_2\frac{\ln T}{T} + a_3 + a_4\frac{T}{2}
++ a_5\frac{T^2}{3} + a_6\frac{T^3}{4} + a_7\frac{T^4}{5} + \frac{b_1}{T}
+$$
 
-.. math::
+$$
+\frac{S^\circ}{R}
+= -\frac{a_1}{2T^2} - \frac{a_2}{T} + a_3\ln T + a_4 T
++ a_5\frac{T^2}{2} + a_6\frac{T^3}{3} + a_7\frac{T^4}{4} + b_2
+$$
 
-   \frac{H^\circ}{RT}
-   = -\frac{a_1}{T^2} + a_2\frac{\ln T}{T} + a_3 + a_4\frac{T}{2}
-   + a_5\frac{T^2}{3} + a_6\frac{T^3}{4} + a_7\frac{T^4}{5} + \frac{b_1}{T}
-
-.. math::
-
-   \frac{S^\circ}{R}
-   = -\frac{a_1}{2T^2} - \frac{a_2}{T} + a_3\ln T + a_4 T
-   + a_5\frac{T^2}{2} + a_6\frac{T^3}{3} + a_7\frac{T^4}{4} + b_2
-
-Multiply by :math:`R = 8.314462618` J/(mol·K) for dimensional values.
+Multiply by $R = 8.314462618$ J/(mol·K) for dimensional values.
 
 ---
 
