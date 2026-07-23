@@ -182,18 +182,15 @@ class ThermochemicalCalculator:
 
         species_data = self.db.get_species_data(species_id)
         if not species_data or 'intervals' not in species_data:
-            raise SpeciesNotFoundError(
-                f'Species ID {species_id} not found in database'
-            )
+            raise SpeciesNotFoundError(f'Species ID {species_id} not found in database')
 
         interval_data = self.db.get_species_for_temperature(species_id, temperature)
         if not interval_data:
             intervals = [
-                (i['temp_min'], i['temp_max'])
-                for i in species_data['intervals']
+                (i['temp_min'], i['temp_max']) for i in species_data['intervals']
             ]
             raise TemperatureOutOfRangeError(
-                f"Temperature {temperature:.1f} K out of valid range "
+                f'Temperature {temperature:.1f} K out of valid range '
                 f"for species '{species_data['name']}'. "
                 f'Available intervals: {intervals}'
             )
