@@ -58,7 +58,8 @@ class ThermoDBQuery:
             Dict with total_species, total_intervals, total_coeff_sets,
             species_by_phase, avg_molecular_weight.
         """
-        assert self.cursor is not None, 'Database not connected'
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
         stats: dict[str, Any] = {}
 
         self.cursor.execute('SELECT COUNT(*) FROM species')
@@ -97,7 +98,8 @@ class ThermoDBQuery:
         Returns:
             List of matching species dicts (max 20).
         """
-        assert self.cursor is not None, 'Database not connected'
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
 
         if exact_match:
             # Case-insensitive exact match — returns only the
@@ -142,7 +144,8 @@ class ThermoDBQuery:
         Returns:
             Species dict with 'intervals' list, or None if not found.
         """
-        assert self.cursor is not None, 'Database not connected'
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
         self.cursor.execute('SELECT * FROM species WHERE id = ?', (species_id,))
         row = self.cursor.fetchone()
         if not row:
@@ -200,7 +203,8 @@ class ThermoDBQuery:
             Dict with interval_number, temp_min, temp_max, coefficients,
             or None if temperature is out of range.
         """
-        assert self.cursor is not None, 'Database not connected'
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
         # A small tolerance (1e-9 K) is added to temp_max so that
         # temperatures exactly on an interval boundary are accepted
         # in either adjacent interval.  ORDER BY interval_number
@@ -254,7 +258,8 @@ class ThermoDBQuery:
         Returns:
             Tuple of (species_list, total_pages).
         """
-        assert self.cursor is not None, 'Database not connected'
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
         self.cursor.execute('SELECT COUNT(*) FROM species')
         total = self.cursor.fetchone()[0]
 
