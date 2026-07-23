@@ -58,6 +58,13 @@ Features
 - CLI interface for quick lookups
 - Temperature range validation
 
+Cheat Sheet
+===========
+
+Download the one-page quick reference:
+
+:download:`pyglenn-cheat-sheet.pdf <../cheat_sheet/cheat_sheet.pdf>`
+
 Citing
 ======
 
