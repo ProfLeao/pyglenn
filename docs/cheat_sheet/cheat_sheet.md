@@ -1,6 +1,7 @@
 # pyglenn — Cheat Sheet
 
 > **v0.1.13** · 2030 species · 3772 intervals · zero dependencies
+> **Author:** Dr. Reginaldo G. Leão Jr. · [ProfLeao/pyglenn](https://github.com/ProfLeao/pyglenn)
 
 ---
 
