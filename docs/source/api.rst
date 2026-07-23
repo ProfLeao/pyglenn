@@ -9,7 +9,21 @@ Calculator
    :members:
    :undoc-members:
    :show-inheritance:
-   :exclude-members: ThermoCalcError, DatabaseNotConnectedError, SpeciesNotFoundError, TemperatureOutOfRangeError
+
+Exceptions
+==========
+
+.. autoclass:: pyglenn.ThermoCalcError
+   :show-inheritance:
+
+.. autoclass:: pyglenn.DatabaseNotConnectedError
+   :show-inheritance:
+
+.. autoclass:: pyglenn.SpeciesNotFoundError
+   :show-inheritance:
+
+.. autoclass:: pyglenn.TemperatureOutOfRangeError
+   :show-inheritance:
 
 Database
 ========
