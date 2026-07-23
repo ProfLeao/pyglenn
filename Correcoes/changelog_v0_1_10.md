@@ -1,4 +1,34 @@
-# Changelog — pyglenn v0.1.10
+# Changelog — pyglenn
+
+---
+
+## v0.1.11 (2026-07-22)
+
+**Base:** v0.1.10
+**Commits:** `aa6138c`, `0648e12`, `129b2a4`, `8991afb`
+
+### Correções
+
+| # | Descrição | Gravidade |
+|---|-----------|-----------|
+| 🔴 | `thermo.db` removido do tracking git na raiz (duplicata de `src/pyglenn/data/`) | Alta |
+| 🟡 | 11 `assert` substituídos por `if ... is None: raise RuntimeError(...)` em `builder.py` e `database.py` — seguro com `python -O` | Média |
+| 🟢 | `docs/` removido do `MANIFEST.in` — reduz tamanho do sdist | Baixa |
+| 💡 | `cli.py` incluído na cobertura de testes (`pyproject.toml`) | Sugestão |
+
+### Arquivos alterados
+
+| Arquivo | Mudança |
+|---------|---------|
+| `thermo.db` | Removido do tracking (`.gitignore` já o ignorava) |
+| `src/pyglenn/builder.py` | 6 asserts → `RuntimeError` |
+| `src/pyglenn/database.py` | 5 asserts → `RuntimeError` |
+| `MANIFEST.in` | `recursive-include docs` comentado |
+| `pyproject.toml` | `omit = ["src/pyglenn/cli.py"]` removido |
+
+---
+
+## v0.1.10 (2026-07-22)
 
 **Data:** 2026-07-22
 **Base:** v0.1.5 (source) / v0.1.9 (pip)
