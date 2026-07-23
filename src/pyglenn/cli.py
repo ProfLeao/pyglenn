@@ -14,7 +14,7 @@ import logging
 import sys
 
 from .builder import ThermoDBBuilder
-from .calculator import ThermochemicalCalculator
+from .calculator import ThermoCalcError, ThermochemicalCalculator
 
 
 def _setup_logging(verbose: bool = False) -> None:
