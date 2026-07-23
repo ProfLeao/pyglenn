@@ -107,7 +107,12 @@ $$
 + a_5\frac{T^2}{2} + a_6\frac{T^3}{3} + a_7\frac{T^4}{4} + b_2
 $$
 
-Multiply by $R = 8.314462618$ J/(mol·K) for dimensional values.
+Dimensional values are obtained by multiplying the dimensionless
+quantities above by the universal gas constant:
+
+$$
+R = 8.314462618 \ \text{J/(mol·K)} \quad \text{(CODATA 2018)}
+$$
 
 ---
 
