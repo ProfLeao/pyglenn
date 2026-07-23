@@ -55,8 +55,8 @@ from pyglenn import ThermochemicalCalculator
 calc = ThermochemicalCalculator()
 calc.connect()
 
-# Find O2
-species = calc.get_available_species('O2')
+# Find O2 (exact match — returns only O2, not Be3N2 or Al2O2)
+species = calc.get_available_species('O2', exact_match=True)
 o2 = species[0]
 
 # Calculate properties at 1000 K
@@ -74,7 +74,8 @@ Or use the **context manager** for automatic cleanup:
 from pyglenn import ThermochemicalCalculator
 
 with ThermochemicalCalculator() as calc:
-    species = calc.get_available_species('CH4')
+    # exact_match=True guarantees the correct species (case-insensitive)
+    species = calc.get_available_species('CH4', exact_match=True)
     props = calc.calculate_properties(species[0]['id'], 500.0)
     print(f"Cp = {props['cp']:.2f} J/(mol·K)")
 ```

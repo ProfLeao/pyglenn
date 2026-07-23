@@ -108,12 +108,18 @@ class ThermochemicalCalculator:
     # ------------------------------------------------------------------
     # Species lookup
     # ------------------------------------------------------------------
-    def get_available_species(self, search_pattern: str = '') -> list[dict[str, Any]]:
+    def get_available_species(
+        self, search_pattern: str = '', exact_match: bool = False
+    ) -> list[dict[str, Any]]:
         """
         Return a list of available species, optionally filtered by name.
 
         Args:
             search_pattern: Optional substring to filter species names.
+            exact_match: If True, use case-insensitive exact match
+                         (e.g. ``'N2'`` returns only N2, not Be3N2).
+                         Defaults to False (substring search) for
+                         backward compatibility.
 
         Returns:
             List of species dicts with id, name, phase, molecular_weight.
@@ -123,7 +129,7 @@ class ThermochemicalCalculator:
             return []
 
         if search_pattern:
-            return self.db.find_species(search_pattern)
+            return self.db.find_species(search_pattern, exact_match=exact_match)
 
         # Paginate through all species
         species_list: list[dict[str, Any]] = []
@@ -145,7 +151,7 @@ class ThermochemicalCalculator:
     # ------------------------------------------------------------------
     def calculate_properties(
         self, species_id: int, temperature: float
-    ) -> dict[str, Any] | None:
+    ) -> dict[str, Any]:
         """
         Calculate thermochemical properties at a given temperature.
 
@@ -163,27 +169,34 @@ class ThermochemicalCalculator:
               - species_name:  Species name
               - phase:         Phase ('gas' or 'condensed')
 
-            Or None if calculation fails.
+        Raises:
+            DatabaseNotConnectedError: If not connected to database.
+            SpeciesNotFoundError: If species_id is not in the database.
+            TemperatureOutOfRangeError: If temperature is outside all
+                valid intervals for the species.
         """
         if not self._connected:
-            logger.error('calculate_properties called without database connection')
-            return None
+            raise DatabaseNotConnectedError(
+                'calculate_properties called without database connection'
+            )
 
         species_data = self.db.get_species_data(species_id)
         if not species_data or 'intervals' not in species_data:
-            logger.error('Species ID %d not found in database', species_id)
-            return None
+            raise SpeciesNotFoundError(
+                f'Species ID {species_id} not found in database'
+            )
 
         interval_data = self.db.get_species_for_temperature(species_id, temperature)
         if not interval_data:
-            logger.error(
-                "Temperature %.1f K out of valid range for species '%s'. "
-                'Available intervals: %s',
-                temperature,
-                species_data['name'],
-                [(i['temp_min'], i['temp_max']) for i in species_data['intervals']],
+            intervals = [
+                (i['temp_min'], i['temp_max'])
+                for i in species_data['intervals']
+            ]
+            raise TemperatureOutOfRangeError(
+                f"Temperature {temperature:.1f} K out of valid range "
+                f"for species '{species_data['name']}'. "
+                f'Available intervals: {intervals}'
             )
-            return None
 
         coeffs: dict[str, float] = interval_data['coefficients']
 
@@ -244,7 +257,13 @@ class ThermochemicalCalculator:
             T2: Final temperature in Kelvin.
 
         Returns:
-            Enthalpy change in J/mol, or None if calculation fails.
+            Enthalpy change in J/mol.
+
+        Raises:
+            DatabaseNotConnectedError: If not connected to database.
+            SpeciesNotFoundError: If species_id is not in the database.
+            TemperatureOutOfRangeError: If either T1 or T2 is outside
+                valid intervals.
         """
         if not self._connected:
             logger.warning('calculate_enthalpy_change called without connection')
@@ -252,9 +271,6 @@ class ThermochemicalCalculator:
 
         props_t1 = self.calculate_properties(species_id, T1)
         props_t2 = self.calculate_properties(species_id, T2)
-
-        if not props_t1 or not props_t2:
-            return None
 
         return float(props_t2['h_relative'] - props_t1['h_relative'])
 
@@ -277,8 +293,10 @@ class ThermochemicalCalculator:
 
         results: dict[float, dict[str, Any]] = {}
         for temp in temps:
-            props = self.calculate_properties(species_id, temp)
-            if props:
+            try:
+                props = self.calculate_properties(species_id, temp)
                 results[temp] = props
+            except TemperatureOutOfRangeError:
+                pass  # skip temperatures outside valid range
 
         return results if results else None

@@ -106,7 +106,6 @@ exclude = ["tests/"]
 
 [tool.coverage.run]
 source = ["src/pyglenn"]
-omit = ["src/pyglenn/cli.py"]
 
 [tool.coverage.report]
 exclude_lines = [

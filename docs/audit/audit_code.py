@@ -172,12 +172,11 @@ def collect_data() -> dict[str, dict[str, Any]]:
             log.info('▶ Processing %s (%s)', py_name, plot_label)
             results[py_name] = {}
 
-            found = calc.get_available_species(py_name)
-            target = None
-            for sp in found:
-                if sp['name'] == py_name and sp['phase'] == 'gas':
-                    target = sp
-                    break
+            found = calc.get_available_species(py_name, exact_match=True)
+            # Filter by phase in case multiple phases exist (e.g. gas + liquid)
+            target = next(
+                (sp for sp in found if sp['phase'] == 'gas'), None
+            )
             if target is None:
                 log.warning('  ✗ %s not found in pyglenn database!', py_name)
                 continue
@@ -192,8 +191,9 @@ def collect_data() -> dict[str, dict[str, Any]]:
                 except ValueError:
                     continue
 
-                props = calc.calculate_properties(sid, Tk)
-                if props is None:
+                try:
+                    props = calc.calculate_properties(sid, Tk)
+                except ThermoCalcError:
                     continue
 
                 dh_py = props['h_relative'] - ref['coef']['H'] * 1000.0

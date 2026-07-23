@@ -3,7 +3,8 @@ include LICENSE
 include pyproject.toml
 
 recursive-include src/pyglenn/data *.inp
-recursive-include docs *.md *.txt
+# Docs are published via GitHub Pages — not needed in sdist
+# recursive-include docs *.md *.txt
 
 prune docs/build
 prune tests

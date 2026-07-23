@@ -1,0 +1,251 @@
+================================================================================
+RELATÓRIO DE INCONSISTÊNCIAS NO PYGLENN v0.1.9
+================================================================================
+Data: 2026-07-22
+Versão testada: pyglenn 0.1.9 (instalado via pip do GitHub ProfLeao/pyglenn)
+Banco de dados: thermo.db (~2030 espécies, ~3772 intervalos de temperatura)
+Ambiente: Python 3.13.11, conda env ct-env, Windows
+
+Contexto: Estas inconsistências foram descobertas durante a depuração do notebook
+"Melhorias_7_2_e_7_3_Analise_Avancada_AFT.ipynb", que utiliza pyglenn para
+cálculo da Temperatura Adiabática de Chama (AFT) via polinômios NASA Glenn.
+
+================================================================================
+INCONSISTÊNCIA 1 — get_available_species() retorna espécies erradas
+================================================================================
+
+Gravidade: CRÍTICA
+
+Descrição:
+  O método get_available_species(name) utiliza internamente uma busca SQL
+  do tipo LIKE '%name%' com LIMIT 20. Isso causa dois problemas:
+
+  (a) A busca LIKE retorna qualquer espécie que CONTENHA o termo no nome,
+      não apenas a correspondência exata. Por exemplo, buscar 'N2' retorna
+      Be3N2(L), Be3N2(a), Be3N2(b), C2N2, C4N2, etc. — NÃO o N2 molecular.
+
+  (b) O LIMIT 20 trunca os resultados, e a ordenação não prioriza
+      correspondências exatas. O N2 molecular (id=861, name='N2') está
+      na posição 17 de 38 resultados (ordenados por id), mas
+      get_available_species('N2') retorna apenas 20 resultados em uma
+      ordem NÃO ordenada por id, e o N2 molecular NÃO aparece entre eles.
+
+Evidência (IDs obtidos do cache via get_available_species):
+  ┌──────────┬──────────┬─────────────────────┬──────────────────┐
+  │ Consulta │ ID cache │ Nome real (SQLite)  │ Nome esperado    │
+  ├──────────┼──────────┼─────────────────────┼──────────────────┤
+  │ 'O2'     │ 69       │ AL2O2               │ O2               │
+  │ 'N2'     │ 1356     │ Be3N2(L)            │ N2               │
+  │ 'CO2'    │ 316      │ CO2                 │ CO2 ✓ (coincid.) │
+  │ 'H2O'    │ 672      │ H2O                 │ H2O ✓ (coincid.) │
+  │ 'CO'     │ 307      │ CO                  │ CO ✓ (coincid.)  │
+  │ 'CH4'    │ 296      │ CH4                 │ CH4 ✓ (coincid.) │
+  │ 'H2'     │ 32       │ ALH2                │ H2               │
+  │ 'OH'     │ 412      │ (CH3COOH)2          │ OH               │
+  │ 'NO'     │ 394      │ C3H8O,1propanol     │ NO               │
+  └──────────┴──────────┴─────────────────────┴──────────────────┘
+
+  5 de 9 consultas retornaram a espécie ERRADA (56% de falha).
+  Apenas CO2, H2O, CO e CH4 acertaram por coincidência — seus nomes
+  são suficientemente específicos para aparecerem primeiro.
+
+Análise detalhada para 'N2':
+  - Total de espécies com 'N2' no nome (SQLite): 38
+  - Resultados retornados por get_available_species('N2'): 20
+  - Posição do N2 molecular (id=861) ordenado por id: 17ª
+  - Resultados de get_available_species('N2') em ordem real:
+    [0]  id=1356  Be3N2(L)      ← ERRADO (precisa T > 2473 K!)
+    [1]  id=1354  Be3N2(a)
+    [2]  id=1355  Be3N2(b)
+    [3]  id=376   C2N2
+    [4]  id=419   C4N2
+    [5]  id=369   CH3N2CH3
+    [6]  id=717   In2Br2
+    [7]  id=718   In2Br4
+    [8]  id=719   In2Br6
+    [9]  id=720   In2CL2
+    [10] id=721   In2CL4
+    [11] id=722   In2CL6
+    [12] id=723   In2F2
+    [13] id=724   In2F4
+    [14] id=725   In2F6
+    [15] id=726   In2I2
+    [16] id=727   In2I4
+    [17] id=728   In2I6
+    [18] id=729   In2O
+    [19] id=1544  In2O3(L)
+  - N2 molecular (id=861): NÃO PRESENTE nos 20 resultados!
+
+Consequência prática:
+  Ao chamar calculate_properties(1356, 1000), o pyglenn tenta calcular
+  propriedades do Be3N2(L) a 1000 K, mas o intervalo válido para esta
+  espécie é apenas [(2473.0, 6000.0)]. Resultado: retorna None, causando
+  TypeError ao tentar acessar result['h_relative'].
+
+Solução implementada no notebook (workaround):
+  Consulta SQLite direta com WHERE UPPER(name) = ? para match exato,
+  ignorando completamente get_available_species().
+
+Sugestão de correção no pyglenn:
+  - Adicionar opção de busca exata (exact_match=True) em get_available_species
+  - OU ordenar resultados priorizando correspondências exatas (name = query)
+  - OU aumentar/documentar o LIMIT e permitir paginação
+  - OU expor o caminho do banco de dados para consultas diretas
+
+
+================================================================================
+INCONSISTÊNCIA 2 — calculate_properties() retorna None em fronteiras
+================================================================================
+
+Gravidade: ALTA
+
+Descrição:
+  O método calculate_properties(species_id, T) retorna None quando a
+  temperatura está EXATAMENTE no limite entre dois intervalos de
+  temperatura (ex: 1000.0 K, 6000.0 K). Isso é inconsistente porque:
+  (a) O mesmo valor de temperatura às vezes funciona (comportamento
+      não determinístico, possivelmente dependente do estado da conexão
+      SQLite ou da ordem de carregamento dos intervalos).
+  (b) O método emite um aviso de "out of valid range" mas retorna None
+      em vez de escolher um dos dois intervalos adjacentes.
+
+Evidência:
+  ┌──────────┬──────────┬──────────────────────────────────────────┐
+  │ Espécie  │ T (K)    │ Comportamento                            │
+  ├──────────┼──────────┼──────────────────────────────────────────┤
+  │ CO2      │ 999.9    │ OK: h=-360113.57 J/mol                   │
+  │ CO2      │ 1000.0   │ None + aviso (limite entre intervalos)   │
+  │ CO2      │ 1000.1   │ OK: h=-360102.70 J/mol                   │
+  │ H2O      │ 999.9    │ OK: h=27653.01 J/mol                     │
+  │ H2O      │ 1000.0   │ None + aviso (limite entre intervalos)   │
+  │ H2O      │ 1000.1   │ OK: h=27668.42 J/mol                     │
+  │ N2       │ 999.9    │ OK (com species_id correto)              │
+  │ N2       │ 1000.0   │ None + aviso (limite entre intervalos)   │
+  │ N2       │ 1000.1   │ OK (com species_id correto)              │
+  │ O2       │ 999.9    │ OK: h=-347856.72 J/mol                   │
+  │ O2       │ 1000.0   │ None + aviso (limite entre intervalos)   │
+  │ O2       │ 1000.1   │ OK: h=-347839.96 J/mol                   │
+  └──────────┴──────────┴──────────────────────────────────────────┘
+
+  Intervalos disponíveis (exemplo CO2):
+    [(200.0, 1000.0), (1000.0, 6000.0), (6000.0, 20000.0)]
+
+  Aviso emitido:
+    "Temperature 1000.0 K out of valid range for species 'CO2'.
+     Available intervals: [(200.0, 1000.0), (1000.0, 6000.0),
+     (6000.0, 20000.0)]"
+
+  Nota: 1000.0 aparece COMO LIMITE SUPERIOR do primeiro intervalo
+  E COMO LIMITE INFERIOR do segundo. O método deveria aceitar 1000.0
+  em qualquer um dos dois, mas rejeita em ambos.
+
+Análise do código-fonte (thermo.py original, linhas 38-43):
+  if temp >= 200 and temp <= 1000:
+      key_temp = 'A'
+  elif temp > 1000 and temp <= 6000:
+      key_temp = 'B'
+  elif temp > 6000:
+      key_temp = 'C'
+
+  Na versão original (sem SQLite), 1000.0 é corretamente classificado
+  como intervalo 'A' (temp <= 1000). O bug foi INTRODUZIDO na v0.1.9
+  com a migração para SQLite — a lógica de seleção de intervalo no
+  SQL parece usar comparações diferentes (possivelmente >= e < em vez
+  de >= e <=, ou comparação com float tem problema de precisão).
+
+Consequência prática:
+  O método fsolve do SciPy (usado para calcular AFT) faz múltiplas
+  avaliações da função de resíduo, frequentemente testando T=1000 K
+  como palpite inicial. O retorno None quebra a execução com TypeError.
+
+Solução implementada no notebook (workaround):
+  Criado wrapper glenn_h() que tenta calculate_properties(sid, T) e,
+  se retornar None, tenta novamente com T+1e-6, T-1e-6, T+1e-3, T-1e-3.
+
+Sugestão de correção no pyglenn:
+  - Garantir que temperaturas exatamente no limite sejam aceitas em
+    qualquer um dos intervalos adjacentes (preferência: intervalo inferior)
+  - OU usar tolerância na comparação (ex: temp <= 1000.0 + 1e-9)
+  - NUNCA retornar None silenciosamente; lançar exceção específica com
+    mensagem clara
+
+
+================================================================================
+INCONSISTÊNCIA 3 — Ordenação não determinística dos resultados
+================================================================================
+
+Gravidade: MÉDIA
+
+Descrição:
+  A ordem dos resultados de get_available_species() não segue nenhum
+  critério documentado (nem alfabético, nem por ID, nem por relevância).
+  Isso torna IMPREVISÍVEL qual espécie será retornada como resultado[0].
+
+Evidência:
+  Resultados de get_available_species('N2') NÃO estão ordenados por id:
+    id=1356, id=1354, id=1355, id=376, id=419, id=369, id=717, ...
+  
+  Ordenação por id (SQL: ORDER BY id) seria:
+    id=369, id=376, id=419, id=717, ..., id=861 (N2), ...
+
+  A ordem atual parece ser a ordem de inserção no banco de dados
+  (rowid), que não tem significado semântico.
+
+Sugestão de correção no pyglenn:
+  - Ordenar resultados por nome exato primeiro, depois por nome
+  - OU ordenar por ID
+  - OU documentar claramente o critério de ordenação
+
+
+================================================================================
+INCONSISTÊNCIA 4 — Comportamento não determinístico de calculate_properties
+================================================================================
+
+Gravidade: BAIXA (mas preocupante)
+
+Descrição:
+  Durante os testes, CO2 a 1000.0 K retornou valor válido em uma
+  execução e None em outra, sem alteração de código. Isso sugere que
+  o comportamento depende do estado interno da conexão SQLite ou da
+  ordem em que as espécies são carregadas.
+
+  Possível causa: A conexão SQLite pode estar em um estado diferente
+  dependendo de consultas anteriores (ex: prepared statements,
+  cache interno do SQLite).
+
+Sugestão de correção no pyglenn:
+  - Garantir que calculate_properties seja puramente determinístico
+  - Adicionar testes unitários para temperaturas de fronteira
+
+
+================================================================================
+RESUMO DAS RECOMENDAÇÕES DE CORREÇÃO
+================================================================================
+
+Prioridade CRÍTICA:
+  1. Corrigir get_available_species() para permitir busca por nome EXATO,
+     não apenas LIKE '%nome%'. Sugestão: adicionar parâmetro exact_match=False
+     (default mantém comportamento atual para compatibilidade).
+
+  2. Corrigir calculate_properties() para NUNCA retornar None silenciosamente.
+     Temperaturas exatamente no limite entre intervalos devem ser aceitas.
+     Se a temperatura estiver realmente fora de todos os intervalos, lançar
+     uma exceção específica (ex: TemperatureOutOfRangeError).
+
+Prioridade ALTA:
+  3. Documentar a limitação de 20 resultados em get_available_species()
+     e permitir paginação ou aumentar o limite.
+
+  4. Ordenar resultados de get_available_species() de forma previsível
+     (ex: correspondências exatas primeiro, depois ordenação alfabética).
+
+Prioridade MÉDIA:
+  5. Expor o caminho do banco de dados (thermo.db) via API pública para
+     permitir consultas SQL diretas pelos usuários.
+
+  6. Adicionar testes unitários para temperaturas de fronteira em todas
+     as ~2030 espécies.
+
+================================================================================
+FIM DO RELATÓRIO
+================================================================================

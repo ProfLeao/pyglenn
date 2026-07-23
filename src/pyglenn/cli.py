@@ -105,14 +105,16 @@ def cmd_query(args: argparse.Namespace) -> None:
             )
             print('-' * 70)
             for T in [298.15, 500, 1000, 1500]:
-                props = calc.calculate_properties(species_id, T)
-                if props:
-                    print(
-                        f'{props["temperature"]:>8.2f} | '
-                        f'{props["cp"]:>14.3f} | '
-                        f'{props["h_relative"]:>14.1f} | '
-                        f'{props["s"]:>14.3f}'
-                    )
+                try:
+                    props = calc.calculate_properties(species_id, T)
+                except ThermoCalcError:
+                    continue
+                print(
+                    f'{props["temperature"]:>8.2f} | '
+                    f'{props["cp"]:>14.3f} | '
+                    f'{props["h_relative"]:>14.1f} | '
+                    f'{props["s"]:>14.3f}'
+                )
 
             h_f = calc.calculate_formation_enthalpy(species_id)
             if h_f is not None:

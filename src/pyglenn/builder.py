@@ -58,7 +58,8 @@ class ThermoDBBuilder:
     # ------------------------------------------------------------------
     def create_tables(self) -> None:
         """Create the normalised table structure."""
-        assert self.cursor is not None, 'Database not connected'
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS species (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -100,7 +101,8 @@ class ThermoDBBuilder:
             )
         """)
 
-        assert self.cursor is not None
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS file_metadata (
                 id INTEGER PRIMARY KEY,
@@ -291,7 +293,8 @@ class ThermoDBBuilder:
     # ------------------------------------------------------------------
     def parse_and_load(self) -> None:
         """Parse the thermo.inp file and populate the database."""
-        assert self.cursor is not None, 'Database not connected'
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
         lines = self.read_thermo_file()
 
         if not lines:
@@ -474,12 +477,14 @@ class ThermoDBBuilder:
                 i += 1
 
         # Final metadata update
-        assert self.cursor is not None
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
         self.cursor.execute(
             'UPDATE file_metadata SET total_species = ? WHERE id = 1',
             (species_count,),
         )
-        assert self.conn is not None
+        if self.conn is None:
+            raise RuntimeError('Database not connected')
         self.conn.commit()
 
         logger.info('=' * 70)
