@@ -463,6 +463,58 @@ def test_get_properties_range(calc: ThermochemicalCalculator) -> None:
     assert results[500.0].cp > results[298.15].cp
 
 
+def test_calculate_properties_range_typed(calc: ThermochemicalCalculator) -> None:
+    """Typed range API loads data once and preserves input order."""
+    species = calc.get_available_species('O2', exact_match=True)
+    species_id = species[0].id
+
+    results = calc.calculate_properties_range(
+        species_id, [500.0, 298.15, 1500.0]
+    )
+    assert [r.temperature for r in results] == [500.0, 298.15, 1500.0]
+
+    scalar = calc.calculate_properties(species_id, 500.0)
+    assert results[0] == scalar
+
+
+def test_calculate_properties_range_skips_out_of_range(
+    calc: ThermochemicalCalculator,
+) -> None:
+    """Non-strict range API skips out-of-range temperatures."""
+    species = calc.get_available_species('O2', exact_match=True)
+    species_id = species[0].id
+
+    results = calc.calculate_properties_range(species_id, [100.0, 500.0, 7000.0])
+    assert [r.temperature for r in results] == [500.0]
+
+
+def test_calculate_properties_range_strict_raises(
+    calc: ThermochemicalCalculator,
+) -> None:
+    """Strict range API raises on the first out-of-range temperature."""
+    species = calc.get_available_species('O2', exact_match=True)
+    species_id = species[0].id
+
+    with pytest.raises(TemperatureOutOfRangeError):
+        calc.calculate_properties_range(species_id, [500.0, 7000.0], strict=True)
+
+
+def test_exception_context(calc: ThermochemicalCalculator) -> None:
+    """Specialised exceptions carry diagnostic context attributes."""
+    species = calc.get_available_species('O2', exact_match=True)
+    species_id = species[0].id
+
+    with pytest.raises(SpeciesNotFoundError) as exc_info:
+        calc.calculate_properties(99999, 300.0)
+    assert exc_info.value.species_id == 99999
+
+    with pytest.raises(TemperatureOutOfRangeError) as exc_info:
+        calc.calculate_properties(species_id, 100.0)
+    assert exc_info.value.temperature == 100.0
+    assert exc_info.value.species_name == 'O2'
+    assert exc_info.value.temp_bounds == (200.0, 6000.0)
+
+
 # ---------------------------------------------------------------------------
 # Test: Database statistics
 # ---------------------------------------------------------------------------

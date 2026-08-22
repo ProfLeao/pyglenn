@@ -462,6 +462,30 @@ class ThermoDBQuery:
             return None
         return SpeciesInfo.from_mapping(row)
 
+    def get_temperature_bounds(
+        self, species_id: int
+    ) -> tuple[float, float] | None:
+        """Return the overall [temp_min, temp_max] covered by a species.
+
+        Args:
+            species_id: Database ID of the species.
+
+        Returns:
+            Tuple of (min_temp, max_temp), or None if the species has no
+            intervals.
+        """
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        self.cursor.execute(
+            'SELECT MIN(temp_min), MAX(temp_max) FROM temperature_intervals '
+            'WHERE species_id = ?',
+            (species_id,),
+        )
+        row = self.cursor.fetchone()
+        if row is None or row[0] is None or row[1] is None:
+            return None
+        return (row[0], row[1])
+
     def get_species_for_temperature(
         self, species_id: int, temperature: float
     ) -> IntervalData | None:

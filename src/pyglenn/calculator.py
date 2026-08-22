@@ -13,11 +13,12 @@ All values returned as floats in standard units:
 from __future__ import annotations
 
 import logging
+from collections.abc import Sequence
 from importlib import resources
 from typing import Any
 
 from .database import R_UNIVERSAL, ThermoDBQuery
-from .models import SpeciesInfo, ThermoProperties
+from .models import IntervalData, SpeciesInfo, ThermoProperties
 
 logger = logging.getLogger(__name__)
 
@@ -37,13 +38,33 @@ class DatabaseNotConnectedError(ThermoCalcError):
 class SpeciesNotFoundError(ThermoCalcError):
     """Raised when a species ID is not found in the database."""
 
-    pass
+    def __init__(self, species_id: int) -> None:
+        self.species_id = species_id
+        super().__init__(f'Species ID {species_id} not found in database')
 
 
 class TemperatureOutOfRangeError(ThermoCalcError):
-    """Raised when the requested temperature is outside valid intervals."""
+    """Raised when the requested temperature is outside valid intervals.
 
-    pass
+    Carries the requested temperature, the species name, and the overall
+    valid temperature bounds (when known).
+    """
+
+    def __init__(
+        self,
+        temperature: float,
+        species_name: str | None = None,
+        temp_bounds: tuple[float, float] | None = None,
+    ) -> None:
+        self.temperature = temperature
+        self.species_name = species_name
+        self.temp_bounds = temp_bounds
+        message = f'Temperature {temperature:.1f} K out of valid range'
+        if species_name:
+            message += f" for species '{species_name}'"
+        if temp_bounds is not None:
+            message += f' (valid range: {temp_bounds[0]:.1f}-{temp_bounds[1]:.1f} K)'
+        super().__init__(message)
 
 
 class ThermochemicalCalculator:
@@ -167,18 +188,14 @@ class ThermochemicalCalculator:
 
         species_info = self.db.get_species_info(species_id)
         if species_info is None:
-            raise SpeciesNotFoundError(
-                f'Species ID {species_id} not found in database'
-            )
+            raise SpeciesNotFoundError(species_id)
 
         interval_data = self.db.get_species_for_temperature(
             species_id, temperature
         )
         if interval_data is None:
-            raise TemperatureOutOfRangeError(
-                f'Temperature {temperature:.1f} K out of valid range '
-                f"for species '{species_info.name}'"
-            )
+            bounds = self.db.get_temperature_bounds(species_id)
+            raise TemperatureOutOfRangeError(temperature, species_info.name, bounds)
 
         coeffs = interval_data.coefficients
 
@@ -279,3 +296,97 @@ class ThermochemicalCalculator:
                 pass  # skip temperatures outside valid range
 
         return results if results else None
+
+    def calculate_properties_range(
+        self,
+        species_id: int,
+        temps: Sequence[float],
+        *,
+        strict: bool = False,
+    ) -> list[ThermoProperties]:
+        """Calculate properties for many temperatures, loading data once.
+
+        Unlike :meth:`get_properties_range`, this loads the species intervals
+        a single time and evaluates all temperatures in memory, preserving
+        input order.
+
+        Args:
+            species_id: Database ID of the species.
+            temps: Sequence of temperatures in Kelvin.
+            strict: If True, raise on an out-of-range temperature.
+                    If False (default), out-of-range values are skipped.
+
+        Returns:
+            Ordered list of ThermoProperties.
+
+        Raises:
+            DatabaseNotConnectedError: If not connected to database.
+            SpeciesNotFoundError: If species_id is not in the database.
+            TemperatureOutOfRangeError: If ``strict`` and a temperature is
+                outside the valid intervals.
+        """
+        if not self._connected:
+            raise DatabaseNotConnectedError(
+                'calculate_properties_range called without database connection'
+            )
+
+        species_info = self.db.get_species_info(species_id)
+        if species_info is None:
+            raise SpeciesNotFoundError(species_id)
+
+        species_data = self.db.get_species_data(species_id)
+        if species_data is None:
+            raise SpeciesNotFoundError(species_id)
+
+        intervals = species_data.intervals
+        bounds = ThermochemicalCalculator._overall_bounds(intervals)
+
+        results: list[ThermoProperties] = []
+        for temp in temps:
+            interval = ThermochemicalCalculator._select_interval(intervals, temp)
+            if interval is None:
+                if strict:
+                    raise TemperatureOutOfRangeError(
+                        temp, species_info.name, bounds
+                    )
+                continue
+
+            coeffs = interval.coefficients
+            cp_r = self.db.calculate_cp(coeffs, temp)
+            h_rt = self.db.calculate_h(coeffs, temp)
+            s_r = self.db.calculate_s(coeffs, temp)
+
+            results.append(
+                ThermoProperties(
+                    temperature=temp,
+                    cp=cp_r * self.r_ref,
+                    h_relative=h_rt * self.r_ref * temp,
+                    s=s_r * self.r_ref,
+                    temp_interval=(interval.temp_min, interval.temp_max),
+                    species_name=species_info.name,
+                    phase=species_info.phase,
+                )
+            )
+        return results
+
+    @staticmethod
+    def _select_interval(
+        intervals: tuple[IntervalData, ...], temperature: float
+    ) -> IntervalData | None:
+        """Return the first interval covering ``temperature``, or None."""
+        for interval in intervals:
+            if interval.temp_min <= temperature <= interval.temp_max + 1e-9:
+                return interval
+        return None
+
+    @staticmethod
+    def _overall_bounds(
+        intervals: tuple[IntervalData, ...],
+    ) -> tuple[float, float] | None:
+        """Return the overall [min, max] temperature covered by intervals."""
+        if not intervals:
+            return None
+        return (
+            min(interval.temp_min for interval in intervals),
+            max(interval.temp_max for interval in intervals),
+        )
