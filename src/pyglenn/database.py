@@ -226,9 +226,7 @@ class ThermoDBQuery:
             'WHERE ti.id IS NULL'
         )
         if orphans:
-            errors.append(
-                f'{orphans} coefficient row(s) reference a missing interval'
-            )
+            errors.append(f'{orphans} coefficient row(s) reference a missing interval')
 
         orphans = _scalar(
             'SELECT COUNT(*) FROM temperature_intervals ti '
@@ -236,18 +234,14 @@ class ThermoDBQuery:
             'WHERE s.id IS NULL'
         )
         if orphans:
-            errors.append(
-                f'{orphans} interval row(s) reference a missing species'
-            )
+            errors.append(f'{orphans} interval row(s) reference a missing species')
 
         dup = _scalar(
             'SELECT COUNT(*) FROM (SELECT interval_id, COUNT(*) AS n '
             'FROM coefficients GROUP BY interval_id) WHERE n != 1'
         )
         if dup:
-            errors.append(
-                f'{dup} interval(s) do not have exactly one coefficient row'
-            )
+            errors.append(f'{dup} interval(s) do not have exactly one coefficient row')
 
         mismatch = _scalar(
             'SELECT COUNT(*) FROM species s WHERE s.num_intervals != '
@@ -278,8 +272,7 @@ class ThermoDBQuery:
             errors.append(f'{bad_coeffs} coefficient set(s) contain NULL values')
 
         bad_names = _scalar(
-            "SELECT COUNT(*) FROM species "
-            "WHERE name LIKE '%.%D%' OR name LIKE '%.%E%'"
+            "SELECT COUNT(*) FROM species WHERE name LIKE '%.%D%' OR name LIKE '%.%E%'"
         )
         if bad_names:
             errors.append(
@@ -344,9 +337,7 @@ class ThermoDBQuery:
     # ------------------------------------------------------------------
     # Species lookup
     # ------------------------------------------------------------------
-    def find_species(
-        self, name: str, exact_match: bool = False
-    ) -> list[SpeciesInfo]:
+    def find_species(self, name: str, exact_match: bool = False) -> list[SpeciesInfo]:
         """Find species by name.
 
         Args:
@@ -485,9 +476,7 @@ class ThermoDBQuery:
             return None
         return SpeciesInfo.from_mapping(row)
 
-    def get_temperature_bounds(
-        self, species_id: int
-    ) -> tuple[float, float] | None:
+    def get_temperature_bounds(self, species_id: int) -> tuple[float, float] | None:
         """Return the overall [temp_min, temp_max] covered by a species.
 
         Args:

@@ -190,9 +190,7 @@ class ThermochemicalCalculator:
         if species_info is None:
             raise SpeciesNotFoundError(species_id)
 
-        interval_data = self.db.get_species_for_temperature(
-            species_id, temperature
-        )
+        interval_data = self.db.get_species_for_temperature(species_id, temperature)
         if interval_data is None:
             bounds = self.db.get_temperature_bounds(species_id)
             raise TemperatureOutOfRangeError(temperature, species_info.name, bounds)
@@ -346,9 +344,7 @@ class ThermochemicalCalculator:
             interval = ThermochemicalCalculator._select_interval(intervals, temp)
             if interval is None:
                 if strict:
-                    raise TemperatureOutOfRangeError(
-                        temp, species_info.name, bounds
-                    )
+                    raise TemperatureOutOfRangeError(temp, species_info.name, bounds)
                 continue
 
             coeffs = interval.coefficients

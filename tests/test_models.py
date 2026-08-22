@@ -22,8 +22,15 @@ def _coeffs() -> NASACoefficients:
 def test_nasa_coefficients_from_mapping_round_trip() -> None:
     """from_mapping and to_dict round-trip the nine coefficients."""
     mapping = {
-        'a1': 1.0, 'a2': 2.0, 'a3': 3.0, 'a4': 4.0, 'a5': 5.0,
-        'a6': 6.0, 'a7': 7.0, 'b1': 8.0, 'b2': 9.0,
+        'a1': 1.0,
+        'a2': 2.0,
+        'a3': 3.0,
+        'a4': 4.0,
+        'a5': 5.0,
+        'a6': 6.0,
+        'a7': 7.0,
+        'b1': 8.0,
+        'b2': 9.0,
     }
     coeffs = NASACoefficients.from_mapping(mapping)
     assert coeffs == _coeffs()
@@ -50,9 +57,7 @@ def test_species_info_from_sqlite_row() -> None:
             'CREATE TABLE species (id INTEGER, name TEXT, formula TEXT, '
             'phase TEXT, molecular_weight REAL)'
         )
-        conn.execute(
-            "INSERT INTO species VALUES (1, 'O2', 'O2', 'gas', 31.9988)"
-        )
+        conn.execute("INSERT INTO species VALUES (1, 'O2', 'O2', 'gas', 31.9988)")
         conn.commit()
         row = conn.execute('SELECT * FROM species').fetchone()
     finally:
@@ -93,9 +98,7 @@ def test_species_data_to_dict_preserves_nested_intervals() -> None:
         molecular_weight=31.9988,
         heat_of_formation_298K=0.0,
         num_intervals=1,
-        intervals=(
-            IntervalData(1, 200.0, 1000.0, 8680.0, _coeffs()),
-        ),
+        intervals=(IntervalData(1, 200.0, 1000.0, 8680.0, _coeffs()),),
     )
     payload = data.to_dict()
     assert payload['intervals'][0]['temp_min'] == 200.0

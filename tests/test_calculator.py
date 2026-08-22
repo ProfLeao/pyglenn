@@ -466,9 +466,7 @@ def test_calculate_properties_range_typed(calc: ThermochemicalCalculator) -> Non
     species = calc.get_available_species('O2', exact_match=True)
     species_id = species[0].id
 
-    results = calc.calculate_properties_range(
-        species_id, [500.0, 298.15, 1500.0]
-    )
+    results = calc.calculate_properties_range(species_id, [500.0, 298.15, 1500.0])
     assert [r.temperature for r in results] == [500.0, 298.15, 1500.0]
 
     scalar = calc.calculate_properties(species_id, 500.0)

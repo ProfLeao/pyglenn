@@ -157,7 +157,7 @@ def cmd_validate(args: argparse.Namespace) -> None:
         print('=' * 70)
         print('DATABASE VALIDATION')
         print('=' * 70)
-        print(f"  Valid: {report['valid']}")
+        print(f'  Valid: {report["valid"]}')
         if report['errors']:
             print('  Errors:')
             for err in report['errors']:
