@@ -102,6 +102,16 @@ pyglenn build -i thermo.inp -o thermo.db
 | `temperature_intervals` | Valid T ranges per species |
 | `coefficients` | NASA-7 polynomial coefficients (a1–a7, b1, b2) |
 | `file_metadata` | Global file metadata |
+| `metadata` | Dataset metadata, including its reference gas constant |
+
+## Gas Constants
+
+`R_UNIVERSAL = 8.31446261815324 J/(mol·K)` is the universal CODATA value and
+remains available through the compatibility alias `R`. NASA Glenn/CEA
+polynomials in newly built databases declare their fitted reference constant as
+`R_GLENN = 8.314510 J/(mol·K)` in SQLite metadata. The calculator reads that
+value automatically when it connects; legacy databases fall back to
+`R_UNIVERSAL` until explicitly migrated.
 
 ## Citing
 
