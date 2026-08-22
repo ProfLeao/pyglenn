@@ -16,7 +16,7 @@ import logging
 from importlib import resources
 from typing import Any
 
-from .database import R, ThermoDBQuery
+from .database import R_UNIVERSAL, ThermoDBQuery
 
 logger = logging.getLogger(__name__)
 
@@ -63,6 +63,7 @@ class ThermochemicalCalculator:
             db_file = str(db_path)
         self.db: ThermoDBQuery = ThermoDBQuery(db_file)
         self._connected: bool = False
+        self.r_ref: float = R_UNIVERSAL
 
     # ------------------------------------------------------------------
     # Context manager protocol
@@ -96,6 +97,7 @@ class ThermochemicalCalculator:
             True if connection succeeded, False otherwise.
         """
         if self.db.connect():
+            self.r_ref = self.db.get_gas_constant_ref()
             self._connected = True
             return True
         return False
@@ -104,6 +106,7 @@ class ThermochemicalCalculator:
         """Close the database connection."""
         self.db.close()
         self._connected = False
+        self.r_ref = R_UNIVERSAL
 
     # ------------------------------------------------------------------
     # Species lookup
@@ -203,9 +206,9 @@ class ThermochemicalCalculator:
         s_r = self.db.calculate_s(coeffs, temperature)
 
         # Convert to absolute units
-        cp = cp_r * R  # J/(mol·K)
-        h_relative = h_rt * R * temperature  # J/mol
-        s = s_r * R  # J/(mol·K)
+        cp = cp_r * self.r_ref  # J/(mol·K)
+        h_relative = h_rt * self.r_ref * temperature  # J/mol
+        s = s_r * self.r_ref  # J/(mol·K)
 
         return {
             'temperature': temperature,

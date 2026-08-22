@@ -16,13 +16,15 @@ from .calculator import (
     ThermoCalcError,
     ThermochemicalCalculator,
 )
-from .database import R, ThermoDBQuery
+from .database import R, R_GLENN, R_UNIVERSAL, ThermoDBQuery
 
 __all__ = [
     'ThermochemicalCalculator',
     'ThermoDBQuery',
     'ThermoDBBuilder',
     'R',
+    'R_UNIVERSAL',
+    'R_GLENN',
     'ThermoCalcError',
     'DatabaseNotConnectedError',
     'SpeciesNotFoundError',

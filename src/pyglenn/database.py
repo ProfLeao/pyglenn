@@ -14,8 +14,15 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-# Physical constant: Universal gas constant
-R: float = 8.314462618  # J/(mol·K) — CODATA 2018 value
+# Gas constants in J/(mol·K).  The bundled NASA Glenn/CEA polynomials were
+# fitted with R_GLENN; R remains a compatibility alias for the universal value.
+R_UNIVERSAL: float = 8.31446261815324  # CODATA 2018/2022
+R_GLENN: float = 8.314510  # NASA Glenn/CEA thermo.inp, CODATA 1986
+R: float = R_UNIVERSAL
+
+GAS_CONSTANT_REF_KEY = 'gas_constant_ref'
+GAS_CONSTANT_REF_SOURCE_KEY = 'gas_constant_ref_source'
+R_GLENN_SOURCE = 'NASA Glenn/CEA thermo.inp (CODATA 1986)'
 
 
 class ThermoDBQuery:
@@ -47,6 +54,92 @@ class ThermoDBQuery:
             self.conn.close()
             self.conn = None
             self.cursor = None
+
+    # ------------------------------------------------------------------
+    # Dataset metadata
+    # ------------------------------------------------------------------
+    def _metadata_table_exists(self) -> bool:
+        """Return whether this database has the additive metadata table."""
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        self.cursor.execute(
+            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?",
+            ('metadata',),
+        )
+        return self.cursor.fetchone() is not None
+
+    def get_gas_constant_ref(self) -> float:
+        """Return the dataset gas constant, with a safe legacy fallback.
+
+        Legacy databases without valid metadata retain the historic universal
+        constant. Database errors are deliberately allowed to propagate instead
+        of being mistaken for a legacy-database condition.
+        """
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        if not self._metadata_table_exists():
+            logger.warning(
+                "database has no 'metadata' table; falling back to R_UNIVERSAL"
+            )
+            return R_UNIVERSAL
+
+        self.cursor.execute(
+            'SELECT value FROM metadata WHERE key = ?', (GAS_CONSTANT_REF_KEY,)
+        )
+        row = self.cursor.fetchone()
+        if row is None:
+            logger.warning(
+                "metadata key 'gas_constant_ref' not found; falling back to R_UNIVERSAL"
+            )
+            return R_UNIVERSAL
+
+        try:
+            r_ref = float(row[0])
+        except (TypeError, ValueError):
+            logger.warning(
+                "metadata key 'gas_constant_ref' is invalid; "
+                'falling back to R_UNIVERSAL'
+            )
+            return R_UNIVERSAL
+
+        if math.isfinite(r_ref) and 8.0 < r_ref < 9.0:
+            return r_ref
+
+        logger.warning(
+            'metadata gas_constant_ref=%r is implausible; falling back to R_UNIVERSAL',
+            r_ref,
+        )
+        return R_UNIVERSAL
+
+    def migrate_metadata(self) -> None:
+        """Add canonical dataset metadata to a connected legacy database.
+
+        This explicit, idempotent operation changes only the additive
+        ``metadata`` table. It never rebuilds or alters thermochemical rows.
+        """
+        if self.cursor is None or self.conn is None:
+            raise RuntimeError('Database not connected')
+
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS metadata (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL
+            )
+            """
+        )
+        self.cursor.executemany(
+            """
+            INSERT INTO metadata (key, value)
+            VALUES (?, ?)
+            ON CONFLICT(key) DO UPDATE SET value = excluded.value
+            """,
+            [
+                (GAS_CONSTANT_REF_KEY, str(R_GLENN)),
+                (GAS_CONSTANT_REF_SOURCE_KEY, R_GLENN_SOURCE),
+            ],
+        )
+        self.conn.commit()
 
     # ------------------------------------------------------------------
     # Statistics
