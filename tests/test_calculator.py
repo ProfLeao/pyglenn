@@ -242,7 +242,7 @@ def test_reference_gas_constant_legacy_fallback_and_migration(
     assert q.get_gas_constant_ref() == R_GLENN
     assert q.cursor is not None
     metadata = dict(q.cursor.execute('SELECT key, value FROM metadata').fetchall())
-    assert metadata['gas_constant_ref'] == str(R_GLENN)
+    assert metadata['gas_constant_ref'] == '8.314510'
     assert (
         metadata['gas_constant_ref_source'] == 'NASA Glenn/CEA thermo.inp (CODATA 1986)'
     )
@@ -476,6 +476,40 @@ def test_database_statistics(calc: ThermochemicalCalculator) -> None:
     assert stats['total_coeff_sets'] == 2
     assert stats['species_by_phase'] == {'gas': 1}
     assert stats['avg_molecular_weight'] == pytest.approx(31.9988)
+
+
+def test_validate_database_valid(calc: ThermochemicalCalculator) -> None:
+    """A well-formed database passes all integrity checks."""
+    report = calc.db.validate_database()
+    assert report['valid'] is True
+    assert report['errors'] == []
+    assert report['counts']['total_species'] == 1
+
+
+def test_validate_database_detects_orphan_coefficients(
+    sample_db_path: Path,
+) -> None:
+    """Integrity checks flag coefficients without a matching interval."""
+    conn = sqlite3.connect(str(sample_db_path))
+    try:
+        conn.execute('PRAGMA foreign_keys = OFF')
+        conn.execute(
+            'INSERT INTO coefficients '
+            '(interval_id, a1, a2, a3, a4, a5, a6, a7, b1, b2) '
+            'VALUES (99999, 1, 2, 3, 4, 5, 6, 7, 8, 9)'
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    q = ThermoDBQuery(str(sample_db_path))
+    q.connect()
+    try:
+        report = q.validate_database()
+        assert report['valid'] is False
+        assert any('missing interval' in e for e in report['errors'])
+    finally:
+        q.close()
 
 
 # ---------------------------------------------------------------------------

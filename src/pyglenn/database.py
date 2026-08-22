@@ -22,6 +22,7 @@ R: float = R_UNIVERSAL
 
 GAS_CONSTANT_REF_KEY = 'gas_constant_ref'
 GAS_CONSTANT_REF_SOURCE_KEY = 'gas_constant_ref_source'
+GAS_CONSTANT_REF_VALUE = '8.314510'  # canonical text form of R_GLENN
 R_GLENN_SOURCE = 'NASA Glenn/CEA thermo.inp (CODATA 1986)'
 
 
@@ -135,11 +136,139 @@ class ThermoDBQuery:
             ON CONFLICT(key) DO UPDATE SET value = excluded.value
             """,
             [
-                (GAS_CONSTANT_REF_KEY, str(R_GLENN)),
+                (GAS_CONSTANT_REF_KEY, GAS_CONSTANT_REF_VALUE),
                 (GAS_CONSTANT_REF_SOURCE_KEY, R_GLENN_SOURCE),
             ],
         )
         self.conn.commit()
+
+    # ------------------------------------------------------------------
+    # Database validation
+    # ------------------------------------------------------------------
+    def validate_database(self) -> dict[str, Any]:
+        """Run integrity and semantic checks and return a validation report.
+
+        Returns:
+            Dict with ``valid`` (bool), ``errors`` (list[str]),
+            ``warnings`` (list[str]), and ``counts`` (dict[str, int]).
+        """
+        if self.cursor is None or self.conn is None:
+            raise RuntimeError('Database not connected')
+
+        cur = self.cursor
+        errors: list[str] = []
+        warnings: list[str] = []
+        counts: dict[str, int] = {}
+
+        def _scalar(sql: str, params: tuple = ()) -> int:
+            cur.execute(sql, params)
+            return int(cur.fetchone()[0])
+
+        missing = []
+        for table in ('species', 'temperature_intervals', 'coefficients'):
+            cur.execute(
+                "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",
+                (table,),
+            )
+            if cur.fetchone() is None:
+                missing.append(table)
+
+        if missing:
+            errors.append('missing required table(s): ' + ', '.join(missing))
+            return {
+                'valid': False,
+                'errors': errors,
+                'warnings': warnings,
+                'counts': {},
+            }
+
+        counts['total_species'] = _scalar('SELECT COUNT(*) FROM species')
+        counts['total_intervals'] = _scalar(
+            'SELECT COUNT(*) FROM temperature_intervals'
+        )
+        counts['total_coeff_sets'] = _scalar('SELECT COUNT(*) FROM coefficients')
+
+        orphans = _scalar(
+            'SELECT COUNT(*) FROM coefficients c '
+            'LEFT JOIN temperature_intervals ti ON c.interval_id = ti.id '
+            'WHERE ti.id IS NULL'
+        )
+        if orphans:
+            errors.append(
+                f'{orphans} coefficient row(s) reference a missing interval'
+            )
+
+        orphans = _scalar(
+            'SELECT COUNT(*) FROM temperature_intervals ti '
+            'LEFT JOIN species s ON ti.species_id = s.id '
+            'WHERE s.id IS NULL'
+        )
+        if orphans:
+            errors.append(
+                f'{orphans} interval row(s) reference a missing species'
+            )
+
+        dup = _scalar(
+            'SELECT COUNT(*) FROM (SELECT interval_id, COUNT(*) AS n '
+            'FROM coefficients GROUP BY interval_id) WHERE n != 1'
+        )
+        if dup:
+            errors.append(
+                f'{dup} interval(s) do not have exactly one coefficient row'
+            )
+
+        mismatch = _scalar(
+            'SELECT COUNT(*) FROM species s WHERE s.num_intervals != '
+            '(SELECT COUNT(*) FROM temperature_intervals ti '
+            'WHERE ti.species_id = s.id)'
+        )
+        if mismatch:
+            errors.append(
+                f'{mismatch} species have num_intervals disagreeing '
+                'with actual interval rows'
+            )
+
+        bad_bounds = _scalar(
+            'SELECT COUNT(*) FROM temperature_intervals '
+            'WHERE temp_min IS NULL OR temp_max IS NULL OR temp_min >= temp_max'
+        )
+        if bad_bounds:
+            errors.append(
+                f'{bad_bounds} interval(s) have non-finite or unordered bounds'
+            )
+
+        bad_coeffs = _scalar(
+            'SELECT COUNT(*) FROM coefficients WHERE a1 IS NULL OR a2 IS NULL '
+            'OR a3 IS NULL OR a4 IS NULL OR a5 IS NULL OR a6 IS NULL '
+            'OR a7 IS NULL OR b1 IS NULL OR b2 IS NULL'
+        )
+        if bad_coeffs:
+            errors.append(f'{bad_coeffs} coefficient set(s) contain NULL values')
+
+        bad_names = _scalar(
+            "SELECT COUNT(*) FROM species "
+            "WHERE name LIKE '%.%D%' OR name LIKE '%.%E%'"
+        )
+        if bad_names:
+            errors.append(
+                f'{bad_names} species name(s) look like FORTRAN coefficient tokens'
+            )
+
+        bad_mw = _scalar(
+            'SELECT COUNT(*) FROM species '
+            'WHERE molecular_weight IS NULL OR molecular_weight <= 0'
+        )
+        if bad_mw:
+            warnings.append(
+                f'{bad_mw} species have NULL or non-positive molecular weight'
+            )
+
+        return {
+            'valid': not errors,
+            'errors': errors,
+            'warnings': warnings,
+            'counts': counts,
+        }
 
     # ------------------------------------------------------------------
     # Statistics

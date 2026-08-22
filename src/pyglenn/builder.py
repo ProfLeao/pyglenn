@@ -24,7 +24,7 @@ from typing import Any
 from .database import (
     GAS_CONSTANT_REF_KEY,
     GAS_CONSTANT_REF_SOURCE_KEY,
-    R_GLENN,
+    GAS_CONSTANT_REF_VALUE,
     R_GLENN_SOURCE,
 )
 
@@ -148,7 +148,7 @@ class ThermoDBBuilder:
             ON CONFLICT(key) DO UPDATE SET value = excluded.value
             """,
             [
-                (GAS_CONSTANT_REF_KEY, str(R_GLENN)),
+                (GAS_CONSTANT_REF_KEY, GAS_CONSTANT_REF_VALUE),
                 (GAS_CONSTANT_REF_SOURCE_KEY, R_GLENN_SOURCE),
             ],
         )

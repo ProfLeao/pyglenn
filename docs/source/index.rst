@@ -54,7 +54,7 @@ Features
 ========
 
 - Compute :math:`C_p(T)`, :math:`H^\circ(T)`, :math:`S^\circ(T)` for any species
-- SQLite database bundled with **~2030 species, 3772 temperature intervals** — no setup needed
+- SQLite database bundled with **2,035 species, 3,779 temperature intervals** — no setup needed
 - CLI interface for quick lookups
 - Temperature range validation
 

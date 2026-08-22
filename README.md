@@ -18,7 +18,7 @@ Computes **Cp(T)**, **H°(T)**, **S°(T)** from NASA polynomial coefficients sto
 - Enthalpy of formation lookup
 - Enthalpy change between two temperatures
 - Command-line interface
-- ~2030 species, 3772 temperature intervals
+- 2,035 species, 3,779 temperature intervals
 
 ## Installation
 
