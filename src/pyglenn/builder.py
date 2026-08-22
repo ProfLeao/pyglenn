@@ -15,10 +15,18 @@ Records 3–5 repeat for each temperature interval.
 from __future__ import annotations
 
 import logging
+import math
 import re
 import sqlite3
 from pathlib import Path
 from typing import Any
+
+from .database import (
+    GAS_CONSTANT_REF_KEY,
+    GAS_CONSTANT_REF_SOURCE_KEY,
+    R_GLENN,
+    R_GLENN_SOURCE,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -115,8 +123,35 @@ class ThermoDBBuilder:
             )
         """)
 
+        self.cursor.execute("""
+            CREATE TABLE IF NOT EXISTS metadata (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL
+            )
+        """)
+
         assert self.conn is not None
         self.conn.commit()
+
+    def write_metadata(self) -> None:
+        """Write canonical dataset metadata using idempotent upserts.
+
+        The method intentionally does not commit; callers can include metadata
+        writes in the same transaction as a database build.
+        """
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        self.cursor.executemany(
+            """
+            INSERT INTO metadata (key, value)
+            VALUES (?, ?)
+            ON CONFLICT(key) DO UPDATE SET value = excluded.value
+            """,
+            [
+                (GAS_CONSTANT_REF_KEY, str(R_GLENN)),
+                (GAS_CONSTANT_REF_SOURCE_KEY, R_GLENN_SOURCE),
+            ],
+        )
 
     # ------------------------------------------------------------------
     # Low-level parsers
@@ -288,12 +323,90 @@ class ThermoDBBuilder:
         """
         return bool(_FORTRAN_D_RE.search(line))
 
+    @staticmethod
+    def is_species_header(line: str) -> bool:
+        """Return whether a line can be a species-identification record.
+
+        A coefficient line can fit entirely inside the fixed-width species-name
+        field.  It must therefore be rejected explicitly, rather than relying
+        on whitespace in the apparent name.
+        """
+        name, _ = ThermoDBBuilder.parse_species_record(line)
+        return (
+            bool(name)
+            and len(name.split()) == 1
+            and not ThermoDBBuilder.is_temperature_line(line)
+            and not ThermoDBBuilder.is_coefficient_line(line)
+        )
+
+    @staticmethod
+    def _has_finite_coefficients(coeffs: dict[str, Any]) -> bool:
+        """Return whether a parsed NASA-7 coefficient set is complete."""
+        return all(
+            isinstance(value, (int, float)) and math.isfinite(value)
+            for value in coeffs.values()
+        )
+
+    def _parse_intervals(
+        self, lines: list[str], start: int, num_intervals: int
+    ) -> tuple[list[tuple[dict[str, Any], dict[str, Any]]], int] | None:
+        """Parse a complete set of interval records without modifying the DB.
+
+        Returning ``None`` leaves the caller free to resynchronise at a later
+        verified species header.  This prevents a malformed block from creating
+        a partial species or from turning coefficient lines into new species.
+        """
+        intervals: list[tuple[dict[str, Any], dict[str, Any]]] = []
+        index = start
+
+        for _ in range(num_intervals):
+            if index + 2 >= len(lines):
+                logger.warning('Incomplete interval records at line %d', index + 1)
+                return None
+            if not self.is_temperature_line(lines[index]):
+                logger.warning(
+                    'Invalid temperature interval record at line %d', index + 1
+                )
+                return None
+
+            interval = self.parse_temp_interval_record(lines[index])
+            coefficients_lines = lines[index + 1 : index + 3]
+            if not all(self.is_coefficient_line(line) for line in coefficients_lines):
+                logger.warning('Invalid coefficient records at line %d', index + 2)
+                return None
+
+            coefficients = self.parse_coefficients_record(coefficients_lines)
+            temp_min = interval['temp_min']
+            temp_max = interval['temp_max']
+            if (
+                not isinstance(temp_min, float)
+                or not isinstance(temp_max, float)
+                or not math.isfinite(temp_min)
+                or not math.isfinite(temp_max)
+                or temp_min >= temp_max
+                or not self._has_finite_coefficients(coefficients)
+            ):
+                logger.warning('Invalid interval values at line %d', index + 1)
+                return None
+
+            intervals.append((interval, coefficients))
+            index += 3
+
+        return intervals, index
+
     # ------------------------------------------------------------------
     # Main parse & load
     # ------------------------------------------------------------------
     def parse_and_load(self) -> None:
-        """Parse the thermo.inp file and populate the database."""
+        """Parse the thermo.inp file and populate the database atomically.
+
+        A species is inserted only after every declared interval and its two
+        coefficient records have been parsed and validated.  Malformed blocks
+        are skipped without leaving partial rows behind.
+        """
         if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        if self.conn is None:
             raise RuntimeError('Database not connected')
         lines = self.read_thermo_file()
 
@@ -301,62 +414,65 @@ class ThermoDBBuilder:
             logger.warning('Empty thermo.inp file!')
             return
 
-        # --- Global metadata (line index 1) ---
         metadata_line = lines[1] if len(lines) > 1 else ''
-        parts = metadata_line.split()
-        if len(parts) >= 4:
-            self.cursor.execute(
-                """
-                INSERT INTO file_metadata
-                    (id, temp_min_global, temp_500_K, temp_1500_K,
-                     temp_max_global, reference_date)
-                VALUES (1, ?, ?, ?, ?, ?)
-                """,
-                (
-                    self.parse_float(parts[0]),
-                    self.parse_float(parts[1]),
-                    self.parse_float(parts[2]),
-                    self.parse_float(parts[3]),
-                    parts[4] if len(parts) > 4 else None,
-                ),
-            )
-
-        # --- Species loop ---
-        i = 2
+        metadata_parts = metadata_line.split()
         species_count = 0
+        existing_count = 0
         skipped = 0
 
-        while i < len(lines):
-            try:
-                # RECORD 1 – species name
-                if i >= len(lines):
-                    break
+        try:
+            self.conn.execute('BEGIN')
+            self.write_metadata()
+            if len(metadata_parts) >= 4:
+                self.cursor.execute(
+                    """
+                    INSERT INTO file_metadata
+                        (id, temp_min_global, temp_500_K, temp_1500_K,
+                         temp_max_global, reference_date)
+                    VALUES (1, ?, ?, ?, ?, ?)
+                    ON CONFLICT(id) DO UPDATE SET
+                        temp_min_global = excluded.temp_min_global,
+                        temp_500_K = excluded.temp_500_K,
+                        temp_1500_K = excluded.temp_1500_K,
+                        temp_max_global = excluded.temp_max_global,
+                        reference_date = excluded.reference_date
+                    """,
+                    (
+                        self.parse_float(metadata_parts[0]),
+                        self.parse_float(metadata_parts[1]),
+                        self.parse_float(metadata_parts[2]),
+                        self.parse_float(metadata_parts[3]),
+                        metadata_parts[4] if len(metadata_parts) > 4 else None,
+                    ),
+                )
 
-                species_name, comments = self.parse_species_record(lines[i])
-
-                if (
-                    not species_name
-                    or len(species_name.split()) > 1
-                    or self.is_temperature_line(lines[i])
-                ):
-                    i += 1
-                    skipped += 1
+            index = 2
+            while index < len(lines):
+                if not self.is_species_header(lines[index]) or index + 1 >= len(lines):
+                    index += 1
                     continue
 
-                logger.info('Processing species: %s', species_name)
-                i += 1
-
-                # RECORD 2 – general info
-                if i >= len(lines):
-                    break
-                general_info = self.parse_general_info_record(lines[i])
-                i += 1
-
-                if general_info.get('num_intervals', 0) <= 0:
-                    skipped += 1
+                species_name, comments = self.parse_species_record(lines[index])
+                general_info = self.parse_general_info_record(lines[index + 1])
+                num_intervals = general_info.get('num_intervals', 0)
+                if not isinstance(num_intervals, int) or num_intervals <= 0:
+                    index += 1
                     continue
 
-                # Insert species
+                parsed_intervals = self._parse_intervals(
+                    lines, index + 2, num_intervals
+                )
+                if parsed_intervals is None:
+                    logger.warning(
+                        'Skipping malformed species block at line %d: %s',
+                        index + 1,
+                        species_name,
+                    )
+                    skipped += 1
+                    index += 1
+                    continue
+
+                intervals, next_index = parsed_intervals
                 try:
                     self.cursor.execute(
                         """
@@ -373,121 +489,60 @@ class ThermoDBBuilder:
                             general_info.get('phase'),
                             general_info.get('molecular_weight'),
                             general_info.get('heat_of_formation'),
-                            general_info.get('num_intervals'),
+                            num_intervals,
                         ),
                     )
-                    species_id = self.cursor.lastrowid
-                    species_count += 1
                 except sqlite3.IntegrityError:
+                    logger.info('Species already exists, skipping: %s', species_name)
+                    existing_count += 1
+                    index = next_index
+                    continue
+
+                species_id = self.cursor.lastrowid
+                for interval_number, (interval, coefficients) in enumerate(
+                    intervals, 1
+                ):
                     self.cursor.execute(
-                        'SELECT id FROM species WHERE name = ?',
-                        (species_name,),
+                        """
+                        INSERT INTO temperature_intervals
+                            (species_id, interval_number, temp_min,
+                             temp_max, h_298_to_0)
+                        VALUES (?, ?, ?, ?, ?)
+                        """,
+                        (
+                            species_id,
+                            interval_number,
+                            interval['temp_min'],
+                            interval['temp_max'],
+                            interval['h_298_to_0'],
+                        ),
                     )
-                    result = self.cursor.fetchone()
-                    if result:
-                        species_id = result[0]
-                    else:
-                        skipped += 1
-                        continue
+                    interval_id = self.cursor.lastrowid
+                    self.cursor.execute(
+                        """
+                        INSERT INTO coefficients
+                            (interval_id, a1, a2, a3, a4, a5,
+                             a6, a7, b1, b2)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """,
+                        (interval_id, *coefficients.values()),
+                    )
 
-                # --- Temperature intervals ---
-                num_intervals = general_info.get('num_intervals', 0)
-                for interval_num in range(num_intervals):
-                    if i >= len(lines):
-                        break
+                logger.info('Loaded species: %s', species_name)
+                species_count += 1
+                index = next_index
 
-                    if not self.is_temperature_line(lines[i]):
-                        break
-
-                    temp_interval = self.parse_temp_interval_record(lines[i])
-                    i += 1
-
-                    if i + 1 >= len(lines):
-                        break
-
-                    if not (
-                        self.is_coefficient_line(lines[i])
-                        and self.is_coefficient_line(lines[i + 1])
-                    ):
-                        break
-
-                    coeffs = self.parse_coefficients_record([lines[i], lines[i + 1]])
-                    i += 2
-
-                    if (
-                        temp_interval.get('temp_min') is None
-                        or temp_interval.get('temp_max') is None
-                    ):
-                        continue
-
-                    try:
-                        self.cursor.execute(
-                            """
-                            INSERT INTO temperature_intervals
-                                (species_id, interval_number, temp_min,
-                                 temp_max, h_298_to_0)
-                            VALUES (?, ?, ?, ?, ?)
-                            """,
-                            (
-                                species_id,
-                                interval_num + 1,
-                                temp_interval.get('temp_min'),
-                                temp_interval.get('temp_max'),
-                                temp_interval.get('h_298_to_0'),
-                            ),
-                        )
-                        interval_id = self.cursor.lastrowid
-
-                        self.cursor.execute(
-                            """
-                            INSERT INTO coefficients
-                                (interval_id, a1, a2, a3, a4, a5,
-                                 a6, a7, b1, b2)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                            """,
-                            (
-                                interval_id,
-                                coeffs.get('a1'),
-                                coeffs.get('a2'),
-                                coeffs.get('a3'),
-                                coeffs.get('a4'),
-                                coeffs.get('a5'),
-                                coeffs.get('a6'),
-                                coeffs.get('a7'),
-                                coeffs.get('b1'),
-                                coeffs.get('b2'),
-                            ),
-                        )
-
-                        logger.debug(
-                            '  Interval %d: %sK - %sK',
-                            interval_num + 1,
-                            temp_interval.get('temp_min'),
-                            temp_interval.get('temp_max'),
-                        )
-                    except Exception as e:
-                        logger.warning(
-                            'Error inserting interval %d: %s',
-                            interval_num + 1,
-                            e,
-                        )
-
-            except Exception as e:
-                logger.warning('Error processing line %d: %s', i, e)
-                i += 1
-
-        # Final metadata update
-        if self.cursor is None:
-            raise RuntimeError('Database not connected')
-        self.cursor.execute(
-            'UPDATE file_metadata SET total_species = ? WHERE id = 1',
-            (species_count,),
-        )
-        if self.conn is None:
-            raise RuntimeError('Database not connected')
-        self.conn.commit()
+            self.cursor.execute(
+                'UPDATE file_metadata SET total_species = ? WHERE id = 1',
+                (species_count,),
+            )
+            self.conn.commit()
+        except Exception:
+            self.conn.rollback()
+            raise
 
         logger.info('=' * 70)
-        logger.info('Total species loaded: %d', species_count)
-        logger.info('Skipped lines: %d', skipped)
+        logger.info('New species loaded: %d', species_count)
+        logger.info('Already existing: %d', existing_count)
+        logger.info('Malformed species blocks skipped: %d', skipped)
         logger.info('Database: %s', self.db_file)
