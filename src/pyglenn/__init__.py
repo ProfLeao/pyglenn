@@ -17,16 +17,30 @@ from .calculator import (
     ThermochemicalCalculator,
 )
 from .database import R_GLENN, R_UNIVERSAL, R, ThermoDBQuery
+from .models import (
+    DatabaseStats,
+    IntervalData,
+    NASACoefficients,
+    SpeciesData,
+    SpeciesInfo,
+    ThermoProperties,
+)
 
 __all__ = [
-    'ThermochemicalCalculator',
-    'ThermoDBQuery',
-    'ThermoDBBuilder',
-    'R',
-    'R_UNIVERSAL',
-    'R_GLENN',
-    'ThermoCalcError',
+    'DatabaseStats',
     'DatabaseNotConnectedError',
+    'IntervalData',
+    'NASACoefficients',
+    'R',
+    'R_GLENN',
+    'R_UNIVERSAL',
+    'SpeciesData',
+    'SpeciesInfo',
     'SpeciesNotFoundError',
     'TemperatureOutOfRangeError',
+    'ThermoCalcError',
+    'ThermoDBBuilder',
+    'ThermoDBQuery',
+    'ThermoProperties',
+    'ThermochemicalCalculator',
 ]

@@ -228,18 +228,16 @@ def test_connect_to_nonexistent_db() -> None:
     assert q.connect() is False
 
 
-def test_reference_gas_constant_legacy_fallback_and_migration(
+def test_reference_gas_constant_auto_migration(
     sample_db_path: Path,
 ) -> None:
-    """Legacy databases fall back safely and can be migrated explicitly."""
+    """Legacy databases are migrated automatically on connect (D3)."""
     q = ThermoDBQuery(str(sample_db_path))
     assert q.connect() is True
 
-    assert q.get_gas_constant_ref() == R_UNIVERSAL
-    q.migrate_metadata()
-    q.migrate_metadata()
-
     assert q.get_gas_constant_ref() == R_GLENN
+    q.migrate_metadata()  # idempotent
+
     assert q.cursor is not None
     metadata = dict(q.cursor.execute('SELECT key, value FROM metadata').fetchall())
     assert metadata['gas_constant_ref'] == '8.314510'
@@ -1079,6 +1077,36 @@ def test_cli_query_smoke(
 
     args = argparse.Namespace(database=str(sample_db_path), species='O2', verbose=False)
     cmd_query(args)
+
+    captured = capsys.readouterr()
+    assert 'SUCCESS' in captured.out
+
+
+def test_cli_migrate_metadata_smoke(
+    sample_db_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Test migrate-metadata command runs without errors."""
+    import argparse
+
+    from pyglenn.cli import cmd_migrate_metadata
+
+    args = argparse.Namespace(database=str(sample_db_path))
+    cmd_migrate_metadata(args)
+
+    captured = capsys.readouterr()
+    assert 'SUCCESS' in captured.out
+
+
+def test_cli_validate_smoke(
+    sample_db_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Test validate command runs without errors."""
+    import argparse
+
+    from pyglenn.cli import cmd_validate
+
+    args = argparse.Namespace(database=str(sample_db_path))
+    cmd_validate(args)
 
     captured = capsys.readouterr()
     assert 'SUCCESS' in captured.out

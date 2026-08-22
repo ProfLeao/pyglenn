@@ -43,8 +43,12 @@ class ThermoDBQuery:
         self.conn: sqlite3.Connection | None = None
         self.cursor: sqlite3.Cursor | None = None
 
-    def connect(self) -> bool:
+    def connect(self, *, auto_migrate: bool = True) -> bool:
         """Connect to database.
+
+        Args:
+            auto_migrate: If True (default), add canonical dataset metadata
+                to legacy databases automatically (see D3).
 
         Returns:
             True if connection succeeded, False otherwise.
@@ -56,6 +60,8 @@ class ThermoDBQuery:
         self.conn = sqlite3.connect(str(self.db_file))
         self.conn.row_factory = sqlite3.Row
         self.cursor = self.conn.cursor()
+        if auto_migrate:
+            self._auto_migrate_metadata()
         return True
 
     def close(self) -> None:
@@ -77,6 +83,23 @@ class ThermoDBQuery:
             ('metadata',),
         )
         return self.cursor.fetchone() is not None
+
+    def _auto_migrate_metadata(self) -> None:
+        """Add canonical metadata to legacy databases on connect (D3).
+
+        Only the additive ``metadata`` table is written. Read-only databases
+        (or any migration failure) degrade to the documented fallback without
+        raising.
+        """
+        if self.cursor is None or self.conn is None:
+            return
+        if self._metadata_table_exists():
+            return
+        try:
+            self.migrate_metadata()
+            logger.info('migrated legacy database metadata on connect')
+        except sqlite3.OperationalError as exc:
+            logger.warning('could not auto-migrate metadata: %s', exc)
 
     def get_gas_constant_ref(self) -> float:
         """Return the dataset gas constant, with a safe legacy fallback.

@@ -113,3 +113,15 @@ def test_database_stats_to_dict() -> None:
     )
     assert stats.total_species == 2035
     assert stats.to_dict()['species_by_phase'] == {'gas': 1266, 'condensed': 769}
+
+
+def test_models_exported_from_package() -> None:
+    """All public models are importable from the top-level package."""
+    import pyglenn
+
+    assert pyglenn.ThermoProperties is ThermoProperties
+    assert pyglenn.SpeciesInfo is SpeciesInfo
+    assert pyglenn.NASACoefficients is NASACoefficients
+    assert pyglenn.IntervalData is IntervalData
+    assert pyglenn.SpeciesData is SpeciesData
+    assert pyglenn.DatabaseStats is DatabaseStats

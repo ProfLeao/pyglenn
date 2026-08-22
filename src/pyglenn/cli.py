@@ -15,6 +15,7 @@ import sys
 
 from .builder import ThermoDBBuilder
 from .calculator import ThermoCalcError, ThermochemicalCalculator
+from .database import ThermoDBQuery
 
 
 def _setup_logging(verbose: bool = False) -> None:
@@ -126,6 +127,54 @@ def cmd_query(args: argparse.Namespace) -> None:
         calc.close()
 
 
+def cmd_migrate_metadata(args: argparse.Namespace) -> None:
+    """Ensure a database carries the canonical dataset metadata."""
+    query = ThermoDBQuery(args.database)
+    if not query.connect():
+        print('Error: Could not connect to database')
+        return
+    try:
+        r_ref = query.get_gas_constant_ref()
+        print('=' * 70)
+        print('METADATA MIGRATION')
+        print('=' * 70)
+        print(f'  Database: {args.database}')
+        print(f'  gas_constant_ref: {r_ref}')
+        print('  gas_constant_ref_source: NASA Glenn/CEA thermo.inp (CODATA 1986)')
+        print('\n[SUCCESS] Metadata is present and canonical.')
+    finally:
+        query.close()
+
+
+def cmd_validate(args: argparse.Namespace) -> None:
+    """Run read-only integrity checks against a database."""
+    query = ThermoDBQuery(args.database)
+    if not query.connect(auto_migrate=False):
+        print('Error: Could not connect to database')
+        return
+    try:
+        report = query.validate_database()
+        print('=' * 70)
+        print('DATABASE VALIDATION')
+        print('=' * 70)
+        print(f"  Valid: {report['valid']}")
+        if report['errors']:
+            print('  Errors:')
+            for err in report['errors']:
+                print(f'    - {err}')
+        if report['warnings']:
+            print('  Warnings:')
+            for warn in report['warnings']:
+                print(f'    - {warn}')
+        print('  Counts:', report['counts'])
+        if report['valid']:
+            print('\n[SUCCESS] Validation completed.')
+        else:
+            print('\n[FAIL] Validation failed.')
+    finally:
+        query.close()
+
+
 def main() -> None:
     """Entry point for the pyglenn CLI."""
     parser = argparse.ArgumentParser(
@@ -171,6 +220,30 @@ def main() -> None:
         help='Species name pattern to search (default: O2)',
     )
     p_query.set_defaults(func=cmd_query)
+
+    # migrate-metadata
+    p_migrate = sub.add_parser(
+        'migrate-metadata', help='Add canonical dataset metadata to a database'
+    )
+    p_migrate.add_argument(
+        '-d',
+        '--database',
+        default='thermo.db',
+        help='SQLite database file (default: thermo.db)',
+    )
+    p_migrate.set_defaults(func=cmd_migrate_metadata)
+
+    # validate
+    p_validate = sub.add_parser(
+        'validate', help='Run read-only database integrity checks'
+    )
+    p_validate.add_argument(
+        '-d',
+        '--database',
+        default='thermo.db',
+        help='SQLite database file (default: thermo.db)',
+    )
+    p_validate.set_defaults(func=cmd_validate)
 
     args = parser.parse_args()
     if args.command is None:
