@@ -12,6 +12,8 @@ import pytest
 from pyglenn import (
     DatabaseNotConnectedError,
     R,
+    R_GLENN,
+    R_UNIVERSAL,
     SpeciesNotFoundError,
     TemperatureOutOfRangeError,
     ThermoCalcError,
@@ -137,6 +139,40 @@ def calc(sample_db_path: Path) -> Generator[ThermochemicalCalculator, None, None
     c.close()
 
 
+def _fortran_field(value: float) -> str:
+    """Format one fixed-width FORTRAN double-precision field."""
+    return f'{value:16.9E}'.replace('E', 'D')
+
+
+def _species_block(name: str, num_intervals: int = 1) -> str:
+    """Create a minimal valid fixed-width NASA thermo species block."""
+    general_info = [' '] * 80
+    general_info[0:2] = f'{num_intervals:2d}'
+    general_info[3:9] = 'test  '
+    general_info[50:52] = ' 0'
+    general_info[52:65] = f'{31.9988:13.7f}'
+    general_info[65:80] = f'{0.0:15.3f}'
+
+    temperature = f'{200.0:11.3f}{1000.0:11.3f}7' + ' ' * 42 + f'{0.0:15.3f}'
+    coefficient_line_1 = ''.join(_fortran_field(value) for value in range(1, 6))
+    coefficient_line_2 = (
+        _fortran_field(6.0)
+        + _fortran_field(7.0)
+        + ' ' * 16
+        + _fortran_field(8.0)
+        + _fortran_field(9.0)
+    )
+    return '\n'.join(
+        [
+            f'{name:<16}  test species',
+            ''.join(general_info),
+            temperature,
+            coefficient_line_1,
+            coefficient_line_2,
+        ]
+    )
+
+
 # ---------------------------------------------------------------------------
 # Test: version and package metadata
 # ---------------------------------------------------------------------------
@@ -168,8 +204,10 @@ def test_imports() -> None:
 
 
 def test_gas_constant_value() -> None:
-    """Verify R is close to the CODATA 2018 value."""
-    assert math.isclose(R, 8.314462618, rel_tol=1e-9)
+    """Verify the universal and NASA Glenn reference constants."""
+    assert R == R_UNIVERSAL
+    assert math.isclose(R_UNIVERSAL, 8.31446261815324, rel_tol=1e-15)
+    assert R_GLENN == 8.314510
 
 
 # ---------------------------------------------------------------------------
@@ -188,6 +226,51 @@ def test_connect_to_nonexistent_db() -> None:
     """Test connecting to a nonexistent database returns False."""
     q = ThermoDBQuery('nonexistent_file.db')
     assert q.connect() is False
+
+
+def test_reference_gas_constant_legacy_fallback_and_migration(
+    sample_db_path: Path,
+) -> None:
+    """Legacy databases fall back safely and can be migrated explicitly."""
+    q = ThermoDBQuery(str(sample_db_path))
+    assert q.connect() is True
+
+    assert q.get_gas_constant_ref() == R_UNIVERSAL
+    q.migrate_metadata()
+    q.migrate_metadata()
+
+    assert q.get_gas_constant_ref() == R_GLENN
+    assert q.cursor is not None
+    metadata = dict(q.cursor.execute('SELECT key, value FROM metadata').fetchall())
+    assert metadata['gas_constant_ref'] == str(R_GLENN)
+    assert (
+        metadata['gas_constant_ref_source'] == 'NASA Glenn/CEA thermo.inp (CODATA 1986)'
+    )
+    q.close()
+
+
+def test_reference_gas_constant_invalid_metadata_falls_back(
+    sample_db_path: Path,
+) -> None:
+    """Invalid metadata cannot silently alter thermochemical calculations."""
+    q = ThermoDBQuery(str(sample_db_path))
+    assert q.connect() is True
+    q.migrate_metadata()
+    assert q.cursor is not None
+    assert q.conn is not None
+
+    q.cursor.execute(
+        "UPDATE metadata SET value = 'not-a-number' WHERE key = 'gas_constant_ref'"
+    )
+    q.conn.commit()
+    assert q.get_gas_constant_ref() == R_UNIVERSAL
+
+    q.cursor.execute(
+        "UPDATE metadata SET value = '10.0' WHERE key = 'gas_constant_ref'"
+    )
+    q.conn.commit()
+    assert q.get_gas_constant_ref() == R_UNIVERSAL
+    q.close()
 
 
 def test_calculator_connect(calc: ThermochemicalCalculator) -> None:
@@ -507,6 +590,82 @@ def test_is_temperature_line() -> None:
     assert not ThermoDBBuilder.is_temperature_line('short')
     # Equal values
     assert not ThermoDBBuilder.is_temperature_line(' 5.0000E+02 5.0000E+02')
+
+
+def test_coefficient_line_is_not_a_species_header() -> None:
+    """A NASA coefficient must never be reinterpreted as a species name."""
+    coefficient_line = (
+        '-1.302004763D+06 3.166984180D+04-3.031242152D+02 '
+        '1.602231130D+00-4.594507340D-03'
+    )
+
+    assert ThermoDBBuilder.is_coefficient_line(coefficient_line)
+    assert not ThermoDBBuilder.is_species_header(coefficient_line)
+
+
+def test_builder_rejects_partial_block_and_resynchronizes(tmp_path: Path) -> None:
+    """A malformed species cannot leave rows behind or hide the next species."""
+    inp_path = tmp_path / 'malformed_thermo.inp'
+    db_path = tmp_path / 'malformed_thermo.db'
+    inp_path.write_text(
+        '\n'.join(
+            [
+                'THERMO',
+                '  200.000    500.000   1500.000  6000.000',
+                _species_block('BROKEN', num_intervals=2),
+                _species_block('O2'),
+            ]
+        )
+    )
+
+    builder = ThermoDBBuilder(str(inp_path), str(db_path))
+    builder.connect()
+    builder.create_tables()
+    builder.parse_and_load()
+    builder.close()
+
+    conn = sqlite3.connect(db_path)
+    try:
+        assert conn.execute('SELECT name FROM species').fetchall() == [('O2',)]
+        assert (
+            conn.execute('SELECT COUNT(*) FROM temperature_intervals').fetchone()[0]
+            == 1
+        )
+        assert conn.execute('SELECT COUNT(*) FROM coefficients').fetchone()[0] == 1
+    finally:
+        conn.close()
+
+
+def test_builder_writes_metadata_and_calculator_uses_it(tmp_path: Path) -> None:
+    """New databases persist R_GLENN and use it for dimensional properties."""
+    inp_path = tmp_path / 'metadata_thermo.inp'
+    db_path = tmp_path / 'metadata_thermo.db'
+    inp_path.write_text(
+        '\n'.join(
+            [
+                'THERMO',
+                '  200.000    500.000   1500.000  6000.000',
+                _species_block('O2'),
+            ]
+        )
+    )
+
+    builder = ThermoDBBuilder(str(inp_path), str(db_path))
+    builder.connect()
+    builder.create_tables()
+    builder.parse_and_load()
+    builder.close()
+
+    calc = ThermochemicalCalculator(str(db_path))
+    assert calc.connect() is True
+    assert calc.r_ref == R_GLENN
+    species = calc.get_available_species('O2', exact_match=True)
+    properties = calc.calculate_properties(species[0]['id'], 500.0)
+    interval = calc.db.get_species_for_temperature(species[0]['id'], 500.0)
+    assert interval is not None
+    cp_r = calc.db.calculate_cp(interval['coefficients'], 500.0)
+    assert properties['cp'] == pytest.approx(cp_r * R_GLENN)
+    calc.close()
 
 
 def test_parse_species_record() -> None:
