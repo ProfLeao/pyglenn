@@ -19,17 +19,14 @@ _EXAMPLES_DST = os.path.join(_HERE, 'examples')
 if os.path.isdir(_EXAMPLES_SRC):
     shutil.rmtree(_EXAMPLES_DST, ignore_errors=True)
     os.makedirs(_EXAMPLES_DST, exist_ok=True)
-    # Copy only the notebooks, recursively (e.g. examples/extra/*.ipynb) —
-    # auxiliary files (README.md, notes) stay in the repo and are
-    # intentionally kept out of the rendered documentation.
-    for _root, _dirs, _files in os.walk(_EXAMPLES_SRC):
-        for _name in sorted(_files):
-            if _name.endswith('.ipynb'):
-                _src = os.path.join(_root, _name)
-                _rel = os.path.relpath(_src, _EXAMPLES_SRC)
-                _dst = os.path.join(_EXAMPLES_DST, _rel)
-                os.makedirs(os.path.dirname(_dst), exist_ok=True)
-                shutil.copy2(_src, _dst)
+    # Copy only the notebooks — auxiliary files (README.md, notes) stay in the
+    # repo and are intentionally kept out of the rendered documentation.
+    for _name in sorted(os.listdir(_EXAMPLES_SRC)):
+        if _name.endswith('.ipynb'):
+            shutil.copy2(
+                os.path.join(_EXAMPLES_SRC, _name),
+                os.path.join(_EXAMPLES_DST, _name),
+            )
 
 # -- Audit/validation assets -----------------------------------------------
 # Copy audit images and data files so they are accessible to the validation

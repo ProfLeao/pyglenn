@@ -39,8 +39,3 @@ Since `pyglenn` uses a *src-layout*, `pip install -e .` is what makes
 |----------|-------------|
 | [`01_basic_usage.ipynb`](01_basic_usage.ipynb) | First steps: look up species and compute $C_p$, $H^\circ$, $S^\circ$. |
 | [`02_fuel_comparison.ipynb`](02_fuel_comparison.ipynb) | Compares CH4, ethanol, and propane with plots of $C_p(T)$, $S^\circ(T)$ and sensible enthalpy (requires matplotlib). |
-
-### Additional examples
-
-Extra notebooks live in [`extra/`](extra/) — drop new `.ipynb` files there
-and they will appear in the documentation on the next build.
