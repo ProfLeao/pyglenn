@@ -513,6 +513,29 @@ def test_exception_context(calc: ThermochemicalCalculator) -> None:
     assert exc_info.value.temp_bounds == (200.0, 6000.0)
 
 
+def test_bundled_reference_values_glenn() -> None:
+    """Cross-language regression anchors for the bundled NASA Glenn/CEA data.
+
+    Values computed with R_GLENN = 8.314510 and cross-checked against the
+    NIST-JANAF audit (docs/audit). O2 has zero formation enthalpy; CO2
+    carries a nonzero formation enthalpy.
+    """
+    with ThermochemicalCalculator() as calc:
+        o2 = calc.get_available_species('O2', exact_match=True)[0]
+
+        props = calc.calculate_properties(o2.id, 298.15)
+        assert props.cp == pytest.approx(29.378353377156, rel=1e-9)
+        assert props.s == pytest.approx(205.149467367314, rel=1e-9)
+
+        props = calc.calculate_properties(o2.id, 1000.0)
+        assert props.cp == pytest.approx(34.882545009141, rel=1e-9)
+        assert props.h_relative == pytest.approx(22707.210697094983, rel=1e-9)
+        assert props.s == pytest.approx(243.587313877898, rel=1e-9)
+
+        co2 = calc.get_available_species('CO2', exact_match=True)[0]
+        assert co2.heat_of_formation_298K == pytest.approx(-393510.0, rel=1e-9)
+
+
 # ---------------------------------------------------------------------------
 # Test: Database statistics
 # ---------------------------------------------------------------------------
@@ -796,6 +819,19 @@ def test_parse_general_info_record() -> None:
     )
     assert info['num_intervals'] == 1
     assert info['phase'] == 'gas'
+
+
+def test_parse_general_info_record_heat_of_formation() -> None:
+    """RECORD 2 extracts molecular weight and heat of formation correctly."""
+    builder = ThermoDBBuilder('dummy.inp', 'dummy.db')
+    line = (
+        ' 3 g 9/99 C   1.00O   2.00    0.00    0.00    0.00 0   44.0095000'
+        '    -393510.000'
+    )
+    info = builder.parse_general_info_record(line)
+    assert info['num_intervals'] == 3
+    assert info['molecular_weight'] == pytest.approx(44.0095)
+    assert info['heat_of_formation'] == pytest.approx(-393510.0)
 
 
 def test_parse_temp_interval_record() -> None:

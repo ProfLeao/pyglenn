@@ -200,19 +200,16 @@ class ThermoDBBuilder:
         data: dict[str, Any] = {}
 
         try:
-            num_int_str = line[0:2].strip() if len(line) > 2 else ''
+            num_int_str = line[0:2].strip()
             data['num_intervals'] = int(num_int_str) if num_int_str.isdigit() else 0
 
-            data['ref_code'] = line[3:9].strip() if len(line) > 9 else ''
+            data['ref_code'] = line[3:9].strip()
 
-            phase_code = line[50:52].strip() if len(line) > 52 else '0'
+            phase_code = line[50:52].strip()
             data['phase'] = 'condensed' if phase_code and phase_code != '0' else 'gas'
 
-            mw_str = line[52:65].strip() if len(line) > 65 else ''
-            data['molecular_weight'] = self.parse_float(mw_str)
-
-            hf_str = line[65:80].strip() if len(line) > 80 else ''
-            data['heat_of_formation'] = self.parse_float(hf_str)
+            data['molecular_weight'] = self.parse_float(line[52:65])
+            data['heat_of_formation'] = self.parse_float(line[65:80])
         except Exception as e:
             logger.warning('Error parsing RECORD 2: %s', e)
 

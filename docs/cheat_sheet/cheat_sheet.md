@@ -15,12 +15,12 @@ pip install pyglenn
 from pyglenn import ThermochemicalCalculator
 
 with ThermochemicalCalculator() as calc:
-    sid  = calc.get_available_species('CH4', exact_match=True)[0]['id']
+    sid  = calc.get_available_species('CH4', exact_match=True)[0].id
     prop = calc.calculate_properties(sid, 1000.0)
 
-    print(f"Cp = {prop['cp']:.2f} J/(mol·K)")
-    print(f"H° = {prop['h_relative']:.1f} J/mol")
-    print(f"S° = {prop['s']:.3f} J/(mol·K)")
+    print(f"Cp = {prop.cp:.2f} J/(mol·K)")
+    print(f"H° = {prop.h_relative:.1f} J/mol")
+    print(f"S° = {prop.s:.3f} J/(mol·K)")
 ```
 
 ---
@@ -31,7 +31,7 @@ with ThermochemicalCalculator() as calc:
 
 ```python
 # Exact match (recommended) — 'N2' returns N₂, not Be₃N₂
-calc.get_available_species('N2', exact_match=True)[0]['id']
+calc.get_available_species('N2', exact_match=True)[0].id
 
 # Substring search (legacy)
 calc.get_available_species('CH4')
@@ -41,20 +41,20 @@ calc.get_available_species('CH4')
 
 ```python
 p = calc.calculate_properties(species_id, 1000.0)
-# p['cp']           → J/(mol·K)
-# p['h_relative']   → J/mol (relative to 0 K)
-# p['s']            → J/(mol·K)
-# p['species_name'] → 'CH4'
-# p['phase']        → 'gas' | 'condensed'
-# p['temp_interval']→ [T_min, T_max]
+# p.cp            → J/(mol·K)
+# p.h_relative    → J/mol (relative to 0 K)
+# p.s             → J/(mol·K)
+# p.species_name  → 'CH4'
+# p.phase         → 'gas' | 'condensed'
+# p.temp_interval → (T_min, T_max)
 ```
 
 ### 📈 Temperature sweep
 
 ```python
-sid = calc.get_available_species('CO2', exact_match=True)[0]['id']
+sid = calc.get_available_species('CO2', exact_match=True)[0].id
 results = calc.get_properties_range(sid, [300, 500, 1000, 1500])
-# → {300.0: {...}, 500.0: {...}, ...}
+# → {300.0: ThermoProperties, 500.0: ThermoProperties, ...}
 ```
 
 ### 🧪 Enthalpy

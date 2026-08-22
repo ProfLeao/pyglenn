@@ -162,13 +162,13 @@ db.connect()
 
 # Search for species
 species = db.find_species('O2')
-print(species[0]['name'])  # O2
+print(species[0].name)  # O2
 
 # Get species data
-data = db.get_species_data(species[0]['id'])
+data = db.get_species_data(species[0].id)
 
 # Calculate Cp at 1000 K
-coeffs = data['intervals'][0]['coefficients']
+coeffs = data.intervals[0].coefficients
 cp_r = db.calculate_cp(coeffs, 1000)
 print(f"Cp(1000K)/R = {cp_r}")
 

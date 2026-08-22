@@ -90,6 +90,7 @@ select = [
 
 [tool.ruff.lint.per-file-ignores]
 "cli.py" = ["T201"]   # allow print() in CLI module
+"scripts/rebuild_database.py" = ["T201"]  # allow print() in rebuild script
 
 [tool.ruff.format]
 quote-style = "single"

@@ -117,10 +117,10 @@ from pyglenn import ThermochemicalCalculator
 
 with ThermochemicalCalculator() as calc:
     species = calc.get_available_species("CH4", exact_match=True)
-    props = calc.calculate_properties(species[0]["id"], 1000.0)
-    print(f"Cp = {props['cp']:.2f} J/(mol·K)")
-    print(f"H° = {props['h_relative']:.1f} J/mol")
-    print(f"S° = {props['s']:.3f} J/(mol·K)")
+    props = calc.calculate_properties(species[0].id, 1000.0)
+    print(f"Cp = {props.cp:.2f} J/(mol·K)")
+    print(f"H° = {props.h_relative:.1f} J/mol")
+    print(f"S° = {props.s:.3f} J/(mol·K)")
 ```
 
 No explicit database path is required — the package ships with a pre-built

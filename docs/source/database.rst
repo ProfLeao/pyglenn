@@ -88,14 +88,14 @@ You can query the database directly using :class:`~pyglenn.ThermoDBQuery`:
 
    # Search species by name
    species = query.find_species('CH4', exact_match=True)
-   print(species[0]['name'], species[0]['phase'])
+   print(species[0].name, species[0].phase)
 
    # Get complete data (metadata + all intervals + coefficients)
-   data = query.get_species_data(species[0]['id'])
-   for interval in data['intervals']:
-       print(f"  {interval['temp_min']}–{interval['temp_max']} K")
-       coeffs = interval['coefficients']
-       print(f"  a1={coeffs['a1']}, …, a7={coeffs['a7']}")
+   data = query.get_species_data(species[0].id)
+   for interval in data.intervals:
+       print(f"  {interval.temp_min}–{interval.temp_max} K")
+       coeffs = interval.coefficients
+       print(f"  a1={coeffs.a1}, …, a7={coeffs.a7}")
 
    query.close()
 

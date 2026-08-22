@@ -7,8 +7,9 @@ with :func:`dataclasses.asdict` (or the ``to_dict`` convenience method).
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import asdict, dataclass
-from typing import Any, Mapping, Optional
+from typing import Any
 
 
 @dataclass(frozen=True)
@@ -42,13 +43,13 @@ class SpeciesInfo:
 
     id: int
     name: str
-    formula: Optional[str] = None
-    phase: Optional[str] = None
-    molecular_weight: Optional[float] = None
-    heat_of_formation_298K: Optional[float] = None
-    num_intervals: Optional[int] = None
-    comments: Optional[str] = None
-    reference_code: Optional[str] = None
+    formula: str | None = None
+    phase: str | None = None
+    molecular_weight: float | None = None
+    heat_of_formation_298K: float | None = None
+    num_intervals: int | None = None
+    comments: str | None = None
+    reference_code: str | None = None
 
     @classmethod
     def from_mapping(cls, mapping: Mapping[str, Any]) -> SpeciesInfo:
@@ -84,7 +85,7 @@ class IntervalData:
     interval_number: int
     temp_min: float
     temp_max: float
-    h_298_to_0: Optional[float]
+    h_298_to_0: float | None
     coefficients: NASACoefficients
 
     def to_dict(self) -> dict[str, Any]:
@@ -105,7 +106,7 @@ class ThermoProperties:
     s: float
     temp_interval: tuple[float, float]
     species_name: str
-    phase: Optional[str] = None
+    phase: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         """Return the properties as a plain dict (tuple serialised as list)."""
@@ -126,13 +127,13 @@ class SpeciesData:
 
     id: int
     name: str
-    formula: Optional[str] = None
-    phase: Optional[str] = None
-    molecular_weight: Optional[float] = None
-    heat_of_formation_298K: Optional[float] = None
-    num_intervals: Optional[int] = None
-    comments: Optional[str] = None
-    reference_code: Optional[str] = None
+    formula: str | None = None
+    phase: str | None = None
+    molecular_weight: float | None = None
+    heat_of_formation_298K: float | None = None
+    num_intervals: int | None = None
+    comments: str | None = None
+    reference_code: str | None = None
     intervals: tuple[IntervalData, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
@@ -150,7 +151,7 @@ class DatabaseStats:
     total_intervals: int
     total_coeff_sets: int
     species_by_phase: Mapping[str, int]
-    avg_molecular_weight: Optional[float] = None
+    avg_molecular_weight: float | None = None
 
     def to_dict(self) -> dict[str, Any]:
         """Return the statistics as a plain dict."""
