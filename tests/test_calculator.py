@@ -10,6 +10,8 @@ from pathlib import Path
 import pytest
 
 from pyglenn import (
+    R_GLENN,
+    R_UNIVERSAL,
     DatabaseNotConnectedError,
     R,
     SpeciesNotFoundError,
@@ -137,6 +139,40 @@ def calc(sample_db_path: Path) -> Generator[ThermochemicalCalculator, None, None
     c.close()
 
 
+def _fortran_field(value: float) -> str:
+    """Format one fixed-width FORTRAN double-precision field."""
+    return f'{value:16.9E}'.replace('E', 'D')
+
+
+def _species_block(name: str, num_intervals: int = 1) -> str:
+    """Create a minimal valid fixed-width NASA thermo species block."""
+    general_info = [' '] * 80
+    general_info[0:2] = f'{num_intervals:2d}'
+    general_info[3:9] = 'test  '
+    general_info[50:52] = ' 0'
+    general_info[52:65] = f'{31.9988:13.7f}'
+    general_info[65:80] = f'{0.0:15.3f}'
+
+    temperature = f'{200.0:11.3f}{1000.0:11.3f}7' + ' ' * 42 + f'{0.0:15.3f}'
+    coefficient_line_1 = ''.join(_fortran_field(value) for value in range(1, 6))
+    coefficient_line_2 = (
+        _fortran_field(6.0)
+        + _fortran_field(7.0)
+        + ' ' * 16
+        + _fortran_field(8.0)
+        + _fortran_field(9.0)
+    )
+    return '\n'.join(
+        [
+            f'{name:<16}  test species',
+            ''.join(general_info),
+            temperature,
+            coefficient_line_1,
+            coefficient_line_2,
+        ]
+    )
+
+
 # ---------------------------------------------------------------------------
 # Test: version and package metadata
 # ---------------------------------------------------------------------------
@@ -168,8 +204,10 @@ def test_imports() -> None:
 
 
 def test_gas_constant_value() -> None:
-    """Verify R is close to the CODATA 2018 value."""
-    assert math.isclose(R, 8.314462618, rel_tol=1e-9)
+    """Verify the universal and NASA Glenn reference constants."""
+    assert R == R_UNIVERSAL
+    assert math.isclose(R_UNIVERSAL, 8.31446261815324, rel_tol=1e-15)
+    assert R_GLENN == 8.314510
 
 
 # ---------------------------------------------------------------------------
@@ -188,6 +226,49 @@ def test_connect_to_nonexistent_db() -> None:
     """Test connecting to a nonexistent database returns False."""
     q = ThermoDBQuery('nonexistent_file.db')
     assert q.connect() is False
+
+
+def test_reference_gas_constant_auto_migration(
+    sample_db_path: Path,
+) -> None:
+    """Legacy databases are migrated automatically on connect (D3)."""
+    q = ThermoDBQuery(str(sample_db_path))
+    assert q.connect() is True
+
+    assert q.get_gas_constant_ref() == R_GLENN
+    q.migrate_metadata()  # idempotent
+
+    assert q.cursor is not None
+    metadata = dict(q.cursor.execute('SELECT key, value FROM metadata').fetchall())
+    assert metadata['gas_constant_ref'] == '8.314510'
+    assert (
+        metadata['gas_constant_ref_source'] == 'NASA Glenn/CEA thermo.inp (CODATA 1986)'
+    )
+    q.close()
+
+
+def test_reference_gas_constant_invalid_metadata_falls_back(
+    sample_db_path: Path,
+) -> None:
+    """Invalid metadata cannot silently alter thermochemical calculations."""
+    q = ThermoDBQuery(str(sample_db_path))
+    assert q.connect() is True
+    q.migrate_metadata()
+    assert q.cursor is not None
+    assert q.conn is not None
+
+    q.cursor.execute(
+        "UPDATE metadata SET value = 'not-a-number' WHERE key = 'gas_constant_ref'"
+    )
+    q.conn.commit()
+    assert q.get_gas_constant_ref() == R_UNIVERSAL
+
+    q.cursor.execute(
+        "UPDATE metadata SET value = '10.0' WHERE key = 'gas_constant_ref'"
+    )
+    q.conn.commit()
+    assert q.get_gas_constant_ref() == R_UNIVERSAL
+    q.close()
 
 
 def test_calculator_connect(calc: ThermochemicalCalculator) -> None:
@@ -232,14 +313,14 @@ def test_get_all_species(calc: ThermochemicalCalculator) -> None:
     """Test retrieving all species."""
     species = calc.get_available_species()
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
 
 def test_find_species_by_name(calc: ThermochemicalCalculator) -> None:
     """Test searching species by name."""
     species = calc.get_available_species('O2')
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
 
 def test_find_nonexistent_species(calc: ThermochemicalCalculator) -> None:
@@ -256,49 +337,49 @@ def test_find_nonexistent_species(calc: ThermochemicalCalculator) -> None:
 def test_calculate_properties_o2_298K(calc: ThermochemicalCalculator) -> None:
     """Test O2 properties at 298.15 K — verifies structure and correctness."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     props = calc.calculate_properties(species_id, 298.15)
     assert props is not None
-    assert props['species_name'] == 'O2'
-    assert props['phase'] == 'gas'
+    assert props.species_name == 'O2'
+    assert props.phase == 'gas'
 
     # Verify Cp is positive and within physically reasonable bounds
-    assert props['cp'] > 0
-    assert props['cp'] < 200  # J/(mol·K) — well above any reasonable upper bound
+    assert props.cp > 0
+    assert props.cp < 200  # J/(mol·K) — well above any reasonable upper bound
 
     # Temperature interval check
-    assert props['temp_interval'][0] == 200.0
-    assert props['temp_interval'][1] == 1000.0
+    assert props.temp_interval[0] == 200.0
+    assert props.temp_interval[1] == 1000.0
 
     # All properties should be finite numbers
-    assert math.isfinite(props['cp'])
-    assert math.isfinite(props['h_relative'])
-    assert math.isfinite(props['s'])
+    assert math.isfinite(props.cp)
+    assert math.isfinite(props.h_relative)
+    assert math.isfinite(props.s)
 
 
 def test_calculate_properties_o2_500K(calc: ThermochemicalCalculator) -> None:
     """Test O2 properties at 500 K."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     props = calc.calculate_properties(species_id, 500.0)
     assert props is not None
 
     # Cp should be positive and finite
-    assert props['cp'] > 0
-    assert math.isfinite(props['cp'])
+    assert props.cp > 0
+    assert math.isfinite(props.cp)
 
     # H should increase with T (check vs 298 K)
     props_298 = calc.calculate_properties(species_id, 298.15)
     assert props_298 is not None
-    assert props['h_relative'] > props_298['h_relative']
+    assert props.h_relative > props_298.h_relative
 
 
 def test_calculate_properties_out_of_range(calc: ThermochemicalCalculator) -> None:
     """Test requesting properties outside valid temperature range."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     # Below valid range
     with pytest.raises(TemperatureOutOfRangeError):
@@ -323,7 +404,7 @@ def test_calculate_properties_invalid_species(calc: ThermochemicalCalculator) ->
 def test_formation_enthalpy(calc: ThermochemicalCalculator) -> None:
     """Test formation enthalpy retrieval."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     h_f = calc.calculate_formation_enthalpy(species_id)
     # O2(g) reference element → ΔH°f = 0
@@ -339,7 +420,7 @@ def test_formation_enthalpy(calc: ThermochemicalCalculator) -> None:
 def test_enthalpy_change(calc: ThermochemicalCalculator) -> None:
     """Test enthalpy change between two temperatures."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     delta_h = calc.calculate_enthalpy_change(species_id, 298.15, 500.0)
     assert delta_h is not None
@@ -352,7 +433,7 @@ def test_enthalpy_change(calc: ThermochemicalCalculator) -> None:
 def test_enthalpy_change_zero_delta(calc: ThermochemicalCalculator) -> None:
     """Test enthalpy change between same temperature is zero."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     delta_h = calc.calculate_enthalpy_change(species_id, 400.0, 400.0)
     assert delta_h is not None
@@ -367,7 +448,7 @@ def test_enthalpy_change_zero_delta(calc: ThermochemicalCalculator) -> None:
 def test_get_properties_range(calc: ThermochemicalCalculator) -> None:
     """Test calculating properties at multiple temperatures."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     results = calc.get_properties_range(species_id, [298.15, 500.0, 800.0])
     assert results is not None
@@ -377,7 +458,80 @@ def test_get_properties_range(calc: ThermochemicalCalculator) -> None:
     assert 800.0 in results
 
     # Cp should increase with temperature
-    assert results[500.0]['cp'] > results[298.15]['cp']
+    assert results[500.0].cp > results[298.15].cp
+
+
+def test_calculate_properties_range_typed(calc: ThermochemicalCalculator) -> None:
+    """Typed range API loads data once and preserves input order."""
+    species = calc.get_available_species('O2', exact_match=True)
+    species_id = species[0].id
+
+    results = calc.calculate_properties_range(species_id, [500.0, 298.15, 1500.0])
+    assert [r.temperature for r in results] == [500.0, 298.15, 1500.0]
+
+    scalar = calc.calculate_properties(species_id, 500.0)
+    assert results[0] == scalar
+
+
+def test_calculate_properties_range_skips_out_of_range(
+    calc: ThermochemicalCalculator,
+) -> None:
+    """Non-strict range API skips out-of-range temperatures."""
+    species = calc.get_available_species('O2', exact_match=True)
+    species_id = species[0].id
+
+    results = calc.calculate_properties_range(species_id, [100.0, 500.0, 7000.0])
+    assert [r.temperature for r in results] == [500.0]
+
+
+def test_calculate_properties_range_strict_raises(
+    calc: ThermochemicalCalculator,
+) -> None:
+    """Strict range API raises on the first out-of-range temperature."""
+    species = calc.get_available_species('O2', exact_match=True)
+    species_id = species[0].id
+
+    with pytest.raises(TemperatureOutOfRangeError):
+        calc.calculate_properties_range(species_id, [500.0, 7000.0], strict=True)
+
+
+def test_exception_context(calc: ThermochemicalCalculator) -> None:
+    """Specialised exceptions carry diagnostic context attributes."""
+    species = calc.get_available_species('O2', exact_match=True)
+    species_id = species[0].id
+
+    with pytest.raises(SpeciesNotFoundError) as exc_info:
+        calc.calculate_properties(99999, 300.0)
+    assert exc_info.value.species_id == 99999
+
+    with pytest.raises(TemperatureOutOfRangeError) as exc_info:
+        calc.calculate_properties(species_id, 100.0)
+    assert exc_info.value.temperature == 100.0
+    assert exc_info.value.species_name == 'O2'
+    assert exc_info.value.temp_bounds == (200.0, 6000.0)
+
+
+def test_bundled_reference_values_glenn() -> None:
+    """Cross-language regression anchors for the bundled NASA Glenn/CEA data.
+
+    Values computed with R_GLENN = 8.314510 and cross-checked against the
+    NIST-JANAF audit (docs/audit). O2 has zero formation enthalpy; CO2
+    carries a nonzero formation enthalpy.
+    """
+    with ThermochemicalCalculator() as calc:
+        o2 = calc.get_available_species('O2', exact_match=True)[0]
+
+        props = calc.calculate_properties(o2.id, 298.15)
+        assert props.cp == pytest.approx(29.378353377156, rel=1e-9)
+        assert props.s == pytest.approx(205.149467367314, rel=1e-9)
+
+        props = calc.calculate_properties(o2.id, 1000.0)
+        assert props.cp == pytest.approx(34.882545009141, rel=1e-9)
+        assert props.h_relative == pytest.approx(22707.210697094983, rel=1e-9)
+        assert props.s == pytest.approx(243.587313877898, rel=1e-9)
+
+        co2 = calc.get_available_species('CO2', exact_match=True)[0]
+        assert co2.heat_of_formation_298K == pytest.approx(-393510.0, rel=1e-9)
 
 
 # ---------------------------------------------------------------------------
@@ -388,11 +542,45 @@ def test_get_properties_range(calc: ThermochemicalCalculator) -> None:
 def test_database_statistics(calc: ThermochemicalCalculator) -> None:
     """Test database statistics retrieval."""
     stats = calc.db.get_statistics()
-    assert stats['total_species'] == 1
-    assert stats['total_intervals'] == 2
-    assert stats['total_coeff_sets'] == 2
-    assert stats['species_by_phase'] == {'gas': 1}
-    assert stats['avg_molecular_weight'] == pytest.approx(31.9988)
+    assert stats.total_species == 1
+    assert stats.total_intervals == 2
+    assert stats.total_coeff_sets == 2
+    assert stats.species_by_phase == {'gas': 1}
+    assert stats.avg_molecular_weight == pytest.approx(31.9988)
+
+
+def test_validate_database_valid(calc: ThermochemicalCalculator) -> None:
+    """A well-formed database passes all integrity checks."""
+    report = calc.db.validate_database()
+    assert report['valid'] is True
+    assert report['errors'] == []
+    assert report['counts']['total_species'] == 1
+
+
+def test_validate_database_detects_orphan_coefficients(
+    sample_db_path: Path,
+) -> None:
+    """Integrity checks flag coefficients without a matching interval."""
+    conn = sqlite3.connect(str(sample_db_path))
+    try:
+        conn.execute('PRAGMA foreign_keys = OFF')
+        conn.execute(
+            'INSERT INTO coefficients '
+            '(interval_id, a1, a2, a3, a4, a5, a6, a7, b1, b2) '
+            'VALUES (99999, 1, 2, 3, 4, 5, 6, 7, 8, 9)'
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    q = ThermoDBQuery(str(sample_db_path))
+    q.connect()
+    try:
+        report = q.validate_database()
+        assert report['valid'] is False
+        assert any('missing interval' in e for e in report['errors'])
+    finally:
+        q.close()
 
 
 # ---------------------------------------------------------------------------
@@ -407,8 +595,8 @@ def test_thermodbquery_find_species(sample_db_path: Path) -> None:
 
     species = q.find_species('O2')
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
-    assert species[0]['phase'] == 'gas'
+    assert species[0].name == 'O2'
+    assert species[0].phase == 'gas'
 
     q.close()
 
@@ -420,13 +608,38 @@ def test_thermodbquery_get_species_data(sample_db_path: Path) -> None:
 
     data = q.get_species_data(1)
     assert data is not None
-    assert data['name'] == 'O2'
-    assert 'intervals' in data
-    assert len(data['intervals']) == 2
-    assert data['intervals'][0]['temp_min'] == 200.0
-    assert data['intervals'][0]['temp_max'] == 1000.0
-    assert data['intervals'][1]['temp_min'] == 1000.0
-    assert data['intervals'][1]['temp_max'] == 6000.0
+    assert data.name == 'O2'
+    assert len(data.intervals) == 2
+    assert data.intervals[0].temp_min == 200.0
+    assert data.intervals[0].temp_max == 1000.0
+    assert data.intervals[1].temp_min == 1000.0
+    assert data.intervals[1].temp_max == 6000.0
+
+    q.close()
+
+
+def test_thermodbquery_list_all_species(sample_db_path: Path) -> None:
+    """list_all_species returns every species in one ordered query."""
+    q = ThermoDBQuery(str(sample_db_path))
+    q.connect()
+
+    species = q.list_all_species()
+    assert [sp.name for sp in species] == ['O2']
+    assert all(isinstance(sp.id, int) for sp in species)
+
+    q.close()
+
+
+def test_thermodbquery_get_species_info(sample_db_path: Path) -> None:
+    """get_species_info returns metadata and None for missing IDs."""
+    q = ThermoDBQuery(str(sample_db_path))
+    q.connect()
+
+    info = q.get_species_info(1)
+    assert info is not None
+    assert info.name == 'O2'
+    assert info.molecular_weight == 31.9988
+    assert q.get_species_info(99999) is None
 
     q.close()
 
@@ -443,12 +656,12 @@ def test_polynomial_consistency(calc: ThermochemicalCalculator) -> None:
     which simplifies to: d(H/RT)/dT = (Cp/R - H/RT) / T
     """
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     # Get coefficients for 500 K
     interval = calc.db.get_species_for_temperature(species_id, 500.0)
     assert interval is not None
-    coeffs = interval['coefficients']
+    coeffs = interval.coefficients
 
     T = 500.0
 
@@ -509,6 +722,82 @@ def test_is_temperature_line() -> None:
     assert not ThermoDBBuilder.is_temperature_line(' 5.0000E+02 5.0000E+02')
 
 
+def test_coefficient_line_is_not_a_species_header() -> None:
+    """A NASA coefficient must never be reinterpreted as a species name."""
+    coefficient_line = (
+        '-1.302004763D+06 3.166984180D+04-3.031242152D+02 '
+        '1.602231130D+00-4.594507340D-03'
+    )
+
+    assert ThermoDBBuilder.is_coefficient_line(coefficient_line)
+    assert not ThermoDBBuilder.is_species_header(coefficient_line)
+
+
+def test_builder_rejects_partial_block_and_resynchronizes(tmp_path: Path) -> None:
+    """A malformed species cannot leave rows behind or hide the next species."""
+    inp_path = tmp_path / 'malformed_thermo.inp'
+    db_path = tmp_path / 'malformed_thermo.db'
+    inp_path.write_text(
+        '\n'.join(
+            [
+                'THERMO',
+                '  200.000    500.000   1500.000  6000.000',
+                _species_block('BROKEN', num_intervals=2),
+                _species_block('O2'),
+            ]
+        )
+    )
+
+    builder = ThermoDBBuilder(str(inp_path), str(db_path))
+    builder.connect()
+    builder.create_tables()
+    builder.parse_and_load()
+    builder.close()
+
+    conn = sqlite3.connect(db_path)
+    try:
+        assert conn.execute('SELECT name FROM species').fetchall() == [('O2',)]
+        assert (
+            conn.execute('SELECT COUNT(*) FROM temperature_intervals').fetchone()[0]
+            == 1
+        )
+        assert conn.execute('SELECT COUNT(*) FROM coefficients').fetchone()[0] == 1
+    finally:
+        conn.close()
+
+
+def test_builder_writes_metadata_and_calculator_uses_it(tmp_path: Path) -> None:
+    """New databases persist R_GLENN and use it for dimensional properties."""
+    inp_path = tmp_path / 'metadata_thermo.inp'
+    db_path = tmp_path / 'metadata_thermo.db'
+    inp_path.write_text(
+        '\n'.join(
+            [
+                'THERMO',
+                '  200.000    500.000   1500.000  6000.000',
+                _species_block('O2'),
+            ]
+        )
+    )
+
+    builder = ThermoDBBuilder(str(inp_path), str(db_path))
+    builder.connect()
+    builder.create_tables()
+    builder.parse_and_load()
+    builder.close()
+
+    calc = ThermochemicalCalculator(str(db_path))
+    assert calc.connect() is True
+    assert calc.r_ref == R_GLENN
+    species = calc.get_available_species('O2', exact_match=True)
+    properties = calc.calculate_properties(species[0].id, 500.0)
+    interval = calc.db.get_species_for_temperature(species[0].id, 500.0)
+    assert interval is not None
+    cp_r = calc.db.calculate_cp(interval.coefficients, 500.0)
+    assert properties.cp == pytest.approx(cp_r * R_GLENN)
+    calc.close()
+
+
 def test_parse_species_record() -> None:
     """Test RECORD 1 species name and comments parsing."""
     name, comments = ThermoDBBuilder.parse_species_record(
@@ -528,6 +817,19 @@ def test_parse_general_info_record() -> None:
     )
     assert info['num_intervals'] == 1
     assert info['phase'] == 'gas'
+
+
+def test_parse_general_info_record_heat_of_formation() -> None:
+    """RECORD 2 extracts molecular weight and heat of formation correctly."""
+    builder = ThermoDBBuilder('dummy.inp', 'dummy.db')
+    line = (
+        ' 3 g 9/99 C   1.00O   2.00    0.00    0.00    0.00 0   44.0095000'
+        '    -393510.000'
+    )
+    info = builder.parse_general_info_record(line)
+    assert info['num_intervals'] == 3
+    assert info['molecular_weight'] == pytest.approx(44.0095)
+    assert info['heat_of_formation'] == pytest.approx(-393510.0)
 
 
 def test_parse_temp_interval_record() -> None:
@@ -576,7 +878,7 @@ def test_list_species_page(sample_db_path: Path) -> None:
     species, total_pages = q.list_species_page(page=1, page_size=10)
     assert len(species) == 1
     assert total_pages == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Page beyond available data
     species, total_pages = q.list_species_page(page=2, page_size=10)
@@ -649,13 +951,13 @@ def test_calculate_properties_lower_boundary(
 ) -> None:
     """O2 properties at T = 200.0 K — exactly the lower interval boundary."""
     species = calc.get_available_species('O2', exact_match=True)
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     props = calc.calculate_properties(species_id, 200.0)
     assert props is not None
-    assert props['temp_interval'] == [200.0, 1000.0]
-    assert math.isfinite(props['cp'])
-    assert math.isfinite(props['h_relative'])
+    assert props.temp_interval == (200.0, 1000.0)
+    assert math.isfinite(props.cp)
+    assert math.isfinite(props.h_relative)
 
 
 def test_calculate_properties_shared_boundary(
@@ -668,15 +970,15 @@ def test_calculate_properties_shared_boundary(
     floating-point edge cases in the SQL query.
     """
     species = calc.get_available_species('O2', exact_match=True)
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     props = calc.calculate_properties(species_id, 1000.0)
     assert props is not None
     # The lower interval (interval_number=1) should be selected when both
     # intervals cover the same temperature (ORDER BY interval_number).
-    assert props['temp_interval'] == [200.0, 1000.0]
-    assert math.isfinite(props['cp'])
-    assert math.isfinite(props['h_relative'])
+    assert props.temp_interval == (200.0, 1000.0)
+    assert math.isfinite(props.cp)
+    assert math.isfinite(props.h_relative)
 
 
 def test_calculate_properties_upper_boundary(
@@ -684,13 +986,13 @@ def test_calculate_properties_upper_boundary(
 ) -> None:
     """O2 properties at T = 6000.0 K — exactly the upper interval boundary."""
     species = calc.get_available_species('O2', exact_match=True)
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     props = calc.calculate_properties(species_id, 6000.0)
     assert props is not None
-    assert props['temp_interval'] == [1000.0, 6000.0]
-    assert math.isfinite(props['cp'])
-    assert math.isfinite(props['h_relative'])
+    assert props.temp_interval == (1000.0, 6000.0)
+    assert math.isfinite(props.cp)
+    assert math.isfinite(props.h_relative)
 
 
 # ---------------------------------------------------------------------------
@@ -705,17 +1007,17 @@ def test_get_available_species_exact_match(
     # Substring search (default) — works fine for 'O2' in this small test db
     species = calc.get_available_species('O2')
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Exact match — also works
     species = calc.get_available_species('O2', exact_match=True)
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Exact match — case insensitive
     species = calc.get_available_species('o2', exact_match=True)
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Exact match — no match
     species = calc.get_available_species('O3', exact_match=True)
@@ -732,12 +1034,12 @@ def test_thermodbquery_find_species_exact_match(
     # Substring search (default)
     species = q.find_species('O2')
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Exact match
     species = q.find_species('O2', exact_match=True)
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Exact match — no result for partial name
     species = q.find_species('O', exact_match=True)
@@ -809,6 +1111,36 @@ def test_cli_query_smoke(
 
     args = argparse.Namespace(database=str(sample_db_path), species='O2', verbose=False)
     cmd_query(args)
+
+    captured = capsys.readouterr()
+    assert 'SUCCESS' in captured.out
+
+
+def test_cli_migrate_metadata_smoke(
+    sample_db_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Test migrate-metadata command runs without errors."""
+    import argparse
+
+    from pyglenn.cli import cmd_migrate_metadata
+
+    args = argparse.Namespace(database=str(sample_db_path))
+    cmd_migrate_metadata(args)
+
+    captured = capsys.readouterr()
+    assert 'SUCCESS' in captured.out
+
+
+def test_cli_validate_smoke(
+    sample_db_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Test validate command runs without errors."""
+    import argparse
+
+    from pyglenn.cli import cmd_validate
+
+    args = argparse.Namespace(database=str(sample_db_path))
+    cmd_validate(args)
 
     captured = capsys.readouterr()
     assert 'SUCCESS' in captured.out

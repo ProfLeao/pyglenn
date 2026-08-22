@@ -166,7 +166,7 @@ def collect_data() -> dict[str, dict[str, Any]]:
         log.info('Connected to pyglenn database (bundled thermo.db)')
         stats = calc.db.get_statistics()
         log.info('DB stats: %d species, %d intervals',
-                 stats['total_species'], stats['total_intervals'])
+                 stats.total_species, stats.total_intervals)
 
         for py_name, plot_label, _ in SPECIES:
             log.info('▶ Processing %s (%s)', py_name, plot_label)
@@ -175,14 +175,14 @@ def collect_data() -> dict[str, dict[str, Any]]:
             found = calc.get_available_species(py_name, exact_match=True)
             # Filter by phase in case multiple phases exist (e.g. gas + liquid)
             target = next(
-                (sp for sp in found if sp['phase'] == 'gas'), None
+                (sp for sp in found if sp.phase == 'gas'), None
             )
             if target is None:
                 log.warning('  ✗ %s not found in pyglenn database!', py_name)
                 continue
 
-            sid = target['id']
-            log.info('  ✓ ID: %d | MW: %s', sid, target['molecular_weight'])
+            sid = target.id
+            log.info('  ✓ ID: %d | MW: %s', sid, target.molecular_weight)
 
             for T in TEMPERATURES:
                 Tk = round(float(T), 2)
@@ -196,11 +196,11 @@ def collect_data() -> dict[str, dict[str, Any]]:
                 except ThermoCalcError:
                     continue
 
-                dh_py = props['h_relative'] - ref['coef']['H'] * 1000.0
+                dh_py = props.h_relative - ref['coef']['H'] * 1000.0
 
                 results[py_name][Tk] = {
                     'nist': {'cp': ref['cp'], 'dh_298': ref['dh_298'], 's': ref['s']},
-                    'pyglenn': {'cp': props['cp'], 'dh_298': dh_py, 's': props['s']},
+                    'pyglenn': {'cp': props.cp, 'dh_298': dh_py, 's': props.s},
                 }
 
             n_pts = len(results[py_name])

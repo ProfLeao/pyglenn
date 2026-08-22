@@ -37,6 +37,15 @@ The database contains three linked tables:
 - ``a1`` … ``a7`` — polynomial coefficients
 - ``b1``, ``b2`` — integration constants
 
+**metadata** — additive dataset metadata
+
+- ``key`` — metadata key
+- ``value`` — metadata value
+
+Newly built NASA Glenn/CEA databases store ``gas_constant_ref = 8.314510`` and
+its provenance in this table. Legacy databases without this table remain
+readable and use the universal fallback constant.
+
 NASA Polynomial Format
 =======================
 
@@ -79,25 +88,29 @@ You can query the database directly using :class:`~pyglenn.ThermoDBQuery`:
 
    # Search species by name
    species = query.find_species('CH4', exact_match=True)
-   print(species[0]['name'], species[0]['phase'])
+   print(species[0].name, species[0].phase)
 
    # Get complete data (metadata + all intervals + coefficients)
-   data = query.get_species_data(species[0]['id'])
-   for interval in data['intervals']:
-       print(f"  {interval['temp_min']}–{interval['temp_max']} K")
-       coeffs = interval['coefficients']
-       print(f"  a1={coeffs['a1']}, …, a7={coeffs['a7']}")
+   data = query.get_species_data(species[0].id)
+   for interval in data.intervals:
+       print(f"  {interval.temp_min}–{interval.temp_max} K")
+       coeffs = interval.coefficients
+       print(f"  a1={coeffs.a1}, …, a7={coeffs.a7}")
 
    query.close()
 
-Universal Gas Constant
-======================
+Gas Constants
+=============
 
-The universal gas constant is available as :data:`pyglenn.R`:
+The universal CODATA gas constant and the NASA Glenn/CEA dataset reference
+constant are available as :data:`pyglenn.R_UNIVERSAL` and
+:data:`pyglenn.R_GLENN`. :data:`pyglenn.R` remains a compatibility alias for
+the universal value.
 
 .. code-block:: python
 
-   from pyglenn import R
+   from pyglenn import R_GLENN, R_UNIVERSAL
 
-   print(f"R = {R} J/(mol·K)")
+   print(f"R (universal) = {R_UNIVERSAL} J/(mol·K)")
+   print(f"R (NASA Glenn) = {R_GLENN} J/(mol·K)")
 

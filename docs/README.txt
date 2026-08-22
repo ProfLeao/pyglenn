@@ -21,7 +21,7 @@ PROJECT FILES:
 
 3. thermo.inp
    - Original file with thermochemical data (FORTRAN format)
-   - Contains ~2030 species and their polynomial coefficients
+   - Contains 2,035 species and their polynomial coefficients
 
 4. thermo_to_sqlite.py
    - Python script that converts thermo.inp to SQLite3
@@ -30,8 +30,8 @@ PROJECT FILES:
 
 5. thermo.db
    - Generated SQLite3 database
-   - 2030 species, 3772 temperature intervals
-   - 3772 polynomial coefficient sets
+   - 2,035 species, 3,779 temperature intervals
+   - 3,779 polynomial coefficient sets
 
 6. query_thermo_db.py
    - Example script with queries and calculations
@@ -53,17 +53,17 @@ DATABASE STRUCTURE:
    └─────────────────┘
            ↓
    ┌─────────────────┐
-   │    species      │ (2030 chemical species)
+   │    species      │ (2,035 chemical species)
    │  (id, name...)  │
    └─────────────────┘
            ↓
    ┌────────────────────────────┐
-   │ temperature_intervals      │ (3772 intervals)
+   │ temperature_intervals      │ (3,779 intervals)
    │ (species_id, temp_min/max) │
    └────────────────────────────┘
            ↓
    ┌──────────────────────────────┐
-   │    coefficients              │ (3772 sets)
+   │    coefficients              │ (3,779 sets)
    │ (a1-a7, b1, b2 coefficients) │
    └──────────────────────────────┘
 
@@ -101,15 +101,15 @@ HOW TO USE:
 
 DATA LOADED:
 
-✓ Species: 2030
-  - Gaseous: 1264
-  - Condensed: 766
+✓ Species: 2035
+  - Gaseous: 1266
+  - Condensed: 769
   
-✓ Temperature Intervals: 3772
+✓ Temperature Intervals: 3779
   - Global range: 200 K to 20000 K
   - Multiple intervals per species for better accuracy
   
-✓ Polynomial Coefficients: 3772 sets
+✓ Polynomial Coefficients: 3779 sets
   - 7 coefficients (a1-a7) for Cp
   - 2 integration constants (b1, b2)
 
@@ -162,13 +162,13 @@ db.connect()
 
 # Search for species
 species = db.find_species('O2')
-print(species[0]['name'])  # O2
+print(species[0].name)  # O2
 
 # Get species data
-data = db.get_species_data(species[0]['id'])
+data = db.get_species_data(species[0].id)
 
 # Calculate Cp at 1000 K
-coeffs = data['intervals'][0]['coefficients']
+coeffs = data.intervals[0].coefficients
 cp_r = db.calculate_cp(coeffs, 1000)
 print(f"Cp(1000K)/R = {cp_r}")
 

@@ -15,6 +15,7 @@ import sys
 
 from .builder import ThermoDBBuilder
 from .calculator import ThermoCalcError, ThermochemicalCalculator
+from .database import ThermoDBQuery
 
 
 def _setup_logging(verbose: bool = False) -> None:
@@ -76,11 +77,11 @@ def cmd_query(args: argparse.Namespace) -> None:
         print('\n1. DATABASE STATISTICS:')
         print('-' * 70)
         stats = calc.db.get_statistics()
-        print(f'  Total species: {stats["total_species"]}')
-        print(f'  Total intervals: {stats["total_intervals"]}')
-        print(f'  Total coefficient sets: {stats["total_coeff_sets"]}')
-        print(f'  Species by phase: {stats["species_by_phase"]}')
-        print(f'  Average molecular weight: {stats["avg_molecular_weight"]:.2f} g/mol')
+        print(f'  Total species: {stats.total_species}')
+        print(f'  Total intervals: {stats.total_intervals}')
+        print(f'  Total coefficient sets: {stats.total_coeff_sets}')
+        print(f'  Species by phase: {stats.species_by_phase}')
+        print(f'  Average molecular weight: {stats.avg_molecular_weight:.2f} g/mol')
 
         # Search
         pattern = args.species or 'O2'
@@ -89,14 +90,14 @@ def cmd_query(args: argparse.Namespace) -> None:
         species_list = calc.get_available_species(pattern)
         for sp in species_list[:5]:
             print(
-                f'  ID: {sp["id"]:4d} | Name: {sp["name"]:20s} | '
-                f'Phase: {sp["phase"]:10s} | MW: {sp["molecular_weight"]}'
+                f'  ID: {sp.id:4d} | Name: {sp.name:20s} | '
+                f'Phase: {sp.phase:10s} | MW: {sp.molecular_weight}'
             )
 
         # Properties
         if species_list:
-            species_id = species_list[0]['id']
-            species_name = species_list[0]['name']
+            species_id = species_list[0].id
+            species_name = species_list[0].name
             print(f'\n3. PROPERTIES FOR {species_name}:')
             print('-' * 70)
             print(
@@ -110,10 +111,10 @@ def cmd_query(args: argparse.Namespace) -> None:
                 except ThermoCalcError:
                     continue
                 print(
-                    f'{props["temperature"]:>8.2f} | '
-                    f'{props["cp"]:>14.3f} | '
-                    f'{props["h_relative"]:>14.1f} | '
-                    f'{props["s"]:>14.3f}'
+                    f'{props.temperature:>8.2f} | '
+                    f'{props.cp:>14.3f} | '
+                    f'{props.h_relative:>14.1f} | '
+                    f'{props.s:>14.3f}'
                 )
 
             h_f = calc.calculate_formation_enthalpy(species_id)
@@ -124,6 +125,54 @@ def cmd_query(args: argparse.Namespace) -> None:
         print('[SUCCESS] Queries completed!')
     finally:
         calc.close()
+
+
+def cmd_migrate_metadata(args: argparse.Namespace) -> None:
+    """Ensure a database carries the canonical dataset metadata."""
+    query = ThermoDBQuery(args.database)
+    if not query.connect():
+        print('Error: Could not connect to database')
+        return
+    try:
+        r_ref = query.get_gas_constant_ref()
+        print('=' * 70)
+        print('METADATA MIGRATION')
+        print('=' * 70)
+        print(f'  Database: {args.database}')
+        print(f'  gas_constant_ref: {r_ref}')
+        print('  gas_constant_ref_source: NASA Glenn/CEA thermo.inp (CODATA 1986)')
+        print('\n[SUCCESS] Metadata is present and canonical.')
+    finally:
+        query.close()
+
+
+def cmd_validate(args: argparse.Namespace) -> None:
+    """Run read-only integrity checks against a database."""
+    query = ThermoDBQuery(args.database)
+    if not query.connect(auto_migrate=False):
+        print('Error: Could not connect to database')
+        return
+    try:
+        report = query.validate_database()
+        print('=' * 70)
+        print('DATABASE VALIDATION')
+        print('=' * 70)
+        print(f'  Valid: {report["valid"]}')
+        if report['errors']:
+            print('  Errors:')
+            for err in report['errors']:
+                print(f'    - {err}')
+        if report['warnings']:
+            print('  Warnings:')
+            for warn in report['warnings']:
+                print(f'    - {warn}')
+        print('  Counts:', report['counts'])
+        if report['valid']:
+            print('\n[SUCCESS] Validation completed.')
+        else:
+            print('\n[FAIL] Validation failed.')
+    finally:
+        query.close()
 
 
 def main() -> None:
@@ -171,6 +220,30 @@ def main() -> None:
         help='Species name pattern to search (default: O2)',
     )
     p_query.set_defaults(func=cmd_query)
+
+    # migrate-metadata
+    p_migrate = sub.add_parser(
+        'migrate-metadata', help='Add canonical dataset metadata to a database'
+    )
+    p_migrate.add_argument(
+        '-d',
+        '--database',
+        default='thermo.db',
+        help='SQLite database file (default: thermo.db)',
+    )
+    p_migrate.set_defaults(func=cmd_migrate_metadata)
+
+    # validate
+    p_validate = sub.add_parser(
+        'validate', help='Run read-only database integrity checks'
+    )
+    p_validate.add_argument(
+        '-d',
+        '--database',
+        default='thermo.db',
+        help='SQLite database file (default: thermo.db)',
+    )
+    p_validate.set_defaults(func=cmd_validate)
 
     args = parser.parse_args()
     if args.command is None:

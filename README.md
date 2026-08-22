@@ -18,7 +18,7 @@ Computes **Cp(T)**, **H°(T)**, **S°(T)** from NASA polynomial coefficients sto
 - Enthalpy of formation lookup
 - Enthalpy change between two temperatures
 - Command-line interface
-- ~2030 species, 3772 temperature intervals
+- 2,035 species, 3,779 temperature intervals
 
 ## Installation
 
@@ -60,10 +60,10 @@ species = calc.get_available_species('O2', exact_match=True)
 o2 = species[0]
 
 # Calculate properties at 1000 K
-props = calc.calculate_properties(o2['id'], 1000.0)
-print(f"Cp = {props['cp']:.2f} J/(mol·K)")
-print(f"H° = {props['h_relative']:.1f} J/mol")
-print(f"S° = {props['s']:.3f} J/(mol·K)")
+props = calc.calculate_properties(o2.id, 1000.0)
+print(f"Cp = {props.cp:.2f} J/(mol·K)")
+print(f"H° = {props.h_relative:.1f} J/mol")
+print(f"S° = {props.s:.3f} J/(mol·K)")
 
 calc.close()
 ```
@@ -76,8 +76,8 @@ from pyglenn import ThermochemicalCalculator
 with ThermochemicalCalculator() as calc:
     # exact_match=True guarantees the correct species (case-insensitive)
     species = calc.get_available_species('CH4', exact_match=True)
-    props = calc.calculate_properties(species[0]['id'], 500.0)
-    print(f"Cp = {props['cp']:.2f} J/(mol·K)")
+    props = calc.calculate_properties(species[0].id, 500.0)
+    print(f"Cp = {props.cp:.2f} J/(mol·K)")
 ```
 
 ### CLI
@@ -102,6 +102,16 @@ pyglenn build -i thermo.inp -o thermo.db
 | `temperature_intervals` | Valid T ranges per species |
 | `coefficients` | NASA-7 polynomial coefficients (a1–a7, b1, b2) |
 | `file_metadata` | Global file metadata |
+| `metadata` | Dataset metadata, including its reference gas constant |
+
+## Gas Constants
+
+`R_UNIVERSAL = 8.31446261815324 J/(mol·K)` is the universal CODATA value and
+remains available through the compatibility alias `R`. NASA Glenn/CEA
+polynomials in newly built databases declare their fitted reference constant as
+`R_GLENN = 8.314510 J/(mol·K)` in SQLite metadata. The calculator reads that
+value automatically when it connects; legacy databases fall back to
+`R_UNIVERSAL` until explicitly migrated.
 
 ## Citing
 

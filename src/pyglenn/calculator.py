@@ -13,10 +13,12 @@ All values returned as floats in standard units:
 from __future__ import annotations
 
 import logging
+from collections.abc import Sequence
 from importlib import resources
 from typing import Any
 
-from .database import R, ThermoDBQuery
+from .database import R_UNIVERSAL, ThermoDBQuery
+from .models import IntervalData, SpeciesInfo, ThermoProperties
 
 logger = logging.getLogger(__name__)
 
@@ -36,13 +38,33 @@ class DatabaseNotConnectedError(ThermoCalcError):
 class SpeciesNotFoundError(ThermoCalcError):
     """Raised when a species ID is not found in the database."""
 
-    pass
+    def __init__(self, species_id: int) -> None:
+        self.species_id = species_id
+        super().__init__(f'Species ID {species_id} not found in database')
 
 
 class TemperatureOutOfRangeError(ThermoCalcError):
-    """Raised when the requested temperature is outside valid intervals."""
+    """Raised when the requested temperature is outside valid intervals.
 
-    pass
+    Carries the requested temperature, the species name, and the overall
+    valid temperature bounds (when known).
+    """
+
+    def __init__(
+        self,
+        temperature: float,
+        species_name: str | None = None,
+        temp_bounds: tuple[float, float] | None = None,
+    ) -> None:
+        self.temperature = temperature
+        self.species_name = species_name
+        self.temp_bounds = temp_bounds
+        message = f'Temperature {temperature:.1f} K out of valid range'
+        if species_name:
+            message += f" for species '{species_name}'"
+        if temp_bounds is not None:
+            message += f' (valid range: {temp_bounds[0]:.1f}-{temp_bounds[1]:.1f} K)'
+        super().__init__(message)
 
 
 class ThermochemicalCalculator:
@@ -63,6 +85,7 @@ class ThermochemicalCalculator:
             db_file = str(db_path)
         self.db: ThermoDBQuery = ThermoDBQuery(db_file)
         self._connected: bool = False
+        self.r_ref: float = R_UNIVERSAL
 
     # ------------------------------------------------------------------
     # Context manager protocol
@@ -96,6 +119,7 @@ class ThermochemicalCalculator:
             True if connection succeeded, False otherwise.
         """
         if self.db.connect():
+            self.r_ref = self.db.get_gas_constant_ref()
             self._connected = True
             return True
         return False
@@ -104,13 +128,14 @@ class ThermochemicalCalculator:
         """Close the database connection."""
         self.db.close()
         self._connected = False
+        self.r_ref = R_UNIVERSAL
 
     # ------------------------------------------------------------------
     # Species lookup
     # ------------------------------------------------------------------
     def get_available_species(
         self, search_pattern: str = '', exact_match: bool = False
-    ) -> list[dict[str, Any]]:
+    ) -> list[SpeciesInfo]:
         """
         Return a list of available species, optionally filtered by name.
 
@@ -122,7 +147,7 @@ class ThermochemicalCalculator:
                          backward compatibility.
 
         Returns:
-            List of species dicts with id, name, phase, molecular_weight.
+            List of SpeciesInfo with id, name, phase, molecular_weight.
         """
         if not self._connected:
             logger.warning('get_available_species called without connection')
@@ -131,27 +156,14 @@ class ThermochemicalCalculator:
         if search_pattern:
             return self.db.find_species(search_pattern, exact_match=exact_match)
 
-        # Paginate through all species
-        species_list: list[dict[str, Any]] = []
-        page = 1
-        while True:
-            species_page, total_pages = self.db.list_species_page(
-                page=page, page_size=100
-            )
-            if not species_page:
-                break
-            species_list.extend(species_page)
-            if page >= total_pages:
-                break
-            page += 1
-        return species_list
+        return self.db.list_all_species()
 
     # ------------------------------------------------------------------
     # Core calculations
     # ------------------------------------------------------------------
     def calculate_properties(
         self, species_id: int, temperature: float
-    ) -> dict[str, Any]:
+    ) -> ThermoProperties:
         """
         Calculate thermochemical properties at a given temperature.
 
@@ -160,14 +172,8 @@ class ThermochemicalCalculator:
             temperature: Temperature in Kelvin.
 
         Returns:
-            Dictionary with keys:
-              - temperature:   Input temperature (K)
-              - cp:            Heat capacity in J/(mol·K)
-              - h_relative:    Enthalpy relative to 0 K in J/mol
-              - s:             Absolute entropy in J/(mol·K)
-              - temp_interval: [T_min, T_max]
-              - species_name:  Species name
-              - phase:         Phase ('gas' or 'condensed')
+            ThermoProperties with temperature, cp, h_relative, s,
+            temp_interval, species_name, and phase.
 
         Raises:
             DatabaseNotConnectedError: If not connected to database.
@@ -180,22 +186,16 @@ class ThermochemicalCalculator:
                 'calculate_properties called without database connection'
             )
 
-        species_data = self.db.get_species_data(species_id)
-        if not species_data or 'intervals' not in species_data:
-            raise SpeciesNotFoundError(f'Species ID {species_id} not found in database')
+        species_info = self.db.get_species_info(species_id)
+        if species_info is None:
+            raise SpeciesNotFoundError(species_id)
 
         interval_data = self.db.get_species_for_temperature(species_id, temperature)
-        if not interval_data:
-            intervals = [
-                (i['temp_min'], i['temp_max']) for i in species_data['intervals']
-            ]
-            raise TemperatureOutOfRangeError(
-                f'Temperature {temperature:.1f} K out of valid range '
-                f"for species '{species_data['name']}'. "
-                f'Available intervals: {intervals}'
-            )
+        if interval_data is None:
+            bounds = self.db.get_temperature_bounds(species_id)
+            raise TemperatureOutOfRangeError(temperature, species_info.name, bounds)
 
-        coeffs: dict[str, float] = interval_data['coefficients']
+        coeffs = interval_data.coefficients
 
         # Dimensionless properties (÷ R)
         cp_r = self.db.calculate_cp(coeffs, temperature)
@@ -203,22 +203,19 @@ class ThermochemicalCalculator:
         s_r = self.db.calculate_s(coeffs, temperature)
 
         # Convert to absolute units
-        cp = cp_r * R  # J/(mol·K)
-        h_relative = h_rt * R * temperature  # J/mol
-        s = s_r * R  # J/(mol·K)
+        cp = cp_r * self.r_ref  # J/(mol·K)
+        h_relative = h_rt * self.r_ref * temperature  # J/mol
+        s = s_r * self.r_ref  # J/(mol·K)
 
-        return {
-            'temperature': temperature,
-            'cp': cp,
-            'h_relative': h_relative,
-            's': s,
-            'temp_interval': [
-                interval_data['temp_min'],
-                interval_data['temp_max'],
-            ],
-            'species_name': species_data['name'],
-            'phase': species_data['phase'],
-        }
+        return ThermoProperties(
+            temperature=temperature,
+            cp=cp,
+            h_relative=h_relative,
+            s=s,
+            temp_interval=(interval_data.temp_min, interval_data.temp_max),
+            species_name=species_info.name,
+            phase=species_info.phase,
+        )
 
     def calculate_formation_enthalpy(self, species_id: int) -> float | None:
         """
@@ -234,11 +231,11 @@ class ThermochemicalCalculator:
             logger.warning('calculate_formation_enthalpy called without connection')
             return None
 
-        species_data = self.db.get_species_data(species_id)
-        if not species_data:
+        species_info = self.db.get_species_info(species_id)
+        if species_info is None:
             return None
 
-        return species_data.get('heat_of_formation_298K')
+        return species_info.heat_of_formation_298K
 
     def calculate_enthalpy_change(
         self, species_id: int, T1: float, T2: float
@@ -246,7 +243,7 @@ class ThermochemicalCalculator:
         """
         Calculate ΔH°(T₂) − ΔH°(T₁) in J/mol.
 
-        Uses H°(T) values relative to 0 K.
+        Uses absolute H°(T) values (NASA-7 convention).
 
         Args:
             species_id: Database ID of the species.
@@ -269,11 +266,11 @@ class ThermochemicalCalculator:
         props_t1 = self.calculate_properties(species_id, T1)
         props_t2 = self.calculate_properties(species_id, T2)
 
-        return float(props_t2['h_relative'] - props_t1['h_relative'])
+        return float(props_t2.h_relative - props_t1.h_relative)
 
     def get_properties_range(
         self, species_id: int, temps: list[float]
-    ) -> dict[float, dict[str, Any]] | None:
+    ) -> dict[float, ThermoProperties] | None:
         """
         Calculate properties at multiple temperatures.
 
@@ -282,13 +279,13 @@ class ThermochemicalCalculator:
             temps: List of temperatures in Kelvin.
 
         Returns:
-            Dict mapping temperature → property dict, or None if all fail.
+            Dict mapping temperature → ThermoProperties, or None if all fail.
         """
         if not self._connected:
             logger.warning('get_properties_range called without connection')
             return None
 
-        results: dict[float, dict[str, Any]] = {}
+        results: dict[float, ThermoProperties] = {}
         for temp in temps:
             try:
                 props = self.calculate_properties(species_id, temp)
@@ -297,3 +294,95 @@ class ThermochemicalCalculator:
                 pass  # skip temperatures outside valid range
 
         return results if results else None
+
+    def calculate_properties_range(
+        self,
+        species_id: int,
+        temps: Sequence[float],
+        *,
+        strict: bool = False,
+    ) -> list[ThermoProperties]:
+        """Calculate properties for many temperatures, loading data once.
+
+        Unlike :meth:`get_properties_range`, this loads the species intervals
+        a single time and evaluates all temperatures in memory, preserving
+        input order.
+
+        Args:
+            species_id: Database ID of the species.
+            temps: Sequence of temperatures in Kelvin.
+            strict: If True, raise on an out-of-range temperature.
+                    If False (default), out-of-range values are skipped.
+
+        Returns:
+            Ordered list of ThermoProperties.
+
+        Raises:
+            DatabaseNotConnectedError: If not connected to database.
+            SpeciesNotFoundError: If species_id is not in the database.
+            TemperatureOutOfRangeError: If ``strict`` and a temperature is
+                outside the valid intervals.
+        """
+        if not self._connected:
+            raise DatabaseNotConnectedError(
+                'calculate_properties_range called without database connection'
+            )
+
+        species_info = self.db.get_species_info(species_id)
+        if species_info is None:
+            raise SpeciesNotFoundError(species_id)
+
+        species_data = self.db.get_species_data(species_id)
+        if species_data is None:
+            raise SpeciesNotFoundError(species_id)
+
+        intervals = species_data.intervals
+        bounds = ThermochemicalCalculator._overall_bounds(intervals)
+
+        results: list[ThermoProperties] = []
+        for temp in temps:
+            interval = ThermochemicalCalculator._select_interval(intervals, temp)
+            if interval is None:
+                if strict:
+                    raise TemperatureOutOfRangeError(temp, species_info.name, bounds)
+                continue
+
+            coeffs = interval.coefficients
+            cp_r = self.db.calculate_cp(coeffs, temp)
+            h_rt = self.db.calculate_h(coeffs, temp)
+            s_r = self.db.calculate_s(coeffs, temp)
+
+            results.append(
+                ThermoProperties(
+                    temperature=temp,
+                    cp=cp_r * self.r_ref,
+                    h_relative=h_rt * self.r_ref * temp,
+                    s=s_r * self.r_ref,
+                    temp_interval=(interval.temp_min, interval.temp_max),
+                    species_name=species_info.name,
+                    phase=species_info.phase,
+                )
+            )
+        return results
+
+    @staticmethod
+    def _select_interval(
+        intervals: tuple[IntervalData, ...], temperature: float
+    ) -> IntervalData | None:
+        """Return the first interval covering ``temperature``, or None."""
+        for interval in intervals:
+            if interval.temp_min <= temperature <= interval.temp_max + 1e-9:
+                return interval
+        return None
+
+    @staticmethod
+    def _overall_bounds(
+        intervals: tuple[IntervalData, ...],
+    ) -> tuple[float, float] | None:
+        """Return the overall [min, max] temperature covered by intervals."""
+        if not intervals:
+            return None
+        return (
+            min(interval.temp_min for interval in intervals),
+            max(interval.temp_max for interval in intervals),
+        )

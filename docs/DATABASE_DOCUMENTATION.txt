@@ -115,10 +115,10 @@ SQL QUERY EXAMPLES:
 
 LOADING INFORMATION:
 
-• Total Species Loaded: 2030
-• Total Temperature Intervals: 3772
-• Total Coefficient Sets: 3772
-• Skipped Data Lines: 100 (malformed or inconsistent lines)
+• Total Species Loaded: 2035
+• Total Temperature Intervals: 3779
+• Total Coefficient Sets: 3779
+• Duplicate Species Skipped: 11 (already present)
 
 ================================================================================
 
