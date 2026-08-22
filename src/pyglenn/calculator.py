@@ -245,7 +245,7 @@ class ThermochemicalCalculator:
         """
         Calculate ΔH°(T₂) − ΔH°(T₁) in J/mol.
 
-        Uses H°(T) values relative to 0 K.
+        Uses absolute H°(T) values (NASA-7 convention).
 
         Args:
             species_id: Database ID of the species.

@@ -1,7 +1,7 @@
 # Additional examples
 
-This folder is intended for extra Jupyter notebooks that extend the
-core examples. Place new `.ipynb` files here — they will be picked up
-automatically by the Sphinx documentation build (via the `:glob:` directive
-in `examples.md`).
+This folder is intended for extra Jupyter notebooks that extend the core
+examples. Place new `.ipynb` files here — the documentation build copies
+them recursively and renders them via the `examples/extra/*` glob in
+`examples.md` (see `docs/source/conf.py`).
 

@@ -42,7 +42,7 @@ calc.get_available_species('CH4')
 ```python
 p = calc.calculate_properties(species_id, 1000.0)
 # p.cp            → J/(mol·K)
-# p.h_relative    → J/mol (relative to 0 K)
+# p.h_relative    → J/mol (absolute H°(T), NASA-7 convention)
 # p.s             → J/(mol·K)
 # p.species_name  → 'CH4'
 # p.phase         → 'gas' | 'condensed'
