@@ -10,10 +10,10 @@ from pathlib import Path
 import pytest
 
 from pyglenn import (
-    DatabaseNotConnectedError,
-    R,
     R_GLENN,
     R_UNIVERSAL,
+    DatabaseNotConnectedError,
+    R,
     SpeciesNotFoundError,
     TemperatureOutOfRangeError,
     ThermoCalcError,
@@ -315,14 +315,14 @@ def test_get_all_species(calc: ThermochemicalCalculator) -> None:
     """Test retrieving all species."""
     species = calc.get_available_species()
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
 
 def test_find_species_by_name(calc: ThermochemicalCalculator) -> None:
     """Test searching species by name."""
     species = calc.get_available_species('O2')
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
 
 def test_find_nonexistent_species(calc: ThermochemicalCalculator) -> None:
@@ -339,49 +339,49 @@ def test_find_nonexistent_species(calc: ThermochemicalCalculator) -> None:
 def test_calculate_properties_o2_298K(calc: ThermochemicalCalculator) -> None:
     """Test O2 properties at 298.15 K — verifies structure and correctness."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     props = calc.calculate_properties(species_id, 298.15)
     assert props is not None
-    assert props['species_name'] == 'O2'
-    assert props['phase'] == 'gas'
+    assert props.species_name == 'O2'
+    assert props.phase == 'gas'
 
     # Verify Cp is positive and within physically reasonable bounds
-    assert props['cp'] > 0
-    assert props['cp'] < 200  # J/(mol·K) — well above any reasonable upper bound
+    assert props.cp > 0
+    assert props.cp < 200  # J/(mol·K) — well above any reasonable upper bound
 
     # Temperature interval check
-    assert props['temp_interval'][0] == 200.0
-    assert props['temp_interval'][1] == 1000.0
+    assert props.temp_interval[0] == 200.0
+    assert props.temp_interval[1] == 1000.0
 
     # All properties should be finite numbers
-    assert math.isfinite(props['cp'])
-    assert math.isfinite(props['h_relative'])
-    assert math.isfinite(props['s'])
+    assert math.isfinite(props.cp)
+    assert math.isfinite(props.h_relative)
+    assert math.isfinite(props.s)
 
 
 def test_calculate_properties_o2_500K(calc: ThermochemicalCalculator) -> None:
     """Test O2 properties at 500 K."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     props = calc.calculate_properties(species_id, 500.0)
     assert props is not None
 
     # Cp should be positive and finite
-    assert props['cp'] > 0
-    assert math.isfinite(props['cp'])
+    assert props.cp > 0
+    assert math.isfinite(props.cp)
 
     # H should increase with T (check vs 298 K)
     props_298 = calc.calculate_properties(species_id, 298.15)
     assert props_298 is not None
-    assert props['h_relative'] > props_298['h_relative']
+    assert props.h_relative > props_298.h_relative
 
 
 def test_calculate_properties_out_of_range(calc: ThermochemicalCalculator) -> None:
     """Test requesting properties outside valid temperature range."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     # Below valid range
     with pytest.raises(TemperatureOutOfRangeError):
@@ -406,7 +406,7 @@ def test_calculate_properties_invalid_species(calc: ThermochemicalCalculator) ->
 def test_formation_enthalpy(calc: ThermochemicalCalculator) -> None:
     """Test formation enthalpy retrieval."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     h_f = calc.calculate_formation_enthalpy(species_id)
     # O2(g) reference element → ΔH°f = 0
@@ -422,7 +422,7 @@ def test_formation_enthalpy(calc: ThermochemicalCalculator) -> None:
 def test_enthalpy_change(calc: ThermochemicalCalculator) -> None:
     """Test enthalpy change between two temperatures."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     delta_h = calc.calculate_enthalpy_change(species_id, 298.15, 500.0)
     assert delta_h is not None
@@ -435,7 +435,7 @@ def test_enthalpy_change(calc: ThermochemicalCalculator) -> None:
 def test_enthalpy_change_zero_delta(calc: ThermochemicalCalculator) -> None:
     """Test enthalpy change between same temperature is zero."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     delta_h = calc.calculate_enthalpy_change(species_id, 400.0, 400.0)
     assert delta_h is not None
@@ -450,7 +450,7 @@ def test_enthalpy_change_zero_delta(calc: ThermochemicalCalculator) -> None:
 def test_get_properties_range(calc: ThermochemicalCalculator) -> None:
     """Test calculating properties at multiple temperatures."""
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     results = calc.get_properties_range(species_id, [298.15, 500.0, 800.0])
     assert results is not None
@@ -460,7 +460,7 @@ def test_get_properties_range(calc: ThermochemicalCalculator) -> None:
     assert 800.0 in results
 
     # Cp should increase with temperature
-    assert results[500.0]['cp'] > results[298.15]['cp']
+    assert results[500.0].cp > results[298.15].cp
 
 
 # ---------------------------------------------------------------------------
@@ -471,11 +471,11 @@ def test_get_properties_range(calc: ThermochemicalCalculator) -> None:
 def test_database_statistics(calc: ThermochemicalCalculator) -> None:
     """Test database statistics retrieval."""
     stats = calc.db.get_statistics()
-    assert stats['total_species'] == 1
-    assert stats['total_intervals'] == 2
-    assert stats['total_coeff_sets'] == 2
-    assert stats['species_by_phase'] == {'gas': 1}
-    assert stats['avg_molecular_weight'] == pytest.approx(31.9988)
+    assert stats.total_species == 1
+    assert stats.total_intervals == 2
+    assert stats.total_coeff_sets == 2
+    assert stats.species_by_phase == {'gas': 1}
+    assert stats.avg_molecular_weight == pytest.approx(31.9988)
 
 
 def test_validate_database_valid(calc: ThermochemicalCalculator) -> None:
@@ -524,8 +524,8 @@ def test_thermodbquery_find_species(sample_db_path: Path) -> None:
 
     species = q.find_species('O2')
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
-    assert species[0]['phase'] == 'gas'
+    assert species[0].name == 'O2'
+    assert species[0].phase == 'gas'
 
     q.close()
 
@@ -537,13 +537,38 @@ def test_thermodbquery_get_species_data(sample_db_path: Path) -> None:
 
     data = q.get_species_data(1)
     assert data is not None
-    assert data['name'] == 'O2'
-    assert 'intervals' in data
-    assert len(data['intervals']) == 2
-    assert data['intervals'][0]['temp_min'] == 200.0
-    assert data['intervals'][0]['temp_max'] == 1000.0
-    assert data['intervals'][1]['temp_min'] == 1000.0
-    assert data['intervals'][1]['temp_max'] == 6000.0
+    assert data.name == 'O2'
+    assert len(data.intervals) == 2
+    assert data.intervals[0].temp_min == 200.0
+    assert data.intervals[0].temp_max == 1000.0
+    assert data.intervals[1].temp_min == 1000.0
+    assert data.intervals[1].temp_max == 6000.0
+
+    q.close()
+
+
+def test_thermodbquery_list_all_species(sample_db_path: Path) -> None:
+    """list_all_species returns every species in one ordered query."""
+    q = ThermoDBQuery(str(sample_db_path))
+    q.connect()
+
+    species = q.list_all_species()
+    assert [sp.name for sp in species] == ['O2']
+    assert all(isinstance(sp.id, int) for sp in species)
+
+    q.close()
+
+
+def test_thermodbquery_get_species_info(sample_db_path: Path) -> None:
+    """get_species_info returns metadata and None for missing IDs."""
+    q = ThermoDBQuery(str(sample_db_path))
+    q.connect()
+
+    info = q.get_species_info(1)
+    assert info is not None
+    assert info.name == 'O2'
+    assert info.molecular_weight == 31.9988
+    assert q.get_species_info(99999) is None
 
     q.close()
 
@@ -560,12 +585,12 @@ def test_polynomial_consistency(calc: ThermochemicalCalculator) -> None:
     which simplifies to: d(H/RT)/dT = (Cp/R - H/RT) / T
     """
     species = calc.get_available_species('O2')
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     # Get coefficients for 500 K
     interval = calc.db.get_species_for_temperature(species_id, 500.0)
     assert interval is not None
-    coeffs = interval['coefficients']
+    coeffs = interval.coefficients
 
     T = 500.0
 
@@ -694,11 +719,11 @@ def test_builder_writes_metadata_and_calculator_uses_it(tmp_path: Path) -> None:
     assert calc.connect() is True
     assert calc.r_ref == R_GLENN
     species = calc.get_available_species('O2', exact_match=True)
-    properties = calc.calculate_properties(species[0]['id'], 500.0)
-    interval = calc.db.get_species_for_temperature(species[0]['id'], 500.0)
+    properties = calc.calculate_properties(species[0].id, 500.0)
+    interval = calc.db.get_species_for_temperature(species[0].id, 500.0)
     assert interval is not None
-    cp_r = calc.db.calculate_cp(interval['coefficients'], 500.0)
-    assert properties['cp'] == pytest.approx(cp_r * R_GLENN)
+    cp_r = calc.db.calculate_cp(interval.coefficients, 500.0)
+    assert properties.cp == pytest.approx(cp_r * R_GLENN)
     calc.close()
 
 
@@ -769,7 +794,7 @@ def test_list_species_page(sample_db_path: Path) -> None:
     species, total_pages = q.list_species_page(page=1, page_size=10)
     assert len(species) == 1
     assert total_pages == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Page beyond available data
     species, total_pages = q.list_species_page(page=2, page_size=10)
@@ -842,13 +867,13 @@ def test_calculate_properties_lower_boundary(
 ) -> None:
     """O2 properties at T = 200.0 K — exactly the lower interval boundary."""
     species = calc.get_available_species('O2', exact_match=True)
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     props = calc.calculate_properties(species_id, 200.0)
     assert props is not None
-    assert props['temp_interval'] == [200.0, 1000.0]
-    assert math.isfinite(props['cp'])
-    assert math.isfinite(props['h_relative'])
+    assert props.temp_interval == (200.0, 1000.0)
+    assert math.isfinite(props.cp)
+    assert math.isfinite(props.h_relative)
 
 
 def test_calculate_properties_shared_boundary(
@@ -861,15 +886,15 @@ def test_calculate_properties_shared_boundary(
     floating-point edge cases in the SQL query.
     """
     species = calc.get_available_species('O2', exact_match=True)
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     props = calc.calculate_properties(species_id, 1000.0)
     assert props is not None
     # The lower interval (interval_number=1) should be selected when both
     # intervals cover the same temperature (ORDER BY interval_number).
-    assert props['temp_interval'] == [200.0, 1000.0]
-    assert math.isfinite(props['cp'])
-    assert math.isfinite(props['h_relative'])
+    assert props.temp_interval == (200.0, 1000.0)
+    assert math.isfinite(props.cp)
+    assert math.isfinite(props.h_relative)
 
 
 def test_calculate_properties_upper_boundary(
@@ -877,13 +902,13 @@ def test_calculate_properties_upper_boundary(
 ) -> None:
     """O2 properties at T = 6000.0 K — exactly the upper interval boundary."""
     species = calc.get_available_species('O2', exact_match=True)
-    species_id = species[0]['id']
+    species_id = species[0].id
 
     props = calc.calculate_properties(species_id, 6000.0)
     assert props is not None
-    assert props['temp_interval'] == [1000.0, 6000.0]
-    assert math.isfinite(props['cp'])
-    assert math.isfinite(props['h_relative'])
+    assert props.temp_interval == (1000.0, 6000.0)
+    assert math.isfinite(props.cp)
+    assert math.isfinite(props.h_relative)
 
 
 # ---------------------------------------------------------------------------
@@ -898,17 +923,17 @@ def test_get_available_species_exact_match(
     # Substring search (default) — works fine for 'O2' in this small test db
     species = calc.get_available_species('O2')
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Exact match — also works
     species = calc.get_available_species('O2', exact_match=True)
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Exact match — case insensitive
     species = calc.get_available_species('o2', exact_match=True)
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Exact match — no match
     species = calc.get_available_species('O3', exact_match=True)
@@ -925,12 +950,12 @@ def test_thermodbquery_find_species_exact_match(
     # Substring search (default)
     species = q.find_species('O2')
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Exact match
     species = q.find_species('O2', exact_match=True)
     assert len(species) == 1
-    assert species[0]['name'] == 'O2'
+    assert species[0].name == 'O2'
 
     # Exact match — no result for partial name
     species = q.find_species('O', exact_match=True)

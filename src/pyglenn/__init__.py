@@ -16,7 +16,7 @@ from .calculator import (
     ThermoCalcError,
     ThermochemicalCalculator,
 )
-from .database import R, R_GLENN, R_UNIVERSAL, ThermoDBQuery
+from .database import R_GLENN, R_UNIVERSAL, R, ThermoDBQuery
 
 __all__ = [
     'ThermochemicalCalculator',

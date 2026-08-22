@@ -76,11 +76,11 @@ def cmd_query(args: argparse.Namespace) -> None:
         print('\n1. DATABASE STATISTICS:')
         print('-' * 70)
         stats = calc.db.get_statistics()
-        print(f'  Total species: {stats["total_species"]}')
-        print(f'  Total intervals: {stats["total_intervals"]}')
-        print(f'  Total coefficient sets: {stats["total_coeff_sets"]}')
-        print(f'  Species by phase: {stats["species_by_phase"]}')
-        print(f'  Average molecular weight: {stats["avg_molecular_weight"]:.2f} g/mol')
+        print(f'  Total species: {stats.total_species}')
+        print(f'  Total intervals: {stats.total_intervals}')
+        print(f'  Total coefficient sets: {stats.total_coeff_sets}')
+        print(f'  Species by phase: {stats.species_by_phase}')
+        print(f'  Average molecular weight: {stats.avg_molecular_weight:.2f} g/mol')
 
         # Search
         pattern = args.species or 'O2'
@@ -89,14 +89,14 @@ def cmd_query(args: argparse.Namespace) -> None:
         species_list = calc.get_available_species(pattern)
         for sp in species_list[:5]:
             print(
-                f'  ID: {sp["id"]:4d} | Name: {sp["name"]:20s} | '
-                f'Phase: {sp["phase"]:10s} | MW: {sp["molecular_weight"]}'
+                f'  ID: {sp.id:4d} | Name: {sp.name:20s} | '
+                f'Phase: {sp.phase:10s} | MW: {sp.molecular_weight}'
             )
 
         # Properties
         if species_list:
-            species_id = species_list[0]['id']
-            species_name = species_list[0]['name']
+            species_id = species_list[0].id
+            species_name = species_list[0].name
             print(f'\n3. PROPERTIES FOR {species_name}:')
             print('-' * 70)
             print(
@@ -110,10 +110,10 @@ def cmd_query(args: argparse.Namespace) -> None:
                 except ThermoCalcError:
                     continue
                 print(
-                    f'{props["temperature"]:>8.2f} | '
-                    f'{props["cp"]:>14.3f} | '
-                    f'{props["h_relative"]:>14.1f} | '
-                    f'{props["s"]:>14.3f}'
+                    f'{props.temperature:>8.2f} | '
+                    f'{props.cp:>14.3f} | '
+                    f'{props.h_relative:>14.1f} | '
+                    f'{props.s:>14.3f}'
                 )
 
             h_f = calc.calculate_formation_enthalpy(species_id)
