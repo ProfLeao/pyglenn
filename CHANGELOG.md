@@ -20,6 +20,8 @@ and the versioning follows [SemVer](https://semver.org/).
 - `fit_nasa7(temperatures, cp_values, ...)` — least-squares fitting of NASA-7
   coefficients to tabulated Cp(T) data, honoring the
   `H°(t_ref) = h_ref` convention (`b1`, not `a6`).
+- `fit_nasa7_multi(temperatures, cp_values, breakpoints, ...)` — multi-interval
+  NASA-7 fit with continuity of Cp and its first derivative at each breakpoint.
 - `NOTICE` of attribution (Glenn.jl lineage) and `py.typed` for type
   consumers.
 

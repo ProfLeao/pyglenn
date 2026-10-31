@@ -141,8 +141,23 @@ that ``H°(t_ref) = h_ref`` holds exactly (NASA-7 convention, constant ``b1``):
 
 ``s_ref`` optionally anchors the entropy constant ``b2``; otherwise it is
 ``0.0``. The fit is performed in a scaled variable to keep the design matrix
-well-conditioned — prefer fitting one temperature interval at a time, as NASA
-datasets do.
+well-conditioned.
+
+For several temperature intervals at once, use
+:func:`~pyglenn.fit_nasa7_multi`, which enforces continuity of ``Cp/R`` and
+its first derivative at each breakpoint and keeps ``H°`` continuous across
+intervals:
+
+.. code-block:: python
+
+   from pyglenn import fit_nasa7_multi
+
+   T = np.linspace(200.0, 6000.0, 300)         # Kelvin
+   cp = ...                                    # J/(mol·K)
+
+   low, high = fit_nasa7_multi(
+       T, cp, breakpoints=[1000.0], t_ref=298.15, h_ref=0.0
+   )                                           # one NASACoefficients per interval
 
 Error Handling
 ==============

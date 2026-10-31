@@ -342,7 +342,7 @@ numérica contra o arquivo de origem.
   ponderada pelas frações molares (correção da média harmônica da spec).
 - **B2** (`fit_nasa7`): ajuste por mínimos quadrados implementado em
   `src/pyglenn/fitting.py` (dependência `numpy`), com ancoragem
-  `H°(t_ref) = h_ref` via `b1` e escala interna para condicionamento.
-  Multi-intervalo com continuidade de valor/derivada permanece como
-  trabalho futuro.
+  `H°(t_ref) = h_ref` via `b1`, escala interna para condicionamento e
+  `fit_nasa7_multi` para múltiplos intervalos com continuidade de valor e
+  primeira derivada no ponto de emenda.
 
