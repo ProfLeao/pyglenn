@@ -207,6 +207,121 @@ nada".
 
 ---
 
+## B1 — `validate_database --full` com checagem contra dados de referência
+
+**Prioridade:** Baixa
+**Origem:** item de auditoria B1
+**Estado:** não iniciado
+
+### Contexto
+
+`validate_database()` é **estrutural**: contagens, chaves estrangeiras, limites
+finitos/ordenados, continuidade entre intervalos. A auditoria B1 propõe ir além
+e validar os **valores** (Cp, H, S) contra uma fonte de referência externa
+(NIST-JANAF, CEA, NASA TP-2002).
+
+### Ressalva obrigatória (por que não é trivial)
+
+- O dataset usa `R_GLENN = 8.314510` (CODATA 1986), enquanto fontes modernas
+  usam CODATA 2018/2022; isso introduz desvio sistemático da ordem de 1e-6.
+- Os polinômios do `thermo.inp` têm precisão finita (7 algarismos nos
+  coeficientes), então pontos fora das âncoras acumulam erro de arredondamento.
+- A convenção `H°(298.15) = ΔH°f(298.15)` deve ser respeitada ao comparar
+  entalpias — nunca comparar `H(0 K)` (não existe neste dataset).
+
+### Abordagem
+
+1. Adicionar `validate_database(full: bool = False)` ou subcomando CLI
+   `validate --full`, que amostra N temperaturas por espécie (ex.: 200, 298.15,
+   500, 1000, 2000, 4000 K dentro de cada intervalo) e compara contra uma
+   tabela de referência **versionada** (arquivo pinado em
+   `docs/audit/` ou `data/reference.csv`).
+2. Tolerâncias **generosas** e por propriedade (ex.: `rel=1e-4` para Cp/H/S em
+   fase gasosa; mais folga para fase condensada), documentadas na saída.
+3. Reportar por espécie/intervalo, com resumo agregado (máx. desvio relativo).
+
+### O que NÃO fazer
+
+- ❌ Comparar com constantes de gás diferentes sem corrigir o fator.
+- ❌ Tratar desvio < 1e-6 como falha — é ruído de constante/arredondamento.
+- ❌ Usar referências sem pino de versão (torna a validação não-reprodutível).
+
+---
+
+## B2 — Ajuste de polinômios NASA-7 a partir de dados brutos (`fit_nasa7`)
+
+**Prioridade:** Média
+**Origem:** item de auditoria B2
+**Estado:** não iniciado (som bem definido)
+
+### Contexto
+
+Não existe caminho para gerar um conjunto NASA-7 a partir de dados tabulados
+(T, Cp/H/S) — só leitura do `thermo.inp`. A auditoria B2 propõe expor um
+ajustador.
+
+### Escopo proposto
+
+- API: `fit_nasa7(temperatures, cp_values, t_ref=298.15, h_ref=0.0, ...) ->
+  NASACoefficients`, com pesos opcionais por ponto.
+- Ajuste por mínimos quadrados nas 7 potências `a1..a7`, impondo por construção
+  `H°(t_ref) = h_ref` (isto é, `b1` derivado do polinômio de H avaliado em
+  `t_ref`, coerente com a convenção do dataset).
+- Para múltiplos intervalos: continuidade de **valor e primeira derivada** no
+  ponto de emenda (restrição linear no problema de mínimos quadrados).
+
+### Critérios de aceite
+
+- Reproduz um polinômio NASA-7 sintético com erro relativo < 1e-6 nos pontos
+  amostrados.
+- `H°(t_ref)` do resultado igual a `h_ref` dentro de tolerância numérica.
+- Documentação da convenção (constante `b1`, não `a6`) no docstring.
+
+---
+
+## B3 — Exportação Chemkin / Cantera (com ressalvas)
+
+**Prioridade:** Baixa
+**Origem:** item de auditoria B3
+**Estado:** não iniciado
+
+### Contexto
+
+Interoperabilidade com Chemkin (`thermo.dat`) e Cantera (YAML). A auditoria B3
+sugere exportar as espécies do dataset.
+
+### Ressalva crítica (impede "dump direto")
+
+O formato NASA-7 do **Chemkin** difere do **NASA-CEA** (origem do `thermo.inp`):
+
+| Item | NASA-CEA (nosso) | Chemkin |
+|---|---|---|
+| Constante de entalpia | `b1` (colunas 73–78) | `a6` |
+| Constante de entropia | `b2` (colunas 79–84) | `a7` |
+| `a6`, `a7` | zero | carregam as constantes |
+
+Ou seja: `a6`/`a7` têm **significados diferentes** nos dois formatos. Exportar
+exige **transformação de base** — mover `b1 → a6` e `b2 → a7` — e revalidação
+numérica contra o arquivo de origem.
+
+### Abordagem
+
+1. Implementar `export_chemkin(path)` e/ou `export_cantera(path)` que façam a
+   transformação `b1/b2 → a6/a7` e escrevam o cabeçalho Chemkin apropriado
+   (divisão de faixa 200–1000 / 1000–6000 K, quando aplicável).
+2. Validar round-trip: importar o arquivo exportado em Cantera e comparar
+   Cp/H/S contra `calculate_properties` em N temperaturas.
+3. Documentar a transformação de base explicitamente (não esconder em
+   comentário).
+
+### O que NÃO fazer
+
+- ❌ Copiar `a1..a7, b1, b2` direto para as colunas Chemkin — inverte o
+  significado de `a6`/`a7` e corrompe H/S.
+- ❌ Anunciar "exportação Chemkin" sem teste de round-trip.
+
+---
+
 ## Resolvido na 0.3.0
 
 - **A1** (`h_relative`): `h_sensible_to` + documentação.
@@ -214,4 +329,12 @@ nada".
   linhagem Glenn.jl + classifier de licença no `pyproject.toml`.
 - **A8** (`py.typed`): `py.typed` criado e incluído em `package-data`
   (`__all__` já existia).
+- **B4** (consistência `H°(298.15) = ΔH°f` + exemplo de reação): teste de
+  consistência sobre o dataset e teste de entalpia de reação
+  (CH₄ + 2 O₂ → CO₂ + 2 H₂O vs NIST-JANAF) adicionados em
+  `tests/test_calculator.py`.
+- **B5** (CHANGELOG + depreciação): `CHANGELOG.md` criado (Keep a Changelog) e
+  `get_properties_range` marcado com `DeprecationWarning` (ver FI-2).
+- **B6** (`dcp_dt` e `gamma`): métodos analíticos adicionados a
+  `ThermochemicalCalculator`, com testes de diferença finita e gás monoatômico.
 
