@@ -287,7 +287,8 @@ def test_calculator_not_connected() -> None:
     # their own not-connected guards that return None for backward compat.
     assert c.calculate_formation_enthalpy(1) is None
     assert c.calculate_enthalpy_change(1, 300, 400) is None
-    assert c.get_properties_range(1, [300, 400]) is None
+    with pytest.warns(DeprecationWarning):
+        assert c.get_properties_range(1, [300, 400]) is None
 
 
 # ---------------------------------------------------------------------------
@@ -552,7 +553,8 @@ def test_get_properties_range(calc: ThermochemicalCalculator) -> None:
     species = calc.get_available_species('O2')
     species_id = species[0].id
 
-    results = calc.get_properties_range(species_id, [298.15, 500.0, 800.0])
+    with pytest.warns(DeprecationWarning):
+        results = calc.get_properties_range(species_id, [298.15, 500.0, 800.0])
     assert results is not None
     assert len(results) == 3
     assert 298.15 in results
@@ -561,6 +563,16 @@ def test_get_properties_range(calc: ThermochemicalCalculator) -> None:
 
     # Cp should increase with temperature
     assert results[500.0].cp > results[298.15].cp
+
+
+def test_get_properties_range_deprecation_warning(
+    calc: ThermochemicalCalculator,
+) -> None:
+    """get_properties_range emits a DeprecationWarning pointing to the new API."""
+    species = calc.get_available_species('O2', exact_match=True)
+    species_id = species[0].id
+    with pytest.warns(DeprecationWarning, match='calculate_properties_range'):
+        calc.get_properties_range(species_id, [298.15])
 
 
 def test_calculate_properties_range_typed(calc: ThermochemicalCalculator) -> None:

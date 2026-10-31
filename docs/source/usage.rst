@@ -122,3 +122,13 @@ The typed models are :class:`~pyglenn.ThermoProperties`,
 :class:`~pyglenn.SpeciesInfo`, :class:`~pyglenn.SpeciesData`,
 :class:`~pyglenn.IntervalData`, :class:`~pyglenn.NASACoefficients` and
 :class:`~pyglenn.DatabaseStats`.
+
+Deprecated API
+==============
+
+:meth:`pyglenn.ThermochemicalCalculator.get_properties_range` is deprecated and
+will be removed in 0.4.0. Use
+:meth:`~pyglenn.ThermochemicalCalculator.calculate_properties_range` instead —
+it returns an ordered list of ``ThermoProperties`` rather than a
+temperature-keyed dictionary, and accepts ``strict=True`` to raise on
+out-of-range temperatures.

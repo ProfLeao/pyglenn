@@ -13,6 +13,7 @@ All values returned as floats in standard units:
 from __future__ import annotations
 
 import logging
+import warnings
 from collections.abc import Sequence
 from importlib import resources
 from typing import Any
@@ -310,6 +311,13 @@ class ThermochemicalCalculator:
         Returns:
             Dict mapping temperature → ThermoProperties, or None if all fail.
         """
+        warnings.warn(
+            'get_properties_range is deprecated and will be removed in 0.4.0; '
+            'use calculate_properties_range(species_id, temps, strict=False), '
+            'which returns an ordered list instead of a temperature-keyed dict.',
+            DeprecationWarning,
+            stacklevel=2,
+        )
         if not self._connected:
             logger.warning('get_properties_range called without connection')
             return None
