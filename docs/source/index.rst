@@ -55,6 +55,8 @@ Features
 
 - Compute :math:`C_p(T)`, :math:`H^\circ(T)`, :math:`S^\circ(T)` for any species
 - SQLite database bundled with **2,035 species, 3,779 temperature intervals** — no setup needed
+- Mixture properties (molar and mass basis) for a fixed composition
+- Analytical :math:`dC_p/dT` and :math:`C_p/C_v` (:math:`\gamma`)
 - CLI interface for quick lookups
 - Temperature range validation
 

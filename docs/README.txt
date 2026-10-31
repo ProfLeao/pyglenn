@@ -2,6 +2,10 @@
 README - THERMOCHEMICAL CONVERSION PROJECT (thermo.inp → SQLite3)
 ================================================================================
 
+NOTE: LEGACY DOCUMENT — describes the original conversion scripts
+(thermo_to_sqlite.py, query_thermo_db.py). The current package structure and
+Python API are documented in the root README.md and the Sphinx documentation.
+
 OVERVIEW:
 This project converts thermochemical data from FORTRAN format (thermo.inp)
 into a normalized SQLite3 database, facilitating queries and analysis

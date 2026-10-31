@@ -337,4 +337,7 @@ numérica contra o arquivo de origem.
   `get_properties_range` marcado com `DeprecationWarning` (ver FI-2).
 - **B6** (`dcp_dt` e `gamma`): métodos analíticos adicionados a
   `ThermochemicalCalculator`, com testes de diferença finita e gás monoatômico.
+- **Bloco C** (misturas): `Mixture`, `MixedProperties`, `mixture_properties`
+  e `CompositionError` implementados; massa molar por média aritmética
+  ponderada pelas frações molares (correção da média harmônica da spec).
 

@@ -85,6 +85,22 @@ dcpdT = calc.dcp_dt(species_id, 1000.0)   # dCp/dT in J/(mol·K²)
 gamma = calc.gamma(species_id, 1000.0)    # Cp/Cv (ideal gas)
 ```
 
+### 🧬 Mixtures
+
+```python
+from pyglenn import Mixture
+
+n2_id = calc.get_available_species('N2', exact_match=True)[0].id
+o2_id = calc.get_available_species('O2', exact_match=True)[0].id
+
+air = Mixture(((n2_id, 0.79), (o2_id, 0.21)))   # mole fractions sum to 1
+air.validate()                                  # CompositionError if invalid
+
+mix = calc.mixture_properties(air, 1000.0)      # MixedProperties
+mix.cp_molar   # J/(mol·K)  — mole-fraction weighted
+mix.cp_mass    # J/(kg·K)   — molar / molar_mass (arithmetic mean M)
+```
+
 ### 🛡️ Error handling
 
 ```python
@@ -99,6 +115,7 @@ except ThermoCalcError as e:
 | Exception | Meaning | Context carried |
 |---|---|---|
 | `ThermoCalcError` | Base — catches all pyglenn errors | — |
+| `CompositionError` | Mole fractions don't sum to 1 / negative / duplicate | — |
 | `DatabaseNotConnectedError` | Forgot `.connect()` or context manager | — |
 | `SpeciesNotFoundError` | Invalid species ID | `.species_id` |
 | `TemperatureOutOfRangeError` | T outside valid intervals | `.temperature`, `.species_name`, `.temp_bounds` |
@@ -192,6 +209,8 @@ name = props['species_name']               name = props.species_name
   of a temperature-keyed dict.
 - New analytical helpers: `h_sensible_to(sid, T)`, `dcp_dt(sid, T)`,
   `gamma(sid, T)`.
+- Mixtures: `Mixture` + `mixture_properties(...)` → `MixedProperties`
+  (molar & mass basis); `CompositionError` for invalid compositions.
 
 ---
 
@@ -202,6 +221,6 @@ name = props['species_name']               name = props.species_name
 | `ThermochemicalCalculator` | High-level — properties, enthalpy, species lookup |
 | `ThermoDBQuery` | Low-level — SQL access, coefficient evaluation, validation |
 | `ThermoDBBuilder` | Build DB from FORTRAN `thermo.inp` |
-| `ThermoProperties`, `SpeciesInfo`, `NASACoefficients`, `IntervalData`, `SpeciesData`, `DatabaseStats` | Typed result dataclasses |
+| `ThermoProperties`, `SpeciesInfo`, `NASACoefficients`, `IntervalData`, `SpeciesData`, `DatabaseStats`, `Mixture`, `MixedProperties` | Typed result dataclasses |
 | `R_GLENN`, `R_UNIVERSAL`, `R` | Dataset reference constant, universal constant, alias |
-| `ThermoCalcError` (+ 3 subclasses) | Exception hierarchy |
+| `ThermoCalcError` (+ 4 subclasses) | Exception hierarchy |

@@ -15,6 +15,8 @@ Computes **Cp(T)**, **H°(T)**, **S°(T)** from NASA polynomial coefficients sto
 - Parse NASA-format `thermo.inp` (FORTRAN Appendix C) → SQLite3 database
 - Query species by name, phase, molecular weight
 - Calculate Cp(T), H°(T), S°(T) at any valid temperature
+- Sensible enthalpy, analytical dCp/dT and Cp/Cv (γ)
+- Mixture properties (molar and mass basis) for a fixed composition
 - Enthalpy of formation lookup
 - Enthalpy change between two temperatures
 - Command-line interface
@@ -78,6 +80,25 @@ with ThermochemicalCalculator() as calc:
     species = calc.get_available_species('CH4', exact_match=True)
     props = calc.calculate_properties(species[0].id, 500.0)
     print(f"Cp = {props.cp:.2f} J/(mol·K)")
+```
+
+### Mixtures
+
+Compute mixture properties (e.g. dry air) from mole fractions, on both the
+molar and mass basis:
+
+```python
+from pyglenn import Mixture, ThermochemicalCalculator
+
+with ThermochemicalCalculator() as calc:
+    n2 = calc.get_available_species('N2', exact_match=True)[0]
+    o2 = calc.get_available_species('O2', exact_match=True)[0]
+
+    air = Mixture(((n2.id, 0.79), (o2.id, 0.21)))  # mole fractions
+    mix = calc.mixture_properties(air, 1000.0)
+
+print(f"mean molar mass = {mix.molar_mass * 1000.0:.3f} g/mol")
+print(f"cp_mass         = {mix.cp_mass:.2f} J/(kg·K)")
 ```
 
 ### CLI

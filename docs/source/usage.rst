@@ -80,11 +80,52 @@ therefore:
 The NASA-7 polynomials are continuous across interval boundaries, so the two
 temperatures may lie in different intervals.
 
+Analytical Derivatives
+======================
+
+.. code-block:: python
+
+   with ThermochemicalCalculator() as calc:
+       sid = calc.get_available_species('O2', exact_match=True)[0].id
+
+       dcp_dt = calc.dcp_dt(sid, 1000.0)   # dCp/dT in J/(mol·K²)
+       gamma  = calc.gamma(sid, 1000.0)    # Cp/Cv (ideal gas)
+
+Mixtures
+========
+
+For a mixture with a **known** composition (air, combustion products, reference
+mixtures), compose per-species properties with :class:`~pyglenn.Mixture`:
+
+.. code-block:: python
+
+   from pyglenn import Mixture, ThermochemicalCalculator
+
+   with ThermochemicalCalculator() as calc:
+       n2 = calc.get_available_species('N2', exact_match=True)[0]
+       o2 = calc.get_available_species('O2', exact_match=True)[0]
+
+       air = Mixture(((n2.id, 0.79), (o2.id, 0.21)))  # mole fractions
+       air.validate()                                  # raises CompositionError
+
+       mix = calc.mixture_properties(air, 1000.0)      # MixedProperties
+
+       print(mix.cp_mass)      # J/(kg·K)
+       print(mix.molar_mass)   # kg/mol (mole-fraction weighted mean)
+
+``mixture_properties`` returns :class:`~pyglenn.MixedProperties` with both
+molar and mass values. The mean molar mass is the mole-fraction-weighted
+**arithmetic** mean ``M = Σ xᵢ Mᵢ``. No chemical equilibrium is solved — the
+composition is an input. Out-of-range components raise
+:class:`~pyglenn.TemperatureOutOfRangeError` with ``strict=True`` (default)
+or are skipped and renormalized (with a warning) when ``strict=False``.
+
 Error Handling
 ==============
 
 The calculator raises specific exceptions for common errors:
 
+- :class:`~pyglenn.CompositionError` — invalid mixture composition (mole fractions)
 - :class:`~pyglenn.DatabaseNotConnectedError` — database not connected
 - :class:`~pyglenn.SpeciesNotFoundError` — species not found in database
 - :class:`~pyglenn.TemperatureOutOfRangeError` — temperature outside valid range
@@ -120,7 +161,8 @@ use :func:`dataclasses.asdict` or the ``to_dict()`` method:
 
 The typed models are :class:`~pyglenn.ThermoProperties`,
 :class:`~pyglenn.SpeciesInfo`, :class:`~pyglenn.SpeciesData`,
-:class:`~pyglenn.IntervalData`, :class:`~pyglenn.NASACoefficients` and
+:class:`~pyglenn.IntervalData`, :class:`~pyglenn.NASACoefficients`,
+:class:`~pyglenn.Mixture`, :class:`~pyglenn.MixedProperties` and
 :class:`~pyglenn.DatabaseStats`.
 
 Deprecated API
