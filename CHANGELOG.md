@@ -1,42 +1,42 @@
 # Changelog
 
-Todas as mudanças relevantes deste projeto são documentadas neste arquivo.
+All notable changes to this project are documented in this file.
 
-O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
-e o versionamento segue [SemVer](https://semver.org/).
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
+and the versioning follows [SemVer](https://semver.org/).
 
-## [Não publicado]
+## [Unreleased]
 
-### Adicionado
+### Added
 
-- `h_sensible_to(species_id, temperature, t_ref=298.15)` — entalpia sensível.
-- `dcp_dt(species_id, temperature)` — derivada analítica de Cp.
-- `gamma(species_id, temperature)` — razão Cp/Cv (gás ideal).
-- `NOTICE` de atribuição (linhagem Glenn.jl) e `py.typed` para consumidores de
-  tipos.
+- `h_sensible_to(species_id, temperature, t_ref=298.15)` — sensible enthalpy.
+- `dcp_dt(species_id, temperature)` — analytical derivative of Cp.
+- `gamma(species_id, temperature)` — Cp/Cv ratio (ideal gas).
+- `NOTICE` of attribution (Glenn.jl lineage) and `py.typed` for type
+  consumers.
 
-### Alterado
+### Changed
 
-- Docstrings de `h_relative`/`calculate_enthalpy_change` esclarecem a convenção
-  NASA-7: `H°(298.15 K) = ΔH°f(298.15 K)` (constante de integração `b1`).
+- Docstrings of `h_relative`/`calculate_enthalpy_change` clarify the NASA-7
+  convention: `H°(298.15 K) = ΔH°f(298.15 K)` (integration constant `b1`).
 
-### Descontinuado
+### Deprecated
 
-- `get_properties_range` — use `calculate_properties_range`. Remoção na 0.4.0.
+- `get_properties_range` — use `calculate_properties_range`. Removal in 0.4.0.
 
 ## [0.2.0] - 2026-08-22
 
-### Adicionado
+### Added
 
-- API pública tipada (dataclasses: `ThermoProperties`, `SpeciesInfo`,
+- Typed public API (dataclasses: `ThermoProperties`, `SpeciesInfo`,
   `NASACoefficients`, `IntervalData`, `SpeciesData`, `DatabaseStats`).
-- Constante de referência do dataset `R_GLENN = 8.314510` (CODATA 1986) e
-  tabela `metadata`; migração automática no `connect()`.
-- Parser por estados com validação; rebuild do dataset (2.035 espécies,
-  3.779 intervalos).
-- `validate_database()` e CLI `validate`/`migrate-metadata`.
-- Contrato de compatibilidade (`docs/COMPATIBILITY_CONTRACT.md`).
+- Dataset reference constant `R_GLENN = 8.314510` (CODATA 1986) and the
+  `metadata` table; automatic migration in `connect()`.
+- State-based parser with validation; dataset rebuild (2,035 species,
+  3,779 intervals).
+- `validate_database()` and the `validate`/`migrate-metadata` CLI commands.
+- Compatibility contract (`docs/COMPATIBILITY_CONTRACT.md`).
 
-### Corrigido
+### Fixed
 
-- Extração de `heat_of_formation_298K` (colunas 65–80 do RECORD 2).
+- `heat_of_formation_298K` extraction (columns 65–80 of RECORD 2).
