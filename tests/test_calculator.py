@@ -487,6 +487,61 @@ def test_gamma_monoatomic_argon() -> None:
     assert gamma == pytest.approx(5.0 / 3.0, rel=1e-4)
 
 
+def test_h_at_298_equals_formation_enthalpy() -> None:
+    """NASA-7 convention: H°(298.15 K) equals ΔH°f(298.15 K) across species.
+
+    This is the identity ``h_total - h_sensible == h_formation`` evaluated at
+    298.15 K, where the sensible term is zero by definition.
+    """
+    with ThermochemicalCalculator() as calc:
+        checked = 0
+        for sp in calc.db.list_all_species():
+            hf = sp.heat_of_formation_298K
+            if hf is None:
+                continue
+            try:
+                h = calc.calculate_properties(sp.id, 298.15).h_relative
+            except TemperatureOutOfRangeError:
+                continue
+            assert h == pytest.approx(hf, rel=1e-6, abs=1.0), sp.name
+            checked += 1
+        assert checked > 100  # a meaningful fraction of the dataset
+
+
+def test_reaction_enthalpy_methane_combustion() -> None:
+    """CH4 + 2 O2 -> CO2 + 2 H2O: package formation enthalpies vs NIST values.
+
+    At 298.15 K the sensible term is zero, so the reaction enthalpy is the
+    stoichiometric sum of formation enthalpies, compared against textbook
+    NIST-JANAF values.
+    """
+    nist_hf = {
+        'CH4': -74.6e3,
+        'O2': 0.0,
+        'CO2': -393.522e3,
+        'H2O': -241.826e3,
+    }
+    with ThermochemicalCalculator() as calc:
+        ids = {
+            name: calc.get_available_species(name, exact_match=True)[0].id
+            for name in nist_hf
+        }
+        hf = {
+            name: calc.calculate_formation_enthalpy(sid)
+            for name, sid in ids.items()
+        }
+        assert all(value is not None for value in hf.values())
+
+        dh_r = hf['CO2'] + 2 * hf['H2O'] - hf['CH4'] - 2 * hf['O2']
+        expected = (
+            nist_hf['CO2']
+            + 2 * nist_hf['H2O']
+            - nist_hf['CH4']
+            - 2 * nist_hf['O2']
+        )
+        assert dh_r == pytest.approx(expected, rel=1e-3)
+
+
 # ---------------------------------------------------------------------------
 # Test: Properties range
 # ---------------------------------------------------------------------------
