@@ -60,10 +60,10 @@ sid = calc.get_available_species('CO2', exact_match=True)[0].id
 
 # Typed, ordered list — loads intervals once (fast for long sweeps)
 props = calc.calculate_properties_range(sid, [300, 500, 1000, 1500])
+# strict=True raises on out-of-range T instead of skipping it
 
-# Temperature-keyed dict (legacy)
-by_t = calc.get_properties_range(sid, [300, 500, 1000, 1500])
-# → {300.0: ThermoProperties, 500.0: ThermoProperties, ...}
+# ⚠️ Deprecated (removed in 0.4.0) — use calculate_properties_range instead:
+# by_t = calc.get_properties_range(sid, [300, 500, 1000, 1500])
 ```
 
 ### 🧪 Enthalpy
@@ -74,6 +74,15 @@ hf = calc.calculate_formation_enthalpy(species_id)  # J/mol
 
 # Sensible ΔH between two temperatures
 dh = calc.calculate_enthalpy_change(species_id, 298.15, 1000.0)  # J/mol
+# Same thing, with a default t_ref=298.15 K:
+dh = calc.h_sensible_to(species_id, 1000.0)  # J/mol
+```
+
+### 📐 Analytical derivatives
+
+```python
+dcpdT = calc.dcp_dt(species_id, 1000.0)   # dCp/dT in J/(mol·K²)
+gamma = calc.gamma(species_id, 1000.0)    # Cp/Cv (ideal gas)
 ```
 
 ### 🛡️ Error handling
@@ -173,6 +182,16 @@ name = props['species_name']               name = props.species_name
   thermochemical rows are never touched).
 - `R` remains available as an alias of `R_UNIVERSAL`; denormalization now uses
   the dataset's `R_GLENN` reference constant.
+
+---
+
+## 🔄 Migrating to v0.3.0
+
+- `get_properties_range` is deprecated (emits `DeprecationWarning`) — replace
+  it with `calculate_properties_range`, which returns an ordered list instead
+  of a temperature-keyed dict.
+- New analytical helpers: `h_sensible_to(sid, T)`, `dcp_dt(sid, T)`,
+  `gamma(sid, T)`.
 
 ---
 
