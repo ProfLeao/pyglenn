@@ -440,6 +440,31 @@ def test_enthalpy_change_zero_delta(calc: ThermochemicalCalculator) -> None:
     assert math.isclose(delta_h, 0.0, abs_tol=1e-6)
 
 
+def test_h_sensible_to_matches_enthalpy_change(
+    calc: ThermochemicalCalculator,
+) -> None:
+    """h_sensible_to is an alias of calculate_enthalpy_change(298.15, T)."""
+    species = calc.get_available_species('O2')
+    species_id = species[0].id
+
+    assert calc.h_sensible_to(species_id, 1000.0) == pytest.approx(
+        calc.calculate_enthalpy_change(species_id, 298.15, 1000.0)
+    )
+
+
+def test_formation_plus_sensible_equals_total() -> None:
+    """Decomposition identity: h_formation + h_sensible == h_relative."""
+    with ThermochemicalCalculator() as calc:
+        ch4 = calc.get_available_species('CH4', exact_match=True)[0]
+        hf = calc.calculate_formation_enthalpy(ch4.id)
+        sensible = calc.h_sensible_to(ch4.id, 1000.0)
+        total = calc.calculate_properties(ch4.id, 1000.0).h_relative
+
+        assert hf is not None
+        assert sensible is not None
+        assert hf + sensible == pytest.approx(total, rel=1e-9)
+
+
 # ---------------------------------------------------------------------------
 # Test: Properties range
 # ---------------------------------------------------------------------------

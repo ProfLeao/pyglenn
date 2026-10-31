@@ -55,6 +55,31 @@ You can also specify a custom database file:
    with ThermochemicalCalculator('custom.db') as calc:
        ...
 
+Enthalpy Semantics
+==================
+
+``calculate_properties`` returns ``h_relative`` as the **absolute** enthalpy
+$H^\circ(T)$ following the NASA-7 convention, in which
+$H^\circ(298.15\,\mathrm{K})$ equals the standard enthalpy of formation
+$\Delta H_f^\circ(298.15)$. The sensible enthalpy relative to 298.15 K is
+therefore:
+
+.. code-block:: python
+
+   from pyglenn import ThermochemicalCalculator
+
+   with ThermochemicalCalculator() as calc:
+       sid = calc.get_available_species('CH4', exact_match=True)[0].id
+
+       h_total    = calc.calculate_properties(sid, 1000.0).h_relative
+       h_sensible = calc.h_sensible_to(sid, 1000.0)          # H(1000) − H(298.15)
+       h_formation = calc.calculate_formation_enthalpy(sid)  # ΔH°f(298.15)
+
+       # h_total = h_formation + h_sensible
+
+The NASA-7 polynomials are continuous across interval boundaries, so the two
+temperatures may lie in different intervals.
+
 Error Handling
 ==============
 

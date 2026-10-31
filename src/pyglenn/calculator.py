@@ -173,7 +173,9 @@ class ThermochemicalCalculator:
 
         Returns:
             ThermoProperties with temperature, cp, h_relative, s,
-            temp_interval, species_name, and phase.
+            temp_interval, species_name, and phase. ``h_relative`` is the
+            absolute H°(T) (NASA-7 convention): H°(298.15 K) equals the
+            standard enthalpy of formation.
 
         Raises:
             DatabaseNotConnectedError: If not connected to database.
@@ -243,7 +245,9 @@ class ThermochemicalCalculator:
         """
         Calculate ΔH°(T₂) − ΔH°(T₁) in J/mol.
 
-        Uses absolute H°(T) values (NASA-7 convention).
+        Uses absolute H°(T) values (NASA-7 convention). The NASA-7
+        polynomials are continuous across interval boundaries, so T1 and T2
+        may lie in different intervals.
 
         Args:
             species_id: Database ID of the species.
@@ -267,6 +271,31 @@ class ThermochemicalCalculator:
         props_t2 = self.calculate_properties(species_id, T2)
 
         return float(props_t2.h_relative - props_t1.h_relative)
+
+    def h_sensible_to(
+        self, species_id: int, temperature: float, t_ref: float = 298.15
+    ) -> float | None:
+        """Sensible enthalpy H°(T) − H°(t_ref) in J/mol.
+
+        Convenience alias of :meth:`calculate_enthalpy_change` with a readable
+        name and a default reference temperature of 298.15 K. Because the
+        NASA-7 polynomials are continuous across interval boundaries,
+        ``temperature`` and ``t_ref`` may lie in different intervals.
+
+        Args:
+            species_id: Database ID of the species.
+            temperature: Final temperature in Kelvin.
+            t_ref: Reference temperature in Kelvin (default 298.15).
+
+        Returns:
+            Sensible enthalpy change in J/mol, or None if not connected.
+
+        Raises:
+            SpeciesNotFoundError: If species_id is not in the database.
+            TemperatureOutOfRangeError: If ``temperature`` or ``t_ref`` is
+                outside the valid intervals.
+        """
+        return self.calculate_enthalpy_change(species_id, t_ref, temperature)
 
     def get_properties_range(
         self, species_id: int, temps: list[float]

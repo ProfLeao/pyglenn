@@ -95,9 +95,11 @@ class IntervalData:
 
 @dataclass(frozen=True)
 class ThermoProperties:
-    """Thermochemical properties at a single temperature (SI units).
+    """Thermochemical properties at a single temperature.
 
-    ``cp`` and ``s`` are in J/(mol·K); ``h_relative`` is in J/mol.
+    ``cp`` and ``s`` are in J/(mol·K); ``h_relative`` is the absolute
+    enthalpy H°(T) in J/mol (NASA-7 convention), where
+    H°(298.15 K) = ΔH°f(298.15 K).
     """
 
     temperature: float
