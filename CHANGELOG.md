@@ -12,6 +12,11 @@ and the versioning follows [SemVer](https://semver.org/).
 - `h_sensible_to(species_id, temperature, t_ref=298.15)` — sensible enthalpy.
 - `dcp_dt(species_id, temperature)` — analytical derivative of Cp.
 - `gamma(species_id, temperature)` — Cp/Cv ratio (ideal gas).
+- `Mixture` and `MixedProperties` dataclasses plus
+  `ThermochemicalCalculator.mixture_properties(...)` — mole-fraction-weighted
+  mixture properties (molar and mass basis) for a fixed composition.
+- `CompositionError` (subclass of `ThermoCalcError`) for invalid mixture
+  compositions.
 - `NOTICE` of attribution (Glenn.jl lineage) and `py.typed` for type
   consumers.
 

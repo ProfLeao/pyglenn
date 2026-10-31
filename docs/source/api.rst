@@ -9,11 +9,16 @@ Calculator
    :members:
    :undoc-members:
    :show-inheritance:
+   :exclude-members: CompositionError, DatabaseNotConnectedError,
+       SpeciesNotFoundError, TemperatureOutOfRangeError, ThermoCalcError
 
 Exceptions
 ==========
 
 .. autoclass:: pyglenn.ThermoCalcError
+   :show-inheritance:
+
+.. autoclass:: pyglenn.CompositionError
    :show-inheritance:
 
 .. autoclass:: pyglenn.DatabaseNotConnectedError
@@ -23,6 +28,14 @@ Exceptions
    :show-inheritance:
 
 .. autoclass:: pyglenn.TemperatureOutOfRangeError
+   :show-inheritance:
+
+Models
+======
+
+.. automodule:: pyglenn.models
+   :members:
+   :undoc-members:
    :show-inheritance:
 
 Database
