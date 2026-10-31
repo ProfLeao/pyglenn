@@ -158,3 +158,81 @@ class DatabaseStats:
     def to_dict(self) -> dict[str, Any]:
         """Return the statistics as a plain dict."""
         return asdict(self)
+
+
+@dataclass(frozen=True)
+class Mixture:
+    """A thermochemical mixture defined by mole fractions.
+
+    ``species`` is an immutable sequence of ``(species_id, mole_fraction)``
+    pairs. Fractions are dimensionless and must be non-negative and sum to
+    1.0 within the tolerance of :meth:`validate`.
+
+    :meth:`validate` checks self-consistency only (sum, sign, duplicates,
+    emptiness). Species-id existence is checked by the calculator, which
+    owns the database connection.
+    """
+
+    species: tuple[tuple[int, float], ...]
+
+    def validate(self, tol: float = 1e-9) -> None:
+        """Validate the composition, raising ``CompositionError`` on failure.
+
+        Checks, in order: non-empty, no duplicate species ids, non-negative
+        fractions, and mole fractions summing to 1.0 within ``tol``.
+
+        Args:
+            tol: Absolute tolerance for the mole-fraction sum.
+
+        Raises:
+            CompositionError: If any check fails.
+        """
+        from .calculator import CompositionError  # local import: avoid cycle
+
+        if not self.species:
+            raise CompositionError('mixture has no species')
+
+        total = 0.0
+        seen: set[int] = set()
+        for species_id, fraction in self.species:
+            if species_id in seen:
+                raise CompositionError(f'duplicate species id {species_id} in mixture')
+            seen.add(species_id)
+            if fraction < 0.0:
+                raise CompositionError(
+                    f'negative mole fraction {fraction!r} for species id {species_id}'
+                )
+            total += fraction
+
+        if abs(total - 1.0) > tol:
+            raise CompositionError(
+                f'mole fractions sum to {total!r}, expected 1.0 (tolerance {tol})'
+            )
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return the mixture as a plain dict (fractions serialised as lists)."""
+        return {'species': [[sid, x] for sid, x in self.species]}
+
+
+@dataclass(frozen=True)
+class MixedProperties:
+    """Thermochemical properties of a mixture at a single temperature.
+
+    ``*_molar`` values are per mole of mixture; ``*_mass`` values are per
+    kilogram of mixture. ``h_molar`` is the absolute enthalpy H°(T) in the
+    NASA-7 convention (H°(298.15 K) = ΔH°f). ``molar_mass`` is the
+    mole-fraction-weighted mean molar mass (arithmetic mean) in kg/mol.
+    """
+
+    temperature: float
+    cp_mass: float  # J/(kg·K)
+    h_mass: float  # J/kg
+    s_mass: float  # J/(kg·K)
+    cp_molar: float  # J/(mol·K)
+    h_molar: float  # J/mol
+    s_molar: float  # J/(mol·K)
+    molar_mass: float  # kg/mol
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return the properties as a plain dict."""
+        return asdict(self)

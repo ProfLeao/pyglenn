@@ -10,6 +10,7 @@ __author__ = 'Dr. Reginaldo G. Leão Jr.'
 
 from .builder import ThermoDBBuilder
 from .calculator import (
+    CompositionError,
     DatabaseNotConnectedError,
     SpeciesNotFoundError,
     TemperatureOutOfRangeError,
@@ -20,6 +21,8 @@ from .database import R_GLENN, R_UNIVERSAL, R, ThermoDBQuery
 from .models import (
     DatabaseStats,
     IntervalData,
+    MixedProperties,
+    Mixture,
     NASACoefficients,
     SpeciesData,
     SpeciesInfo,
@@ -27,9 +30,12 @@ from .models import (
 )
 
 __all__ = [
+    'CompositionError',
     'DatabaseStats',
     'DatabaseNotConnectedError',
     'IntervalData',
+    'Mixture',
+    'MixedProperties',
     'NASACoefficients',
     'R',
     'R_GLENN',

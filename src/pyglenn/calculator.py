@@ -19,7 +19,13 @@ from importlib import resources
 from typing import Any
 
 from .database import R_UNIVERSAL, ThermoDBQuery
-from .models import IntervalData, SpeciesInfo, ThermoProperties
+from .models import (
+    IntervalData,
+    MixedProperties,
+    Mixture,
+    SpeciesInfo,
+    ThermoProperties,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -66,6 +72,12 @@ class TemperatureOutOfRangeError(ThermoCalcError):
         if temp_bounds is not None:
             message += f' (valid range: {temp_bounds[0]:.1f}-{temp_bounds[1]:.1f} K)'
         super().__init__(message)
+
+
+class CompositionError(ThermoCalcError):
+    """Raised when a mixture composition is invalid."""
+
+    pass
 
 
 class ThermochemicalCalculator:
@@ -422,9 +434,7 @@ class ThermochemicalCalculator:
                 valid intervals for the species.
         """
         if not self._connected:
-            raise DatabaseNotConnectedError(
-                'dcp_dt called without database connection'
-            )
+            raise DatabaseNotConnectedError('dcp_dt called without database connection')
 
         species_info = self.db.get_species_info(species_id)
         if species_info is None:
@@ -467,9 +477,7 @@ class ThermochemicalCalculator:
                 valid intervals for the species.
         """
         if not self._connected:
-            raise DatabaseNotConnectedError(
-                'gamma called without database connection'
-            )
+            raise DatabaseNotConnectedError('gamma called without database connection')
 
         species_info = self.db.get_species_info(species_id)
         if species_info is None:
@@ -483,6 +491,99 @@ class ThermochemicalCalculator:
         cp_r = self.db.calculate_cp(interval.coefficients, temperature)
         cp = cp_r * self.r_ref
         return cp / (cp - self.r_ref)
+
+    def mixture_properties(
+        self,
+        mixture: Mixture,
+        temperature: float,
+        *,
+        strict: bool = True,
+    ) -> MixedProperties:
+        """Calculate properties of a mixture with a known composition.
+
+        No chemical equilibrium is solved: the composition is an input, not a
+        result. Properties are composed per mole of mixture by mole-fraction
+        weighting of each component's properties, then converted to a mass
+        basis with the mole-fraction-weighted mean molar mass (arithmetic
+        mean, ``M = Σ xᵢ Mᵢ``). ``h_molar`` follows the NASA-7 convention
+        (absolute H°(T), with H°(298.15 K) = ΔH°f).
+
+        Args:
+            mixture: Mixture of ``(species_id, mole_fraction)`` pairs.
+            temperature: Temperature in Kelvin.
+            strict: If True (default), raise on any component out of range.
+                If False, out-of-range components are skipped and the
+                remaining fractions renormalized (a warning is logged).
+
+        Returns:
+            MixedProperties with molar and mass based Cp/H/S and molar mass.
+
+        Raises:
+            DatabaseNotConnectedError: If not connected.
+            CompositionError: If the composition is invalid.
+            SpeciesNotFoundError: If a species id is not in the database.
+            TemperatureOutOfRangeError: If ``strict`` and a component is out
+                of range, or if every component is out of range.
+        """
+        if not self._connected:
+            raise DatabaseNotConnectedError(
+                'mixture_properties called without database connection'
+            )
+
+        mixture.validate()
+
+        comps: list[tuple[float, ThermoProperties, float]] = []
+        skipped: list[str] = []
+        for species_id, fraction in mixture.species:
+            info = self.db.get_species_info(species_id)
+            if info is None:
+                raise SpeciesNotFoundError(species_id)
+
+            mw = info.molecular_weight
+            if mw is None or mw <= 0:
+                raise CompositionError(
+                    f"species '{info.name}' (id {species_id}) has no valid "
+                    'molecular weight'
+                )
+
+            try:
+                props = self.calculate_properties(species_id, temperature)
+            except TemperatureOutOfRangeError:
+                if strict:
+                    raise
+                skipped.append(info.name)
+                continue
+
+            comps.append((fraction, props, mw / 1000.0))  # kg/mol
+
+        if not comps:
+            raise TemperatureOutOfRangeError(temperature, 'mixture', None)
+
+        if skipped:
+            total_x = sum(x for x, _, _ in comps)
+            comps = [(x / total_x, p, m) for x, p, m in comps]
+            logger.warning(
+                'mixture_properties skipped out-of-range components %s at '
+                '%.1f K and renormalized the remaining mole fractions',
+                skipped,
+                temperature,
+            )
+
+        molar_mass = sum(x * m for x, _, m in comps)
+        cp_molar = sum(x * p.cp for x, p, _ in comps)
+        h_molar = sum(x * p.h_relative for x, p, _ in comps)
+        s_molar = sum(x * p.s for x, p, _ in comps)
+
+        return MixedProperties(
+            temperature=temperature,
+            cp_molar=cp_molar,
+            h_molar=h_molar,
+            s_molar=s_molar,
+            molar_mass=molar_mass,
+            cp_mass=cp_molar / molar_mass,
+            h_mass=h_molar / molar_mass,
+            s_mass=s_molar / molar_mass,
+        )
 
     @staticmethod
     def _select_interval(

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Pytest-based tests for pyglenn thermochemical calculator."""
 
+import logging
 import math
 import sqlite3
 import tempfile
@@ -12,7 +13,9 @@ import pytest
 from pyglenn import (
     R_GLENN,
     R_UNIVERSAL,
+    CompositionError,
     DatabaseNotConnectedError,
+    Mixture,
     R,
     SpeciesNotFoundError,
     TemperatureOutOfRangeError,
@@ -527,18 +530,12 @@ def test_reaction_enthalpy_methane_combustion() -> None:
             name: calc.get_available_species(name, exact_match=True)[0].id
             for name in nist_hf
         }
-        hf = {
-            name: calc.calculate_formation_enthalpy(sid)
-            for name, sid in ids.items()
-        }
+        hf = {name: calc.calculate_formation_enthalpy(sid) for name, sid in ids.items()}
         assert all(value is not None for value in hf.values())
 
         dh_r = hf['CO2'] + 2 * hf['H2O'] - hf['CH4'] - 2 * hf['O2']
         expected = (
-            nist_hf['CO2']
-            + 2 * nist_hf['H2O']
-            - nist_hf['CH4']
-            - 2 * nist_hf['O2']
+            nist_hf['CO2'] + 2 * nist_hf['H2O'] - nist_hf['CH4'] - 2 * nist_hf['O2']
         )
         assert dh_r == pytest.approx(expected, rel=1e-3)
 
@@ -1258,3 +1255,104 @@ def test_cli_validate_smoke(
 
     captured = capsys.readouterr()
     assert 'SUCCESS' in captured.out
+
+
+# ---------------------------------------------------------------------------
+# Test: Mixture properties (Bloco C)
+# ---------------------------------------------------------------------------
+
+
+def test_mixture_validate_sum_tolerance() -> None:
+    """Mole fractions summing to 0.99 raise CompositionError."""
+    mixture = Mixture(((1, 0.5), (2, 0.49)))
+    with pytest.raises(CompositionError):
+        mixture.validate()
+
+
+def test_mixture_validate_negative_fraction() -> None:
+    """Negative mole fractions raise CompositionError."""
+    with pytest.raises(CompositionError):
+        Mixture(((1, 1.5), (2, -0.5))).validate()
+
+
+def test_mixture_validate_duplicate_ids() -> None:
+    """Duplicate species ids raise CompositionError."""
+    with pytest.raises(CompositionError):
+        Mixture(((1, 0.5), (1, 0.5))).validate()
+
+
+def test_mixture_validate_empty() -> None:
+    """An empty mixture raises CompositionError."""
+    with pytest.raises(CompositionError):
+        Mixture(()).validate()
+
+
+def test_mixture_validate_ok() -> None:
+    """A valid composition passes validation."""
+    Mixture(((1, 0.79), (2, 0.21))).validate()
+
+
+def test_mixture_air_mass_weighted_cp() -> None:
+    """N2 0.79 + O2 0.21 at 1000 K matches hand-calculated mass Cp.
+
+    M = Σ xᵢ Mᵢ (arithmetic mean), then cp_mass = (Σ xᵢ cpᵢ) / M.
+    """
+    with ThermochemicalCalculator() as calc:
+        n2 = calc.get_available_species('N2', exact_match=True)[0]
+        o2 = calc.get_available_species('O2', exact_match=True)[0]
+
+        x_n2, x_o2 = 0.79, 0.21
+        m_n2 = n2.molecular_weight / 1000.0  # kg/mol
+        m_o2 = o2.molecular_weight / 1000.0
+        m_air = x_n2 * m_n2 + x_o2 * m_o2
+
+        p_n2 = calc.calculate_properties(n2.id, 1000.0)
+        p_o2 = calc.calculate_properties(o2.id, 1000.0)
+        cp_mass_expected = (x_n2 * p_n2.cp + x_o2 * p_o2.cp) / m_air
+
+        mix = calc.mixture_properties(Mixture(((n2.id, x_n2), (o2.id, x_o2))), 1000.0)
+
+    assert mix.cp_mass == pytest.approx(cp_mass_expected, rel=1e-12)
+    assert mix.molar_mass == pytest.approx(m_air, rel=1e-12)
+
+
+def test_mixture_single_species_reproduces_pure() -> None:
+    """A single species at x=1.0 equals the pure-species properties."""
+    with ThermochemicalCalculator() as calc:
+        ch4 = calc.get_available_species('CH4', exact_match=True)[0]
+        pure = calc.calculate_properties(ch4.id, 500.0)
+        mix = calc.mixture_properties(Mixture(((ch4.id, 1.0),)), 500.0)
+
+    m_kg = ch4.molecular_weight / 1000.0
+    assert mix.cp_molar == pytest.approx(pure.cp, rel=1e-12)
+    assert mix.h_molar == pytest.approx(pure.h_relative, rel=1e-12)
+    assert mix.s_molar == pytest.approx(pure.s, rel=1e-12)
+    assert mix.molar_mass == pytest.approx(m_kg, rel=1e-12)
+    assert mix.cp_mass == pytest.approx(pure.cp / m_kg, rel=1e-12)
+    assert mix.h_mass == pytest.approx(pure.h_relative / m_kg, rel=1e-12)
+
+
+def test_mixture_strict_raises_out_of_range() -> None:
+    """strict=True propagates TemperatureOutOfRangeError from a component."""
+    with ThermochemicalCalculator() as calc:
+        n2 = calc.get_available_species('N2', exact_match=True)[0]
+        h2o = calc.get_available_species('H2O', exact_match=True)[0]
+        mixture = Mixture(((n2.id, 0.5), (h2o.id, 0.5)))
+        with pytest.raises(TemperatureOutOfRangeError):
+            calc.mixture_properties(mixture, 7000.0, strict=True)
+
+
+def test_mixture_nonstrict_skips_and_warns(caplog: pytest.LogCaptureFixture) -> None:
+    """strict=False skips out-of-range components, renormalizes, and warns."""
+    with ThermochemicalCalculator() as calc:
+        n2 = calc.get_available_species('N2', exact_match=True)[0]
+        h2o = calc.get_available_species('H2O', exact_match=True)[0]
+        mixture = Mixture(((n2.id, 0.5), (h2o.id, 0.5)))
+        with caplog.at_level(logging.WARNING):
+            mix = calc.mixture_properties(mixture, 7000.0, strict=False)
+
+        # H2O (max 6000 K) skipped; N2 renormalized to x=1.0
+        pure_n2 = calc.calculate_properties(n2.id, 7000.0)
+
+    assert mix.cp_molar == pytest.approx(pure_n2.cp, rel=1e-12)
+    assert any('skipped' in record.message for record in caplog.records)
