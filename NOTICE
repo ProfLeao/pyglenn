@@ -1,0 +1,14 @@
+pyglenn
+
+Copyright (c) 2026 Dr. Reginaldo G. Leão Jr.
+
+This project is a Python implementation providing functional parity with the
+Glenn.jl package (https://github.com/ProfLeao/Glenn.jl), which establishes the
+NASA-7 data model and the bundled SQLite schema.
+
+The bundled thermochemical dataset (src/pyglenn/data/thermo.inp and
+src/pyglenn/data/thermo.db) is derived from NASA Glenn/CEA polynomial data
+(NASA TP-2002-211556). Those polynomials are normalized with the CODATA 1986
+gas constant (8.314510 J/(mol·K)); pyglenn denormalizes them with that
+dataset-specific reference constant, as recorded in the database `metadata`
+table.

@@ -65,7 +65,7 @@ version = {attr = "pyglenn.__version__"}
 where = ["src"]
 
 [tool.setuptools.package-data]
-pyglenn = ["data/thermo.inp", "data/thermo.db"]
+pyglenn = ["data/thermo.inp", "data/thermo.db", "py.typed"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
