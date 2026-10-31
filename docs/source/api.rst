@@ -38,6 +38,14 @@ Models
    :undoc-members:
    :show-inheritance:
 
+Fitting
+=======
+
+.. automodule:: pyglenn.fitting
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Database
 ========
 

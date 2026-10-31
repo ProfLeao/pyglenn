@@ -120,6 +120,30 @@ composition is an input. Out-of-range components raise
 :class:`~pyglenn.TemperatureOutOfRangeError` with ``strict=True`` (default)
 or are skipped and renormalized (with a warning) when ``strict=False``.
 
+Fitting NASA-7 Coefficients
+===========================
+
+:func:`~pyglenn.fit_nasa7` fits the seven heat-capacity coefficients
+(``a1..a7``) to tabulated Cp(T) data and derives the integration constants so
+that ``H°(t_ref) = h_ref`` holds exactly (NASA-7 convention, constant ``b1``):
+
+.. code-block:: python
+
+   import numpy as np
+   from pyglenn import fit_nasa7
+
+   T = np.linspace(200.0, 1000.0, 50)          # Kelvin
+   cp = ...                                    # J/(mol·K), measured or computed
+
+   coeffs = fit_nasa7(
+       T, cp, t_ref=298.15, h_ref=0.0, s_ref=None
+   )                                           # -> NASACoefficients
+
+``s_ref`` optionally anchors the entropy constant ``b2``; otherwise it is
+``0.0``. The fit is performed in a scaled variable to keep the design matrix
+well-conditioned — prefer fitting one temperature interval at a time, as NASA
+datasets do.
+
 Error Handling
 ==============
 

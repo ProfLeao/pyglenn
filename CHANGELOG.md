@@ -17,6 +17,9 @@ and the versioning follows [SemVer](https://semver.org/).
   mixture properties (molar and mass basis) for a fixed composition.
 - `CompositionError` (subclass of `ThermoCalcError`) for invalid mixture
   compositions.
+- `fit_nasa7(temperatures, cp_values, ...)` — least-squares fitting of NASA-7
+  coefficients to tabulated Cp(T) data, honoring the
+  `H°(t_ref) = h_ref` convention (`b1`, not `a6`).
 - `NOTICE` of attribution (Glenn.jl lineage) and `py.typed` for type
   consumers.
 
@@ -24,6 +27,8 @@ and the versioning follows [SemVer](https://semver.org/).
 
 - Docstrings of `h_relative`/`calculate_enthalpy_change` clarify the NASA-7
   convention: `H°(298.15 K) = ΔH°f(298.15 K)` (integration constant `b1`).
+- NumPy (`numpy>=1.21`) added as the first runtime dependency (used by
+  `fit_nasa7`).
 
 ### Deprecated
 

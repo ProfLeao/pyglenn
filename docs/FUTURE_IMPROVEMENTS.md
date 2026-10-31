@@ -340,4 +340,9 @@ numérica contra o arquivo de origem.
 - **Bloco C** (misturas): `Mixture`, `MixedProperties`, `mixture_properties`
   e `CompositionError` implementados; massa molar por média aritmética
   ponderada pelas frações molares (correção da média harmônica da spec).
+- **B2** (`fit_nasa7`): ajuste por mínimos quadrados implementado em
+  `src/pyglenn/fitting.py` (dependência `numpy`), com ancoragem
+  `H°(t_ref) = h_ref` via `b1` e escala interna para condicionamento.
+  Multi-intervalo com continuidade de valor/derivada permanece como
+  trabalho futuro.
 
