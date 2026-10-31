@@ -7,6 +7,8 @@ and the versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-31
+
 ### Added
 
 - `h_sensible_to(species_id, temperature, t_ref=298.15)` — sensible enthalpy.

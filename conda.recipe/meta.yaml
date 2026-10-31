@@ -1,5 +1,5 @@
 {% set name = "pyglenn" %}
-{% set version = "0.2.0" %}
+{% set version = "0.3.0" %}
 
 package:
   name: {{ name }}
@@ -23,6 +23,7 @@ requirements:
     - wheel
   run:
     - python >=3.9
+    - numpy >=1.21
 
 test:
   imports:
@@ -30,6 +31,8 @@ test:
     - pyglenn.calculator
     - pyglenn.database
     - pyglenn.builder
+    - pyglenn.fitting
+    - pyglenn.models
   commands:
     - pyglenn --help
 

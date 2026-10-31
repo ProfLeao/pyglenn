@@ -44,7 +44,7 @@ if os.path.isdir(_AUDIT_SRC):
 
 # -- Project information ---------------------------------------------------
 project = 'pyglenn'
-copyright = '2025, Dr. Reginaldo G. Leão Jr.'
+copyright = '2026, Dr. Reginaldo G. Leão Jr.'
 author = 'Dr. Reginaldo G. Leão Jr.'
 
 # Read version from the package itself (single source of truth)

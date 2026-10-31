@@ -13,7 +13,7 @@ authors = [
 ]
 keywords = ["thermochemistry", "thermodynamics", "NASA-polynomials", "heat-capacity", "enthalpy", "entropy"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",

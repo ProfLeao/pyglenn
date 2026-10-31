@@ -1,6 +1,6 @@
 # pyglenn — Cheat Sheet
 
-> **v0.2.0** · 2,035 species · 3,779 intervals · zero runtime dependencies
+> **v0.3.0** · 2,035 species · 3,779 intervals · NumPy ≥ 1.21
 > **Author:** Dr. Reginaldo G. Leão Jr. · [ProfLeao/pyglenn](https://github.com/ProfLeao/pyglenn)
 
 ---
