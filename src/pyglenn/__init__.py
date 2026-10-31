@@ -18,6 +18,7 @@ from .calculator import (
     ThermochemicalCalculator,
 )
 from .database import R_GLENN, R_UNIVERSAL, R, ThermoDBQuery
+from .fitting import fit_nasa7
 from .models import (
     DatabaseStats,
     IntervalData,
@@ -49,4 +50,5 @@ __all__ = [
     'ThermoDBQuery',
     'ThermoProperties',
     'ThermochemicalCalculator',
+    'fit_nasa7',
 ]

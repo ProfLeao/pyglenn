@@ -25,7 +25,9 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Physics",
 ]
 requires-python = ">=3.9"
-dependencies = []
+dependencies = [
+    "numpy>=1.21",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -97,7 +99,7 @@ quote-style = "single"
 indent-style = "space"
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.12"
 strict = false
 warn_return_any = true
 warn_unused_configs = true

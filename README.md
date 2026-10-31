@@ -154,6 +154,7 @@ If you use pyglenn in your research, please cite it as:
 ## Requirements
 
 - Python ≥ 3.9
+- NumPy ≥ 1.21
 - SQLite3 (stdlib)
 
 ## License
