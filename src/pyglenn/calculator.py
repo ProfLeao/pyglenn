@@ -394,6 +394,88 @@ class ThermochemicalCalculator:
             )
         return results
 
+    def dcp_dt(self, species_id: int, temperature: float) -> float:
+        """Derivative of Cp with respect to temperature, in J/(mol·K²).
+
+        Analytical derivative of the NASA-7 Cp polynomial (Equation 1),
+        denormalized with the dataset reference gas constant.
+
+        Args:
+            species_id: Database ID of the species.
+            temperature: Temperature in Kelvin.
+
+        Returns:
+            dCp/dT in J/(mol·K²).
+
+        Raises:
+            DatabaseNotConnectedError: If not connected to database.
+            SpeciesNotFoundError: If species_id is not in the database.
+            TemperatureOutOfRangeError: If temperature is outside all
+                valid intervals for the species.
+        """
+        if not self._connected:
+            raise DatabaseNotConnectedError(
+                'dcp_dt called without database connection'
+            )
+
+        species_info = self.db.get_species_info(species_id)
+        if species_info is None:
+            raise SpeciesNotFoundError(species_id)
+
+        interval = self.db.get_species_for_temperature(species_id, temperature)
+        if interval is None:
+            bounds = self.db.get_temperature_bounds(species_id)
+            raise TemperatureOutOfRangeError(temperature, species_info.name, bounds)
+
+        a = interval.coefficients
+        T = temperature
+        dcp_r_dt = (
+            -2 * a.a1 / T**3
+            - a.a2 / T**2
+            + a.a4
+            + 2 * a.a5 * T
+            + 3 * a.a6 * T**2
+            + 4 * a.a7 * T**3
+        )
+        return dcp_r_dt * self.r_ref
+
+    def gamma(self, species_id: int, temperature: float) -> float:
+        """Specific heat ratio Cp/Cv, assuming an ideal gas.
+
+        For an ideal gas Cv = Cp - R, so gamma = Cp / (Cp - r_ref), where
+        ``r_ref`` is the dataset reference gas constant.
+
+        Args:
+            species_id: Database ID of the species.
+            temperature: Temperature in Kelvin.
+
+        Returns:
+            Dimensionless ratio Cp/Cv.
+
+        Raises:
+            DatabaseNotConnectedError: If not connected to database.
+            SpeciesNotFoundError: If species_id is not in the database.
+            TemperatureOutOfRangeError: If temperature is outside all
+                valid intervals for the species.
+        """
+        if not self._connected:
+            raise DatabaseNotConnectedError(
+                'gamma called without database connection'
+            )
+
+        species_info = self.db.get_species_info(species_id)
+        if species_info is None:
+            raise SpeciesNotFoundError(species_id)
+
+        interval = self.db.get_species_for_temperature(species_id, temperature)
+        if interval is None:
+            bounds = self.db.get_temperature_bounds(species_id)
+            raise TemperatureOutOfRangeError(temperature, species_info.name, bounds)
+
+        cp_r = self.db.calculate_cp(interval.coefficients, temperature)
+        cp = cp_r * self.r_ref
+        return cp / (cp - self.r_ref)
+
     @staticmethod
     def _select_interval(
         intervals: tuple[IntervalData, ...], temperature: float

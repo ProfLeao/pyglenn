@@ -465,6 +465,28 @@ def test_formation_plus_sensible_equals_total() -> None:
         assert hf + sensible == pytest.approx(total, rel=1e-9)
 
 
+def test_dcp_dt_matches_finite_difference(calc: ThermochemicalCalculator) -> None:
+    """Analytical dCp/dT agrees with a central finite difference."""
+    species = calc.get_available_species('O2', exact_match=True)
+    species_id = species[0].id
+    T = 500.0
+    eps = 1e-4
+    numeric = (
+        calc.calculate_properties(species_id, T + eps).cp
+        - calc.calculate_properties(species_id, T - eps).cp
+    ) / (2 * eps)
+    assert calc.dcp_dt(species_id, T) == pytest.approx(numeric, rel=1e-6)
+
+
+def test_gamma_monoatomic_argon() -> None:
+    """Gamma for a monoatomic ideal gas (Ar) is 5/3."""
+    with ThermochemicalCalculator() as calc:
+        ar = calc.get_available_species('Ar', exact_match=True)
+        assert ar, 'Ar not found in database'
+        gamma = calc.gamma(ar[0].id, 298.15)
+    assert gamma == pytest.approx(5.0 / 3.0, rel=1e-4)
+
+
 # ---------------------------------------------------------------------------
 # Test: Properties range
 # ---------------------------------------------------------------------------
