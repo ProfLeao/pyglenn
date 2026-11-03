@@ -1,9 +1,9 @@
 ---
 title: "pyglenn: A Python Toolkit for Thermochemical Properties Calculation from NASA Polynomials"
 author: "Dr. Reginaldo G. Leão Jr."
-date: "August 2026"
+date: "October 2026"
 abstract: >
-  This paper presents pyglenn 0.2.0, an open-source Python package for the
+  This paper presents pyglenn 0.3.0, an open-source Python package for the
   computation of thermochemical properties — heat capacity ($C_p$), enthalpy
   ($H^\circ$), and entropy ($S^\circ$) — from NASA-7 polynomial coefficients.
   The package parses legacy FORTRAN `thermo.inp` files into a normalized
@@ -14,10 +14,10 @@ abstract: >
   CODATA 1986), which eliminates a systematic ~5.7 ppm bias that arises when
   the modern CODATA universal value is used instead. Cross-validation against
   NIST-JANAF reference data demonstrates sub-percent agreement for heat
-  capacity and entropy across seven reference species. pyglenn is
-  dependency-free, installable from PyPI, and suitable for researchers and
-  engineers in combustion science, chemical thermodynamics, and related
-  fields.
+  capacity and entropy across seven reference species. pyglenn has a single
+  runtime dependency (NumPy), is installable from PyPI, and is suitable for
+  researchers and engineers in combustion science, chemical thermodynamics,
+  and related fields.
 ---
 
 # 1. Introduction
@@ -50,6 +50,10 @@ addresses both problems by:
   dataclasses (not opaque dictionaries), plus a command-line interface;
 - Bundling a pre-built, integrity-validated database so that users require no
   manual setup;
+- Composing mixture properties (molar and mass basis) for fixed compositions,
+  such as air and combustion products;
+- Fitting NASA-7 coefficient sets from tabulated Cp(T) data, for single or
+  multiple temperature intervals with continuity constraints;
 - Offering a reproducible database-rebuild and validation toolchain, backed by
   a cross-validation audit against NIST-JANAF reference data.
 
@@ -137,7 +141,7 @@ recovered as a new species.
 
 # 3. Architecture and Data Model
 
-pyglenn follows a layered design with three core modules:
+pyglenn follows a layered design with four core modules:
 
 - **`builder.py`** — Parses `thermo.inp` into a normalized SQLite database
   within a single transaction (`BEGIN`/`COMMIT`/`ROLLBACK`). The parser
@@ -150,6 +154,9 @@ pyglenn follows a layered design with three core modules:
 - **`calculator.py`** — High-level interface exposing scalar, range, and
   enthalpy-change calculations with typed return values and rich,
   context-carrying exceptions.
+- **`fitting.py`** — Least-squares fitting of NASA-7 coefficient sets to
+  tabulated Cp(T) data, including multi-interval fits with continuity
+  constraints.
 
 The normalized schema comprises five tables:
 
@@ -162,8 +169,9 @@ The normalized schema comprises five tables:
 | `metadata` | Additive key/value metadata, including the dataset gas constant |
 
 The public API returns **frozen dataclasses** (`ThermoProperties`,
-`SpeciesInfo`, `NASACoefficients`, `IntervalData`, `SpeciesData`, and
-`DatabaseStats`) instead of untyped dictionaries. This improves static
+`SpeciesInfo`, `NASACoefficients`, `IntervalData`, `SpeciesData`,
+`DatabaseStats`, `Mixture`, and `MixedProperties`) instead of untyped
+dictionaries. This improves static
 checking, IDE autocompletion, and self-documentation, while
 `dataclasses.asdict()` remains available for JSON serialization and legacy
 callers.
@@ -203,7 +211,13 @@ Key methods include:
   list[ThermoProperties]` — bulk evaluation that loads the species intervals
   once and evaluates all temperatures in memory (preserving input order);
 - `get_properties_range(species_id, temps) -> dict[float, ThermoProperties]` —
-  temperature-keyed dictionary for backward compatibility;
+  deprecated in 0.3.0 (removal in 0.4.0);
+- `h_sensible_to(species_id, T, t_ref=298.15)`,
+  `dcp_dt(species_id, T)` (analytical derivative of Cp), and
+  `gamma(species_id, T)` (Cp/Cv ratio);
+- `mixture_properties(mixture, T, strict=True) -> MixedProperties` —
+  mole-fraction-weighted properties of a fixed-composition mixture, on both
+  molar and mass basis;
 - `calculate_formation_enthalpy(species_id)` and
   `calculate_enthalpy_change(species_id, T1, T2)`;
 - `get_available_species(pattern, exact_match=False)`,
@@ -213,8 +227,13 @@ Key methods include:
   per interval, no orphan rows, ordered bounds, `num_intervals` agreement,
   semantic guards), used by the rebuild toolchain and the CLI.
 
+Coefficient fitting is provided by the module-level functions
+`fit_nasa7(...)` (single interval) and `fit_nasa7_multi(...)` (multiple
+intervals with Cp and derivative continuity at each breakpoint).
+
 Errors are reported through a formal exception hierarchy:
 `ThermoCalcError` (base), `DatabaseNotConnectedError`,
+`CompositionError` (invalid mixture composition),
 `SpeciesNotFoundError` (carrying the requested `species_id`), and
 `TemperatureOutOfRangeError` (carrying the requested temperature, species
 name, and the valid interval bounds).
@@ -279,17 +298,18 @@ asset.
 
 pyglenn fills a practical niche in the computational thermodynamics ecosystem:
 it transforms the widely used but format-locked NASA polynomial data into an
-accessible, scriptable, and dependency-free Python tool. Version 0.2.0 adds a
-typed, dataclass-based public API; a correct, dataset-specific gas-constant
-handling (eliminating a ~5.7 ppm systematic bias); a robust state-machine
-parser; automatic metadata migration; database-integrity validation; and a
-NIST-JANAF cross-validation audit.
+accessible and scriptable Python tool. Version 0.3.0 adds a typed,
+dataclass-based public API; a correct, dataset-specific gas-constant handling
+(eliminating a ~5.7 ppm systematic bias); a robust state-machine parser;
+automatic metadata migration; database-integrity validation; a NIST-JANAF
+cross-validation audit; fixed-composition mixture properties; analytical
+derivatives (dCp/dT and Cp/Cv); and NASA-7 coefficient fitting.
 
-The package is lightweight (zero runtime dependencies beyond the Python
-standard library), installable from PyPI, supports Python 3.9–3.12, and
-provides both an intuitive Python API and a command-line interface. Future work
-may include support for the NASA-9 polynomial format, integration with
-chemical-equilibrium solvers, and a web-based interactive species browser.
+The package has a single runtime dependency (NumPy), is installable from PyPI,
+supports Python 3.9–3.12, and provides both an intuitive Python API and a
+command-line interface. Future work may include support for the NASA-9
+polynomial format, integration with chemical-equilibrium solvers, and a
+web-based interactive species browser.
 
 ---
 
