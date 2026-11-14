@@ -252,7 +252,7 @@ e validar os **valores** (Cp, H, S) contra uma fonte de referência externa
 
 **Prioridade:** Média
 **Origem:** item de auditoria B2
-**Estado:** não iniciado (som bem definido)
+**Estado:** resolvido na 0.3.0
 
 ### Contexto
 
