@@ -116,9 +116,9 @@ SQL QUERY EXAMPLES:
 LOADING INFORMATION:
 
 • Total Species Loaded: 2035
-• Total Temperature Intervals: 3779
-• Total Coefficient Sets: 3779
-• Duplicate Species Skipped: 11 (already present)
+• Total Temperature Intervals: 3795
+• Total Coefficient Sets: 3795
+• Duplicate Species Records Merged: 11 (16 intervals recovered)
 
 ================================================================================
 
