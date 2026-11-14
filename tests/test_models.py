@@ -109,8 +109,8 @@ def test_database_stats_to_dict() -> None:
     """DatabaseStats serialises phase counts and average molecular weight."""
     stats = DatabaseStats(
         total_species=2035,
-        total_intervals=3779,
-        total_coeff_sets=3779,
+        total_intervals=3795,
+        total_coeff_sets=3795,
         species_by_phase={'gas': 1266, 'condensed': 769},
         avg_molecular_weight=132.03,
     )

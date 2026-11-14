@@ -18,10 +18,11 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INP = REPO_ROOT / 'src' / 'pyglenn' / 'data' / 'thermo.inp'
 DEFAULT_DB = REPO_ROOT / 'src' / 'pyglenn' / 'data' / 'thermo.db'
 
-# Release gates for the canonical NASA Glenn/CEA dataset.
+# Release gates for the canonical NASA Glenn/CEA dataset (with the
+# phase-transition records merged, recovering 16 intervals).
 EXPECTED_SPECIES = 2035
-EXPECTED_INTERVALS = 3779
-EXPECTED_COEFFS = 3779
+EXPECTED_INTERVALS = 3795
+EXPECTED_COEFFS = 3795
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -48,7 +49,7 @@ def main(argv: list[str] | None = None) -> int:
         builder = ThermoDBBuilder(str(inp), str(tmp_db))
         builder.connect()
         builder.create_tables()
-        builder.parse_and_load()
+        builder.parse_and_load(merge_duplicates=True)
         builder.close()
     except Exception:
         print(

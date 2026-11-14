@@ -13,7 +13,6 @@ All values returned as floats in standard units:
 from __future__ import annotations
 
 import logging
-import warnings
 from collections.abc import Sequence
 from importlib import resources
 from typing import Any
@@ -310,40 +309,6 @@ class ThermochemicalCalculator:
         """
         return self.calculate_enthalpy_change(species_id, t_ref, temperature)
 
-    def get_properties_range(
-        self, species_id: int, temps: list[float]
-    ) -> dict[float, ThermoProperties] | None:
-        """
-        Calculate properties at multiple temperatures.
-
-        Args:
-            species_id: Database ID of the species.
-            temps: List of temperatures in Kelvin.
-
-        Returns:
-            Dict mapping temperature → ThermoProperties, or None if all fail.
-        """
-        warnings.warn(
-            'get_properties_range is deprecated and will be removed in 0.4.0; '
-            'use calculate_properties_range(species_id, temps, strict=False), '
-            'which returns an ordered list instead of a temperature-keyed dict.',
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        if not self._connected:
-            logger.warning('get_properties_range called without connection')
-            return None
-
-        results: dict[float, ThermoProperties] = {}
-        for temp in temps:
-            try:
-                props = self.calculate_properties(species_id, temp)
-                results[temp] = props
-            except TemperatureOutOfRangeError:
-                pass  # skip temperatures outside valid range
-
-        return results if results else None
-
     def calculate_properties_range(
         self,
         species_id: int,
@@ -353,9 +318,8 @@ class ThermochemicalCalculator:
     ) -> list[ThermoProperties]:
         """Calculate properties for many temperatures, loading data once.
 
-        Unlike :meth:`get_properties_range`, this loads the species intervals
-        a single time and evaluates all temperatures in memory, preserving
-        input order.
+        Loads the species intervals a single time and evaluates all
+        temperatures in memory, preserving input order.
 
         Args:
             species_id: Database ID of the species.
