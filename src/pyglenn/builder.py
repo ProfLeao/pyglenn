@@ -392,14 +392,133 @@ class ThermoDBBuilder:
         return intervals, index
 
     # ------------------------------------------------------------------
+    # Species/interval insertion helpers
+    # ------------------------------------------------------------------
+    def _find_species_id(self, name: str) -> int | None:
+        """Return the database id of an existing species, or None."""
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        self.cursor.execute('SELECT id FROM species WHERE name = ?', (name,))
+        row = self.cursor.fetchone()
+        return int(row[0]) if row is not None else None
+
+    def _insert_interval(
+        self,
+        species_id: int,
+        interval_number: int,
+        interval: dict[str, Any],
+        coefficients: dict[str, Any],
+    ) -> None:
+        """Insert one temperature interval and its coefficient set."""
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        self.cursor.execute(
+            """
+            INSERT INTO temperature_intervals
+                (species_id, interval_number, temp_min, temp_max, h_298_to_0)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                species_id,
+                interval_number,
+                interval['temp_min'],
+                interval['temp_max'],
+                interval['h_298_to_0'],
+            ),
+        )
+        interval_id = self.cursor.lastrowid
+        self.cursor.execute(
+            """
+            INSERT INTO coefficients
+                (interval_id, a1, a2, a3, a4, a5, a6, a7, b1, b2)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (interval_id, *coefficients.values()),
+        )
+
+    def _merge_intervals(
+        self,
+        species_id: int,
+        intervals: list[tuple[dict[str, Any], dict[str, Any]]],
+    ) -> int:
+        """Append intervals that neither duplicate nor overlap existing ranges.
+
+        Returns the number of newly inserted intervals.  Touching endpoints
+        are allowed (phase transitions are contiguous by construction).
+        """
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        self.cursor.execute(
+            'SELECT interval_number, temp_min, temp_max '
+            'FROM temperature_intervals WHERE species_id = ?',
+            (species_id,),
+        )
+        existing: list[tuple[int, float, float]] = self.cursor.fetchall()
+
+        next_number = max((row[0] for row in existing), default=0) + 1
+        added = 0
+
+        for interval, coefficients in intervals:
+            t_min = float(interval['temp_min'])
+            t_max = float(interval['temp_max'])
+
+            duplicate = any(
+                math.isclose(t_min, row[1], rel_tol=0.0, abs_tol=1e-9)
+                and math.isclose(t_max, row[2], rel_tol=0.0, abs_tol=1e-9)
+                for row in existing
+            )
+            if duplicate:
+                logger.debug('Skipping duplicate interval %.1f-%.1f K', t_min, t_max)
+                continue
+
+            overlapping = any(t_min < row[2] and t_max > row[1] for row in existing)
+            if overlapping:
+                logger.warning(
+                    'Skipping overlapping interval %.1f-%.1f K', t_min, t_max
+                )
+                continue
+
+            self._insert_interval(species_id, next_number, interval, coefficients)
+            existing.append((next_number, t_min, t_max))
+            next_number += 1
+            added += 1
+
+        return added
+
+    def _update_num_intervals(self, species_id: int) -> None:
+        """Sync ``species.num_intervals`` with the actual interval count."""
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        self.cursor.execute(
+            """
+            UPDATE species
+               SET num_intervals = (
+                   SELECT COUNT(*) FROM temperature_intervals
+                    WHERE species_id = ?
+               )
+             WHERE id = ?
+            """,
+            (species_id, species_id),
+        )
+
+    # ------------------------------------------------------------------
     # Main parse & load
     # ------------------------------------------------------------------
-    def parse_and_load(self) -> None:
+    def parse_and_load(self, *, merge_duplicates: bool = False) -> None:
         """Parse the thermo.inp file and populate the database atomically.
 
         A species is inserted only after every declared interval and its two
         coefficient records have been parsed and validated.  Malformed blocks
         are skipped without leaving partial rows behind.
+
+        Args:
+            merge_duplicates: If False (default), a species whose name already
+                exists is skipped.  The bundled ``thermo.inp`` repeats names for
+                phase transitions, so this drops the higher-temperature
+                records.  If True, the new intervals are merged into the
+                existing species, skipping exact duplicates and overlapping
+                ranges (touching endpoints are allowed), and ``num_intervals``
+                is updated to the total row count.
         """
         if self.cursor is None:
             raise RuntimeError('Database not connected')
@@ -470,7 +589,9 @@ class ThermoDBBuilder:
                     continue
 
                 intervals, next_index = parsed_intervals
-                try:
+
+                existing_id = self._find_species_id(species_name)
+                if existing_id is None:
                     self.cursor.execute(
                         """
                         INSERT INTO species
@@ -489,44 +610,38 @@ class ThermoDBBuilder:
                             num_intervals,
                         ),
                     )
-                except sqlite3.IntegrityError:
-                    logger.info('Species already exists, skipping: %s', species_name)
+                    species_id = self.cursor.lastrowid
+                    if species_id is None:
+                        raise RuntimeError('failed to read species id after insert')
+                    for interval_number, (interval, coefficients) in enumerate(
+                        intervals, 1
+                    ):
+                        self._insert_interval(
+                            species_id, interval_number, interval, coefficients
+                        )
+                    logger.info('Loaded species: %s', species_name)
+                    species_count += 1
+                else:
                     existing_count += 1
-                    index = next_index
-                    continue
+                    if not merge_duplicates:
+                        logger.info(
+                            'Species already exists, skipping: %s', species_name
+                        )
+                    else:
+                        added = self._merge_intervals(existing_id, intervals)
+                        if added:
+                            logger.info(
+                                'Merged %d interval(s) into existing species: %s',
+                                added,
+                                species_name,
+                            )
+                        else:
+                            logger.info(
+                                'No new intervals for existing species: %s',
+                                species_name,
+                            )
+                        self._update_num_intervals(existing_id)
 
-                species_id = self.cursor.lastrowid
-                for interval_number, (interval, coefficients) in enumerate(
-                    intervals, 1
-                ):
-                    self.cursor.execute(
-                        """
-                        INSERT INTO temperature_intervals
-                            (species_id, interval_number, temp_min,
-                             temp_max, h_298_to_0)
-                        VALUES (?, ?, ?, ?, ?)
-                        """,
-                        (
-                            species_id,
-                            interval_number,
-                            interval['temp_min'],
-                            interval['temp_max'],
-                            interval['h_298_to_0'],
-                        ),
-                    )
-                    interval_id = self.cursor.lastrowid
-                    self.cursor.execute(
-                        """
-                        INSERT INTO coefficients
-                            (interval_id, a1, a2, a3, a4, a5,
-                             a6, a7, b1, b2)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                        """,
-                        (interval_id, *coefficients.values()),
-                    )
-
-                logger.info('Loaded species: %s', species_name)
-                species_count += 1
                 index = next_index
 
             self.cursor.execute(

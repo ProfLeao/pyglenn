@@ -7,6 +7,12 @@ and the versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- `ThermoDBBuilder.parse_and_load(..., merge_duplicates=True)` — opt-in merging
+  of repeated species records (phase transitions), recovering the truncated
+  high-temperature ranges of condensed species (e.g. `Cr(cr)`). Off by default.
+
 ## [0.3.0] - 2026-10-31
 
 ### Added
