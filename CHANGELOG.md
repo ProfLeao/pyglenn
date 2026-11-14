@@ -7,6 +7,8 @@ and the versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-11-14
+
 ### Added
 
 - `ThermoDBBuilder.parse_and_load(..., merge_duplicates=True)` — opt-in merging
