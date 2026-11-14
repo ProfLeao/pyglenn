@@ -61,9 +61,6 @@ sid = calc.get_available_species('CO2', exact_match=True)[0].id
 # Typed, ordered list — loads intervals once (fast for long sweeps)
 props = calc.calculate_properties_range(sid, [300, 500, 1000, 1500])
 # strict=True raises on out-of-range T instead of skipping it
-
-# ⚠️ Deprecated (removed in 0.4.0) — use calculate_properties_range instead:
-# by_t = calc.get_properties_range(sid, [300, 500, 1000, 1500])
 ```
 
 ### 🧪 Enthalpy
@@ -204,9 +201,9 @@ name = props['species_name']               name = props.species_name
 
 ## 🔄 Migrating to v0.3.0
 
-- `get_properties_range` is deprecated (emits `DeprecationWarning`) — replace
-  it with `calculate_properties_range`, which returns an ordered list instead
-  of a temperature-keyed dict.
+- `get_properties_range` was removed in **0.4.0** — use
+  `calculate_properties_range`, which returns an ordered list instead of a
+  temperature-keyed dict.
 - New analytical helpers: `h_sensible_to(sid, T)`, `dcp_dt(sid, T)`,
   `gamma(sid, T)`.
 - Mixtures: `Mixture` + `mixture_properties(...)` → `MixedProperties`

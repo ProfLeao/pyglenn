@@ -103,7 +103,7 @@ data['phase'] = 'condensed' if phase_code and phase_code != '0' else 'gas'
 
 **Prioridade:** Baixa
 **Origem:** item de auditoria A5
-**Estado:** não iniciado
+**Estado:** resolvido (depreciação na 0.3.0, remoção na 0.4.0)
 
 ### Contexto
 
@@ -345,4 +345,18 @@ numérica contra o arquivo de origem.
   `H°(t_ref) = h_ref` via `b1`, escala interna para condicionamento e
   `fit_nasa7_multi` para múltiplos intervalos com continuidade de valor e
   primeira derivada no ponto de emenda.
+
+---
+
+## Resolvido na 0.4.0
+
+- **FI-2** (remoção de `get_properties_range`): método removido;
+  `calculate_properties_range` é o único caminho para varreduras de
+  temperatura.
+- **Dataset mesclado** (Fix 4 do guia de porting): `parse_and_load` ganhou
+  `merge_duplicates=True` (opt-in na 0.3.1), e o banco empacotado foi
+  rebuildado com merge, indo de 3 779 para **3 795 intervalos** — as faixas de
+  alta temperatura das espécies com transição de fase (ex.: `Cr(cr)`,
+  `200–2130 K`) foram recuperadas e validadas contra NIST-JANAF em nível
+  sub-percentual.
 

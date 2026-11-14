@@ -7,6 +7,17 @@ and the versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-14
+
+### Added
+
+- Bundled dataset rebuilt with merged phase-transition records: 3,779 → 3,795
+  temperature intervals (e.g. `Cr(cr)` now spans 200–2130 K).
+
+### Removed
+
+- `get_properties_range` — use `calculate_properties_range` instead.
+
 ## [0.3.1] - 2026-11-14
 
 ### Added
