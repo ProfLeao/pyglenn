@@ -72,8 +72,8 @@ Reproduce ::
   budget is therefore **validated** for the matched subset and will be
   **extrapolated** to the rest by phase/class (to be calibrated on this
   subset). The extrapolation is NOT yet implemented.
-- Coefficients were transcribed from the NIST WebBook; they must be reviewed
-  by a second pair of eyes before being treated as authoritative.
+- Coefficients were transcribed from the NIST WebBook and re-verified against
+  the live WebBook Shomate tables (2026-11-19): all 9 species match exactly.
 - The pilot is gas + 2 condensed species; it must be expanded (more organics,
   more condensed phases) before the tier model is fitted.
 

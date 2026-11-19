@@ -7,7 +7,7 @@
     "S": "J/(mol*K)"
   },
   "extracted": "2026-11-19",
-  "note": "Pilot subset (gas-phase). Coefficients copied from the NIST WebBook; more species/phases to be added incrementally.",
+  "note": "Pilot subset (gas + condensed). Coefficients transcribed from the NIST WebBook and re-verified against the live WebBook Shomate tables on 2026-11-19 (all 9 match); more species/phases to be added incrementally.",
   "species": {
     "CO2": {
       "phase": "gas",
