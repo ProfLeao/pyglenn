@@ -168,8 +168,9 @@ nada".
 
 ### Veredito
 
-- `docs/README.txt` recomenda `idx_species_name` e `idx_intervals_species`, mas
-  `create_tables` não os cria explicitamente. Porém:
+- Uma documentação legada (removida) recomendava `idx_species_name` e
+  `idx_intervals_species`, mas `create_tables` não os cria explicitamente.
+  Porém:
   - `species.name` é `UNIQUE` → autoíndice `sqlite_autoindex_species_1`;
   - `temperature_intervals` tem `UNIQUE(species_id, interval_number)` →
     autoíndice `sqlite_autoindex_temperature_intervals_1`.
@@ -183,8 +184,7 @@ nada".
 ### Decisão
 
 - **Não criar** os índices propostos (redundantes com os autoíndices).
-- Atualizar `docs/README.txt` para explicar os autoíndices em vez de sugerir
-  `CREATE INDEX` redundante.
+- Nada a documentar — a doc legada que sugeria os índices foi removida.
 - Opcional (micro-otimização para 2.035 linhas):
   `CREATE INDEX idx_species_name_upper ON species(UPPER(name));` — baixo valor.
 
