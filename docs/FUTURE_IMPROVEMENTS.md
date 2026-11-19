@@ -322,6 +322,97 @@ numérica contra o arquivo de origem.
 
 ---
 
+## UQ-1 — Orçamento de erro termoquímico por espécie (curto prazo)
+
+**Prioridade:** Média (alvo: próxima versão)
+**Origem:** comentário externo de revisão (nov/2026)
+**Estado:** não iniciado
+
+### Contexto
+
+Os coeficientes NASA-7 do `thermo.inp` são publicados **sem incerteza**. Um
+revisor apontou que ninguém propaga esse erro até composição de equilíbrio ou
+temperatura de chama adiabática de forma sistemática e aberta, e que um
+"orçamento de erro validado sobre a base inteira seria excelente".
+
+Este item cobre a parte **factível no curto prazo**: um **envelope de erro
+empírico por espécie** em Cp/H/S(T), derivado de comparação com referência
+independente — **não** a covariância dos coeficientes (ver UQ-2).
+
+### Abordagem (método)
+
+1. **Referência fixada:** NIST-JANAF (Chase 1998), equação de Shomate,
+   versionada em `docs/audit/` como JSON (Shomate é aninhado: N faixas × 8
+   coeficientes — CSV não representa bem).
+2. **Casamento de espécies:** mapear `pyglenn: H2O (gas)` ↔ `NIST: H₂O(g)`,
+   com cuidado especial com fases condensadas (`Cr(cr)`, `Fe(a)`, …).
+3. **Amostragem e comparação:** N temperaturas por espécie, dentro do range
+   válido, calculando Cp/H/S nos dois lados.
+4. **Agregação por espécie:** viés médio, erro máximo, RMS e perfil erro-vs-T
+   (bordas de intervalo, T alta).
+5. **Modelo de erro:** tabela por espécie + classificação em tiers por
+   fase/classe, calibrada no subconjunto validado.
+6. **Validação e publicação:** orçamento validado e versionado abertamente,
+   com metodologia documentada.
+
+### Formatos
+
+| Dado | Formato | Onde |
+|---|---|---|
+| Shomate de referência (entrada) | JSON | `docs/audit/` (versionado) |
+| Estatísticas de erro (publicação) | CSV | `docs/audit/` (convenção atual) |
+| Incerteza em runtime (futuro) | tabela `species_uncertainty` no `thermo.db` | SQLite (additiva, como `metadata`) |
+
+A tabela `species_uncertainty` deve ter colunas de proveniência (`source` ∈
+`nist-janaf` | `extrapolated`, `n_ref_points`) para separar valores validados
+de extrapolados.
+
+### Limitação explícita
+
+O NIST-JANAF **não cobre as 2 035 espécies** do `thermo.inp`. O orçamento será
+**validado** para o subconjunto com referência e **extrapolado** para o resto
+via modelo por fase/classe, com a extrapolação documentada (não inventada).
+
+### O que NÃO fazer
+
+- ❌ Apresentar covariância de coeficientes como se existisse (ver UQ-2).
+- ❌ Extrapolar sem documentar o modelo e sua calibração.
+- ❌ Publicar números sem pino de versão da referência e do dataset.
+
+---
+
+## UQ-2 — Covariância e propagação até equilíbrio/chama (longo prazo)
+
+**Prioridade:** Baixa (indefinida)
+**Origem:** comentário externo de revisão (nov/2026)
+**Estado:** não iniciado (indefinido)
+
+### Contexto
+
+A parte de longo prazo do mesmo comentário: propagar a incerteza termoquímica
+até **composição de equilíbrio** e **temperatura de chama adiabática**.
+
+### Por que é longo prazo
+
+1. **O dado não existe:** não há matriz de covariância publicada para os
+   coeficientes NASA-7 (`a1..a7, b1, b2`). Estimá-la é um problema de pesquisa,
+   não de código.
+2. **O pyglenn não resolve equilíbrio:** a API de misturas trata a composição
+   como **entrada**. Propagar até equilíbrio exige antes um solver de equilíbrio
+   (trabalho futuro já citado no paper).
+
+### Pré-requisitos
+
+- UQ-1 concluído (envelope de erro por espécie como ponto de partida).
+- Solver de equilíbrio químico.
+
+### O que NÃO fazer
+
+- ❌ Anunciar propagação de incerteza sem o orçamento UQ-1 validado.
+- ❌ Tratar covariância como "soma de variâncias independentes" sem justificativa.
+
+---
+
 ## Resolvido na 0.3.0
 
 - **A1** (`h_relative`): `h_sensible_to` + documentação.
