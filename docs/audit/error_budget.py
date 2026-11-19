@@ -99,7 +99,8 @@ def rel_pct(calc: float, ref: float) -> float:
 
 
 def collect() -> list[dict[str, Any]]:
-    reference = json.load(open(REFERENCE_FILE, encoding='utf-8'))
+    with open(REFERENCE_FILE, encoding='utf-8') as f:
+        reference = json.load(f)
     rows: list[dict[str, Any]] = []
 
     with ThermochemicalCalculator() as calc:
