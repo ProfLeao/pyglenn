@@ -1,0 +1,89 @@
+================================================================================
+pyglenn — Error Budget (UQ-1, short-term) — Methodology & Pilot Summary
+================================================================================
+
+This document describes the short-term uncertainty-quantification deliverable
+for pyglenn (UQ-1 in docs/FUTURE_IMPROVEMENTS.md): a **per-species empirical
+error envelope** for Cp/H/S(T), obtained by comparing the NASA-7 evaluation
+against an independent reference (NIST-JANAF, Chase 1998, Shomate equation).
+
+This is NOT coefficient covariance (that is UQ-2, long-term). It is a
+property-level error estimate, openly versioned.
+
+--------------------------------------------------------------------------------
+1. Method
+--------------------------------------------------------------------------------
+
+Reference : NIST-JANAF (Chase, 1998), NIST Chemistry WebBook SRD 69.
+            Coefficients stored in ``shomate_reference.json`` (versioned).
+
+Matching  : pyglenn species name (exact match) -> NIST species/phase. For
+            condensed species the pyglenn name already encodes the phase
+            (e.g. ``Cr(cr)``), so exact match suffices.
+
+Sampling  : ``N_POINTS`` log-spaced temperatures over the overlap of the
+            pyglenn valid range and the Shomate range, from no lower than 300 K.
+
+Metrics   : Cp  -> relative error in percent.
+            H   -> sensible enthalpy ΔH(298.15 -> T), absolute error in J/mol.
+            S   -> absolute error in J/(mol*K).
+
+Per species, the CSV stores: bias (mean), max absolute, and RMS.
+
+Script    : ``docs/audit/error_budget.py``  ->  ``docs/audit/species_error.csv``
+
+Reproduce ::
+
+    python docs/audit/error_budget.py
+
+--------------------------------------------------------------------------------
+2. Current pilot (snapshot, 9 species)
+--------------------------------------------------------------------------------
+
+    species   range (K)      Cp bias%   Cp max%    S bias (J/mol·K)
+    --------  -------------  ---------  ---------  ----------------
+    CO        300 - 6000      +0.024     0.277      +0.006
+    CO2       300 - 6000      +0.187     2.758      +0.003
+    Cr(cr)    300 - 2130      +0.050     0.721      +0.002
+    H2O       500 - 6000      +1.102     3.245      +0.349
+    N2        300 - 6000      +0.026     0.350      +0.001
+    NH3       300 - 6000      +0.561     7.587      -0.163
+    Ni(cr)    300 - 1728      -0.963     12.398     +0.096
+    O2        300 - 6000      +0.096     0.986      +0.044
+    SO2       300 - 6000      -0.247     1.071      -0.233
+
+--------------------------------------------------------------------------------
+3. Interpretation
+--------------------------------------------------------------------------------
+
+- Simple gases (N2, CO, O2, CO2) and Cr agree with NIST-JANAF well within 1%.
+- NH3 and H2O show the largest Cp deviations, mostly at high temperature
+  (> 3000 K) where the NASA-CEA polynomial and the NIST Shomate fit diverge.
+- Ni(cr) shows a large local Cp deviation (max 12.4%) around the magnetic
+  (Curie) transition (~600-700 K): both datasets model the sharp peak, but
+  they do not coincide exactly. This is real, localized, and worth flagging
+  rather than hiding.
+
+--------------------------------------------------------------------------------
+4. Limitations (explicit)
+--------------------------------------------------------------------------------
+
+- NIST-JANAF does NOT cover all 2 035 species of the bundled thermo.inp. This
+  budget is therefore **validated** for the matched subset and will be
+  **extrapolated** to the rest by phase/class (to be calibrated on this
+  subset). The extrapolation is NOT yet implemented.
+- Coefficients were transcribed from the NIST WebBook; they must be reviewed
+  by a second pair of eyes before being treated as authoritative.
+- The pilot is gas + 2 condensed species; it must be expanded (more organics,
+  more condensed phases) before the tier model is fitted.
+
+--------------------------------------------------------------------------------
+5. Next steps
+--------------------------------------------------------------------------------
+
+- Expand ``shomate_reference.json`` (organics: CH4, C2H6, C2H5OH, C3H8;
+  more condensed: C(gr), Fe(a), SiO2, Al2O3; inorganics: H2S, NO, NO2).
+- Fit a tier model (gas / condensed / organic / inorganic) on the validated
+  subset and document the calibration.
+- Optionally expose the budget at runtime (U5): an additive
+  ``species_uncertainty`` table in ``thermo.db`` + a query API.
