@@ -8,16 +8,17 @@
 
 ## Visão geral
 
-A 0.5.0 tem **duas metas** registradas em `docs/FUTURE_IMPROVEMENTS.md`:
+A 0.5.0 tem **três metas** registradas em `docs/FUTURE_IMPROVEMENTS.md`:
 
 | Meta | O que é | Prioridade | Natureza |
 |---|---|---|---|
 | **UQ-1** | Orçamento de erro termoquímico por espécie | Média | Dados + script de auditoria (+ tabela SQLite) |
 | **FI-1** | Granularidade de fase (sólido vs líquido) | Baixa | Schema + builder + API + rebuild |
+| **DOC-1** | Documentação, notebooks e blog de atualizações | Média | Notebooks de exemplo + site |
 
-As duas são **independentes** (UQ-1 mexe em auditoria/dados de referência;
-FI-1 mexe no parser/schema). Podem ser desenvolvidas em paralelo e
-entregues em commits separados.
+As três são **independentes** (UQ-1 mexe em auditoria/dados de referência;
+FI-1 mexe no parser/schema; DOC-1 mexe em documentação/notebooks). Podem ser
+desenvolvidas em paralelo e entregues em commits separados.
 
 ---
 
@@ -196,6 +197,58 @@ atual), derivada do **código bruto de fase** do `thermo.inp` — não da coluna
 
 ---
 
+## Meta 3 — DOC-1: Documentação, notebooks e blog de atualizações
+
+### Objetivo
+
+Elevar a clareza científica e o alcance da documentação: revisar os notebooks
+de exemplo, estendê-los quando as funcionalidades da 0.5.0 estiverem prontas
+e criar um blog trilingue que registre as atualizações de cada versão a
+partir da próxima.
+
+### Etapas
+
+#### D1. Revisão dos notebooks de exemplo
+
+- Revisar os notebooks em `examples/` (`01_basic_usage`, `02_fuel_comparison`,
+  `03_mixture_properties`, `04_fitting`), que são a fonte única da verdade
+  (cópias sob `docs/source/examples/` são geradas no build e nunca editadas).
+- Aumentar a **clareza científica**: contexto físico, unidades, hipóteses,
+  convenção NASA-7 (H°(298.15 K) = ΔH°f) e limites de validade por espécie.
+- Aumentar a **naturalidade da linguagem**, eliminando tom formulaico.
+- Aplicar a skill **`avoid-ai-writing`** em toda a revisão para remover marcas
+  de redação automatizada e aproximar o texto de um autor humano.
+
+#### D2. Extensão dos notebooks
+
+- Quando as funcionalidades estiverem prontas, estender os notebooks para
+  demonstrar:
+  - orçamento de erro por espécie — `ThermochemicalCalculator.uncertainty`
+    (UQ-1);
+  - filtro por `phase_detail` (FI-1).
+- Manter `examples/` e `docs/source/examples/` sincronizados via o mecanismo
+  de cópia já existente no `conf.py` (sem edição divergente).
+
+#### D3. Blog de atualizações na documentação
+
+- Criar um blog em `docs/source/blog/` com as **atualizações de cada versão a
+  partir da próxima** (0.5.0 em diante).
+- Por versão: destaques, mudanças de API, correções e resultados de validação
+  (ex.: tabela do orçamento de erro UQ-1).
+- Publicar cada post em **3 línguas** — português (pt), inglês (en) e espanhol
+  (es) — com um arquivo por idioma (ex.: `blog/2026-11-v050.pt.md`,
+  `.en.md`, `.es.md`).
+
+### Critérios de aceite (DOC-1)
+
+- Notebooks revisados com clareza científica e linguagem natural, sem marcas
+  de escrita automatizada.
+- Notebooks demonstram as novas funcionalidades da 0.5.0 (`uncertainty` e
+  `phase_detail`).
+- Blog com a entrada da 0.5.0 publicada em pt/en/es no site de documentação.
+
+---
+
 ## Sequenciamento e milestones
 
 | # | Marco | Conteúdo | Depende de |
@@ -205,9 +258,12 @@ atual), derivada do **código bruto de fase** do `thermo.inp` — não da coluna
 | M3 | FI-1 parser | F1–F2 (mapeamento + builder) | — |
 | M4 | FI-1 API | F3 (dataclasses + filtros) | M3 |
 | M5 | FI-1 rebuild | F4–F5 (rebuild + validate + testes) | M4 |
-| M6 | Release 0.5.0 | bump versão + CHANGELOG + rebuild final + tag | M2, M5 |
+| M6 | DOC-1 notebooks | D1 (revisão dos notebooks) | — |
+| M7 | DOC-1 publicações | D2–D3 (extensão + blog trilingue) | M2, M5, M6 |
+| M8 | Release 0.5.0 | bump versão + CHANGELOG + rebuild final + tag | M2, M5, M7 |
 
-M1/M2 (UQ-1) e M3–M5 (FI-1) são **paralelizáveis**; só o M6 é serial.
+M1/M2 (UQ-1), M3–M5 (FI-1) e M6/M7 (DOC-1) são **paralelizáveis**; só o M8 é
+serial.
 
 ---
 
@@ -215,9 +271,10 @@ M1/M2 (UQ-1) e M3–M5 (FI-1) são **paralelizáveis**; só o M6 é serial.
 
 - [ ] UQ-1: piloto validado + `species_uncertainty` + summary + testes.
 - [ ] FI-1: `phase_detail` + filtros + rebuild + validação + testes.
+- [ ] DOC-1: notebooks revisados + estendidos + blog trilingue (pt/en/es).
 - [ ] `__version__` → `0.5.0`; `conda.recipe/meta.yaml` idem.
 - [ ] `CHANGELOG.md` com seção `[0.5.0]`.
-- [ ] `docs/FUTURE_IMPROVEMENTS.md`: UQ-1 e FI-1 marcados como resolvidos.
+- [ ] `docs/FUTURE_IMPROVEMENTS.md`: UQ-1, FI-1 e DOC-1 marcados como resolvidos.
 - [ ] Pipeline verde: `pytest`, `ruff check`, `ruff format`, `mypy`,
       `sphinx -b html -W`, e `python -m build`.
 - [ ] Rebuild final do `thermo.db` via `scripts/rebuild_database.py`

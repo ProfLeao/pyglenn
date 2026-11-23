@@ -11,6 +11,38 @@ escopo definido. Itens de **baixa prioridade** não bloqueiam a release corrente
   Cp/H/S(T) validado contra NIST-JANAF).
 - **FI-1** — Granularidade de fase (sólido vs líquido) via `phase_detail`
   derivada do código bruto do `thermo.inp`.
+- **DOC-1** — Documentação: revisão e extensão dos notebooks de exemplo e
+  criação de um blog de atualizações trilingue (pt/en/es).
+
+---
+
+## DOC-1 — Documentação, notebooks e blog de atualizações
+
+**Prioridade:** Média (meta da próxima versão)
+**Origem:** manutenção da documentação de usuário
+**Estado:** não iniciado
+
+### Contexto
+
+A documentação de usuário (site Sphinx, em inglês) e os notebooks de exemplo
+são a principal porta de entrada do pyglenn. Eles precisam (1) ser revisados
+para clareza científica e linguagem natural (com a skill `avoid-ai-writing`),
+(2) demonstrar as novas funcionalidades da 0.5.0 e (3) registrar as
+atualizações de cada versão em um blog trilingue.
+
+### Abordagem
+
+1. Revisar os notebooks de `examples/` (fonte única da verdade; as cópias sob
+   `docs/source/examples/` são geradas no build).
+2. Estender os notebooks com `uncertainty` (UQ-1) e `phase_detail` (FI-1)
+   quando as funcionalidades estiverem prontas.
+3. Criar `docs/source/blog/` com posts por versão em pt/en/es.
+
+### Critérios de aceite
+
+- Notebooks sem marcas de redação automatizada, com clareza científica.
+- Notebooks cobrem as novidades da 0.5.0.
+- Blog com a entrada da 0.5.0 em pt/en/es publicado no site.
 
 ---
 
