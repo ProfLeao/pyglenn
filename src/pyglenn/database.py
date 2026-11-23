@@ -407,13 +407,11 @@ class ThermoDBQuery:
                     f'{orphans} uncertainty row(s) reference a missing species'
                 )
             bad_source = _scalar(
-                "SELECT COUNT(*) FROM species_uncertainty "
+                'SELECT COUNT(*) FROM species_uncertainty '
                 "WHERE source NOT IN ('nist-janaf', 'extrapolated')"
             )
             if bad_source:
-                errors.append(
-                    f'{bad_source} uncertainty row(s) have an invalid source'
-                )
+                errors.append(f'{bad_source} uncertainty row(s) have an invalid source')
 
         return {
             'valid': not errors,
