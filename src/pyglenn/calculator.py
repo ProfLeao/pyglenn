@@ -378,6 +378,59 @@ class ThermochemicalCalculator:
             )
         return results
 
+    def uncertainty(self, species_id: int, temperature: float) -> dict[str, Any] | None:
+        """Return the per-species uncertainty envelope (UQ-1), if populated.
+
+        The envelope is a temperature-independent summary of the error between
+        pyglenn and NIST-JANAF (Cp/H relative error, S absolute error). The
+        requested ``temperature`` is validated against the species' valid
+        range but does not change the returned values.
+
+        Args:
+            species_id: Database ID of the species.
+            temperature: Temperature in Kelvin (only validated for range).
+
+        Returns:
+            Dict with the envelope fields and ``source``
+            (``'nist-janaf'`` for validated species, ``'extrapolated'``
+            otherwise), or None when the uncertainty table is not populated.
+
+        Raises:
+            DatabaseNotConnectedError: If not connected to database.
+            SpeciesNotFoundError: If species_id is not in the database.
+            TemperatureOutOfRangeError: If temperature is outside the
+                species' valid intervals.
+        """
+        if not self._connected:
+            raise DatabaseNotConnectedError(
+                'uncertainty called without database connection'
+            )
+
+        species_info = self.db.get_species_info(species_id)
+        if species_info is None:
+            raise SpeciesNotFoundError(species_id)
+
+        envelope = self.db.get_uncertainty(species_id)
+        if envelope is None:
+            return None
+
+        if self.db.get_species_for_temperature(species_id, temperature) is None:
+            bounds = self.db.get_temperature_bounds(species_id)
+            raise TemperatureOutOfRangeError(temperature, species_info.name, bounds)
+
+        return {
+            'species_id': species_id,
+            'species_name': species_info.name,
+            'temperature': temperature,
+            'cp_rel_bias': envelope['cp_rel_bias'],
+            'cp_rel_2sigma': envelope['cp_rel_2sigma'],
+            'h_rel_bias': envelope['h_rel_bias'],
+            'h_rel_2sigma': envelope['h_rel_2sigma'],
+            's_abs_2sigma': envelope['s_abs_2sigma'],
+            'n_ref_points': envelope['n_ref_points'],
+            'source': envelope['source'],
+        }
+
     def dcp_dt(self, species_id: int, temperature: float) -> float:
         """Derivative of Cp with respect to temperature, in J/(mol·K²).
 
