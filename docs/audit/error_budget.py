@@ -9,8 +9,9 @@ per-species error statistics to ``species_error.csv``.
 Comparison convention:
 
 - Cp : relative error in percent,  (Cp_pyglenn - Cp_NIST) / Cp_NIST * 100
-- H  : sensible enthalpy ΔH(298.15 -> T), absolute error in J/mol
-- S  : absolute error in J/(mol*K)
+- H  : sensible enthalpy ΔH(298.15 -> T), absolute error in J/mol and,
+       where |H| >= H_REL_FLOOR, relative error in percent
+- S  : absolute error in J/(mol*K), reported as bias, max and RMS
 
 Sampling is log-spaced over the overlap between the pyglenn valid range and
 the Shomate range, starting no lower than 300 K.
@@ -32,6 +33,7 @@ OUTPUT_FILE = os.path.join(SCRIPT_DIR, 'species_error.csv')
 
 N_POINTS = 16
 T_FLOOR = 300.0
+H_REL_FLOOR = 1000.0  # J/mol; below this relative H error is meaningless
 
 CSV_FIELDS = [
     'species',
@@ -46,6 +48,10 @@ CSV_FIELDS = [
     'h_abs_max_Jmol',
     's_abs_bias_JmolK',
     's_abs_max_JmolK',
+    'h_rel_bias_pct',
+    'h_rel_max_pct',
+    'h_rel_rms_pct',
+    's_abs_rms_JmolK',
 ]
 
 
@@ -133,6 +139,7 @@ def collect() -> list[dict[str, Any]]:
 
             cp_rel = []
             h_abs = []
+            h_rel = []
             s_abs = []
             for T in temps:
                 coef = get_coef(nist, T)
@@ -140,8 +147,11 @@ def collect() -> list[dict[str, Any]]:
                 h_sensible = calc.h_sensible_to(sid, T)
                 assert h_sensible is not None
 
+                h_ref = shomate_h(coef, T) * 1000.0
                 cp_rel.append(rel_pct(props.cp, shomate_cp(coef, T)))
-                h_abs.append(h_sensible - shomate_h(coef, T) * 1000.0)
+                h_abs.append(h_sensible - h_ref)
+                if abs(h_ref) >= H_REL_FLOOR:
+                    h_rel.append(rel_pct(h_sensible, h_ref))
                 s_abs.append(props.s - shomate_s(coef, T))
 
             rows.append(
@@ -160,6 +170,20 @@ def collect() -> list[dict[str, Any]]:
                     'h_abs_max_Jmol': round(max(abs(e) for e in h_abs), 2),
                     's_abs_bias_JmolK': round(sum(s_abs) / len(s_abs), 4),
                     's_abs_max_JmolK': round(max(abs(e) for e in s_abs), 4),
+                    'h_rel_bias_pct': (
+                        round(sum(h_rel) / len(h_rel), 4) if h_rel else None
+                    ),
+                    'h_rel_max_pct': (
+                        round(max(abs(e) for e in h_rel), 4) if h_rel else None
+                    ),
+                    'h_rel_rms_pct': (
+                        round(math.sqrt(sum(e * e for e in h_rel) / len(h_rel)), 4)
+                        if h_rel
+                        else None
+                    ),
+                    's_abs_rms_JmolK': round(
+                        math.sqrt(sum(e * e for e in s_abs) / len(s_abs)), 4
+                    ),
                 }
             )
             print(
