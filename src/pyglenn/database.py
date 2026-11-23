@@ -9,6 +9,7 @@ from __future__ import annotations
 import logging
 import math
 import sqlite3
+from collections.abc import Sequence
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any
@@ -175,6 +176,110 @@ class ThermoDBQuery:
         self.conn.commit()
 
     # ------------------------------------------------------------------
+    # Species uncertainty (UQ-1, additive)
+    # ------------------------------------------------------------------
+    def _uncertainty_table_exists(self) -> bool:
+        """Return whether this database has the additive uncertainty table."""
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        self.cursor.execute(
+            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?",
+            ('species_uncertainty',),
+        )
+        return self.cursor.fetchone() is not None
+
+    def migrate_uncertainty(self) -> None:
+        """Create the additive ``species_uncertainty`` table if absent.
+
+        Idempotent: existing rows are never touched. The table is optional,
+        like ``metadata``, so a legacy database without it remains valid.
+        """
+        if self.cursor is None or self.conn is None:
+            raise RuntimeError('Database not connected')
+
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS species_uncertainty (
+                species_id INTEGER PRIMARY KEY
+                    REFERENCES species(id) ON DELETE CASCADE,
+                cp_rel_bias REAL,
+                cp_rel_2sigma REAL,
+                h_rel_bias REAL,
+                h_rel_2sigma REAL,
+                s_abs_2sigma REAL,
+                n_ref_points INTEGER,
+                source TEXT CHECK(source IN ('nist-janaf', 'extrapolated')),
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
+        self.conn.commit()
+
+    def populate_uncertainty(self, rows: Sequence[dict[str, Any]]) -> int:
+        """Insert or replace per-species uncertainty envelopes.
+
+        Args:
+            rows: Mappings keyed by the ``species_uncertainty`` columns;
+                ``species_id`` is required and must reference a species.
+
+        Returns:
+            Number of rows written.
+        """
+        if self.cursor is None or self.conn is None:
+            raise RuntimeError('Database not connected')
+        if not self._uncertainty_table_exists():
+            self.migrate_uncertainty()
+
+        columns = (
+            'species_id',
+            'cp_rel_bias',
+            'cp_rel_2sigma',
+            'h_rel_bias',
+            'h_rel_2sigma',
+            's_abs_2sigma',
+            'n_ref_points',
+            'source',
+        )
+        self.cursor.executemany(
+            f"""
+            INSERT INTO species_uncertainty ({', '.join(columns)})
+            VALUES ({', '.join('?' for _ in columns)})
+            ON CONFLICT(species_id) DO UPDATE SET
+                cp_rel_bias = excluded.cp_rel_bias,
+                cp_rel_2sigma = excluded.cp_rel_2sigma,
+                h_rel_bias = excluded.h_rel_bias,
+                h_rel_2sigma = excluded.h_rel_2sigma,
+                s_abs_2sigma = excluded.s_abs_2sigma,
+                n_ref_points = excluded.n_ref_points,
+                source = excluded.source,
+                updated_at = CURRENT_TIMESTAMP
+            """,
+            [tuple(row[c] for c in columns) for row in rows],
+        )
+        self.conn.commit()
+        return len(rows)
+
+    def get_uncertainty(self, species_id: int) -> dict[str, Any] | None:
+        """Return the stored uncertainty envelope for a species, if present.
+
+        Args:
+            species_id: Database ID of the species.
+
+        Returns:
+            Dict of the ``species_uncertainty`` row, or None when the table
+            is absent or the species has no entry.
+        """
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        if not self._uncertainty_table_exists():
+            return None
+        self.cursor.execute(
+            'SELECT * FROM species_uncertainty WHERE species_id = ?', (species_id,)
+        )
+        row = self.cursor.fetchone()
+        return dict(row) if row is not None else None
+
+    # ------------------------------------------------------------------
     # Database validation
     # ------------------------------------------------------------------
     def validate_database(self) -> dict[str, Any]:
@@ -287,6 +392,28 @@ class ThermoDBQuery:
             warnings.append(
                 f'{bad_mw} species have NULL or non-positive molecular weight'
             )
+
+        if self._uncertainty_table_exists():
+            counts['uncertainty_rows'] = _scalar(
+                'SELECT COUNT(*) FROM species_uncertainty'
+            )
+            orphans = _scalar(
+                'SELECT COUNT(*) FROM species_uncertainty su '
+                'LEFT JOIN species s ON su.species_id = s.id '
+                'WHERE s.id IS NULL'
+            )
+            if orphans:
+                errors.append(
+                    f'{orphans} uncertainty row(s) reference a missing species'
+                )
+            bad_source = _scalar(
+                "SELECT COUNT(*) FROM species_uncertainty "
+                "WHERE source NOT IN ('nist-janaf', 'extrapolated')"
+            )
+            if bad_source:
+                errors.append(
+                    f'{bad_source} uncertainty row(s) have an invalid source'
+                )
 
         return {
             'valid': not errors,
