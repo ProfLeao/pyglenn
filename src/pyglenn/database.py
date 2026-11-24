@@ -393,6 +393,45 @@ class ThermoDBQuery:
                 f'{bad_mw} species have NULL or non-positive molecular weight'
             )
 
+        # phase_detail integrity (FI-1).  Only checked when the column exists
+        # (databases built before 0.5.0 lack it and must be rebuilt).
+        cur.execute('PRAGMA table_info(species)')
+        species_cols = {row[1] for row in cur.fetchall()}
+        if 'phase_detail' in species_cols:
+            null_pd = _scalar(
+                'SELECT COUNT(*) FROM species WHERE phase_detail IS NULL'
+            )
+            if null_pd:
+                errors.append(
+                    f'{null_pd} species have NULL phase_detail '
+                    '(rebuild the database from thermo.inp)'
+                )
+            bad_pd = _scalar(
+                "SELECT COUNT(*) FROM species "
+                "WHERE phase_detail NOT IN ('gas', 'liquid', 'solid')"
+            )
+            if bad_pd:
+                errors.append(f'{bad_pd} species have an invalid phase_detail')
+            inconsistent = _scalar(
+                "SELECT COUNT(*) FROM species WHERE "
+                "(phase = 'gas' AND phase_detail != 'gas') OR "
+                "(phase = 'condensed' AND phase_detail NOT IN ('liquid', 'solid'))"
+            )
+            if inconsistent:
+                errors.append(
+                    f'{inconsistent} species have phase inconsistent '
+                    'with phase_detail'
+                )
+            counts['phase_detail_gas'] = _scalar(
+                "SELECT COUNT(*) FROM species WHERE phase_detail = 'gas'"
+            )
+            counts['phase_detail_liquid'] = _scalar(
+                "SELECT COUNT(*) FROM species WHERE phase_detail = 'liquid'"
+            )
+            counts['phase_detail_solid'] = _scalar(
+                "SELECT COUNT(*) FROM species WHERE phase_detail = 'solid'"
+            )
+
         if self._uncertainty_table_exists():
             counts['uncertainty_rows'] = _scalar(
                 'SELECT COUNT(*) FROM species_uncertainty'
