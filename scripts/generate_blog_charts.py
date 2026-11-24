@@ -3,9 +3,10 @@
 
 Reads the UQ-1 error budget (``docs/audit/species_error.csv``), the Shomate
 reference (``docs/audit/shomate_reference.json``) and the bundled database,
-then writes PNG figures into ``docs/source/_static/blog/``.
+then writes localized PNG figures into ``docs/source/_static/blog/<lang>/``
+for the three blog languages (pt, en, es).
 
-Charts produced:
+Charts produced per language:
 
 * ``cp_bias_by_species.png`` — mean relative Cp bias (%) per validated species;
 * ``phase_detail_counts.png`` — species count by ``phase_detail``;
@@ -29,6 +30,45 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 ERROR_CSV = REPO_ROOT / 'docs' / 'audit' / 'species_error.csv'
 SHOMATE_JSON = REPO_ROOT / 'docs' / 'audit' / 'shomate_reference.json'
 OUT_DIR = REPO_ROOT / 'docs' / 'source' / '_static' / 'blog'
+
+LABELS: dict[str, dict[str, object]] = {
+    'pt': {
+        'cp_bias_title': 'Concordância Cp: pyglenn vs NIST-JANAF',
+        'cp_bias_xlabel': 'Cp bias relativo médio (%)',
+        'phase_title': 'Espécies por estado físico (phase_detail)',
+        'phase_ylabel': 'Número de espécies',
+        'phase_categories': ['Gás', 'Líquido', 'Sólido'],
+        'ch4_title': 'Cp do CH4: dois conjuntos de dados',
+        'ch4_xlabel': 'Temperatura (K)',
+        'ch4_ylabel': 'Cp (J/(mol·K))',
+        'ch4_pyglenn': 'pyglenn (NASA-7)',
+        'ch4_nist': 'NIST-JANAF (Shomate)',
+    },
+    'en': {
+        'cp_bias_title': 'Cp agreement: pyglenn vs NIST-JANAF',
+        'cp_bias_xlabel': 'Mean relative Cp bias (%)',
+        'phase_title': 'Species by physical state (phase_detail)',
+        'phase_ylabel': 'Number of species',
+        'phase_categories': ['Gas', 'Liquid', 'Solid'],
+        'ch4_title': 'Cp of CH4: two datasets',
+        'ch4_xlabel': 'Temperature (K)',
+        'ch4_ylabel': 'Cp (J/(mol·K))',
+        'ch4_pyglenn': 'pyglenn (NASA-7)',
+        'ch4_nist': 'NIST-JANAF (Shomate)',
+    },
+    'es': {
+        'cp_bias_title': 'Concordancia de Cp: pyglenn frente a NIST-JANAF',
+        'cp_bias_xlabel': 'Sesgo relativo medio de Cp (%)',
+        'phase_title': 'Especies por estado físico (phase_detail)',
+        'phase_ylabel': 'Número de especies',
+        'phase_categories': ['Gas', 'Líquido', 'Sólido'],
+        'ch4_title': 'Cp del CH4: dos conjuntos de datos',
+        'ch4_xlabel': 'Temperatura (K)',
+        'ch4_ylabel': 'Cp (J/(mol·K))',
+        'ch4_pyglenn': 'pyglenn (NASA-7)',
+        'ch4_nist': 'NIST-JANAF (Shomate)',
+    },
+}
 
 
 def read_error_csv() -> list[tuple[str, float]]:
@@ -57,7 +97,7 @@ def get_coef(ranges: list[dict[str, float]], T: float) -> dict[str, float]:
     raise ValueError(f'T={T} outside Shomate ranges')
 
 
-def chart_cp_bias(out_path: Path) -> None:
+def chart_cp_bias(out_path: Path, labels: dict[str, object]) -> None:
     rows = read_error_csv()
     rows.sort(key=lambda pair: pair[1])
     names = [name for name, _ in rows]
@@ -67,8 +107,8 @@ def chart_cp_bias(out_path: Path) -> None:
     colors = ['#c0392b' if b > 2.0 else ('#2980b9' if b < -2.0 else '#27ae60') for b in biases]
     ax.barh(names, biases, color=colors)
     ax.axvline(0.0, color='black', linewidth=0.8)
-    ax.set_xlabel('Cp bias relativo médio (%)')
-    ax.set_title('Concordância Cp: pyglenn vs NIST-JANAF')
+    ax.set_xlabel(str(labels['cp_bias_xlabel']))
+    ax.set_title(str(labels['cp_bias_title']))
     for i, b in enumerate(biases):
         ax.text(b + (0.15 if b >= 0 else -0.15), i, f'{b:+.1f}', va='center',
                 ha='left' if b >= 0 else 'right', fontsize=8)
@@ -77,7 +117,7 @@ def chart_cp_bias(out_path: Path) -> None:
     plt.close(fig)
 
 
-def chart_phase_detail(out_path: Path) -> None:
+def chart_phase_detail(out_path: Path, labels: dict[str, object]) -> None:
     sys.path.insert(0, str(REPO_ROOT / 'src'))
     from pyglenn import ThermochemicalCalculator
 
@@ -88,14 +128,14 @@ def chart_phase_detail(out_path: Path) -> None:
             'solid': len(calc.get_available_species(phase_detail='solid')),
         }
 
-    labels = ['Gás', 'Líquido', 'Sólido']
+    categories = list(labels['phase_categories'])  # type: ignore[arg-type]
     values = [counts['gas'], counts['liquid'], counts['solid']]
     colors = ['#2980b9', '#e67e22', '#8e44ad']
 
     fig, ax = plt.subplots(figsize=(6.0, 4.2))
-    bars = ax.bar(labels, values, color=colors)
-    ax.set_ylabel('Número de espécies')
-    ax.set_title('Espécies por estado físico (phase_detail)')
+    bars = ax.bar(categories, values, color=colors)
+    ax.set_ylabel(str(labels['phase_ylabel']))
+    ax.set_title(str(labels['phase_title']))
     for bar, value in zip(bars, values):
         ax.text(bar.get_x() + bar.get_width() / 2, value + 20, str(value),
                 ha='center', fontsize=10)
@@ -104,7 +144,7 @@ def chart_phase_detail(out_path: Path) -> None:
     plt.close(fig)
 
 
-def chart_ch4_cp(out_path: Path) -> None:
+def chart_ch4_cp(out_path: Path, labels: dict[str, object]) -> None:
     sys.path.insert(0, str(REPO_ROOT / 'src'))
     from pyglenn import ThermochemicalCalculator
 
@@ -119,11 +159,11 @@ def chart_ch4_cp(out_path: Path) -> None:
     nist_cp = [shomate_cp(get_coef(ch4_ranges, T), T) for T in temps]
 
     fig, ax = plt.subplots(figsize=(7.0, 4.2))
-    ax.plot(temps, pyglenn_cp, label='pyglenn (NASA-7)', color='#2980b9')
-    ax.plot(temps, nist_cp, label='NIST-JANAF (Shomate)', color='#c0392b', linestyle='--')
-    ax.set_xlabel('Temperatura (K)')
-    ax.set_ylabel('Cp (J/(mol·K))')
-    ax.set_title('Cp do CH4: dois conjuntos de dados')
+    ax.plot(temps, pyglenn_cp, label=str(labels['ch4_pyglenn']), color='#2980b9')
+    ax.plot(temps, nist_cp, label=str(labels['ch4_nist']), color='#c0392b', linestyle='--')
+    ax.set_xlabel(str(labels['ch4_xlabel']))
+    ax.set_ylabel(str(labels['ch4_ylabel']))
+    ax.set_title(str(labels['ch4_title']))
     ax.legend()
     ax.grid(alpha=0.3)
     fig.tight_layout()
@@ -132,11 +172,13 @@ def chart_ch4_cp(out_path: Path) -> None:
 
 
 def main() -> int:
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    chart_cp_bias(OUT_DIR / 'cp_bias_by_species.png')
-    chart_phase_detail(OUT_DIR / 'phase_detail_counts.png')
-    chart_ch4_cp(OUT_DIR / 'ch4_cp_comparison.png')
-    print(f'charts written to {OUT_DIR}')
+    for lang, labels in LABELS.items():
+        out = OUT_DIR / lang
+        out.mkdir(parents=True, exist_ok=True)
+        chart_cp_bias(out / 'cp_bias_by_species.png', labels)
+        chart_phase_detail(out / 'phase_detail_counts.png', labels)
+        chart_ch4_cp(out / 'ch4_cp_comparison.png', labels)
+        print(f'[{lang}] charts written to {out}')
     return 0
 
 
