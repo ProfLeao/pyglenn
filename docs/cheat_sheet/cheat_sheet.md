@@ -39,6 +39,9 @@ calc.get_available_species('CH4')
 
 # Full alphabetical listing (single query)
 calc.list_all_species()
+
+# Filter by phase_detail — 'gas' | 'liquid' | 'solid'
+calc.get_available_species(phase_detail='solid')
 ```
 
 ### 🔥 Single-point properties

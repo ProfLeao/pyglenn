@@ -398,29 +398,26 @@ class ThermoDBQuery:
         cur.execute('PRAGMA table_info(species)')
         species_cols = {row[1] for row in cur.fetchall()}
         if 'phase_detail' in species_cols:
-            null_pd = _scalar(
-                'SELECT COUNT(*) FROM species WHERE phase_detail IS NULL'
-            )
+            null_pd = _scalar('SELECT COUNT(*) FROM species WHERE phase_detail IS NULL')
             if null_pd:
                 errors.append(
                     f'{null_pd} species have NULL phase_detail '
                     '(rebuild the database from thermo.inp)'
                 )
             bad_pd = _scalar(
-                "SELECT COUNT(*) FROM species "
+                'SELECT COUNT(*) FROM species '
                 "WHERE phase_detail NOT IN ('gas', 'liquid', 'solid')"
             )
             if bad_pd:
                 errors.append(f'{bad_pd} species have an invalid phase_detail')
             inconsistent = _scalar(
-                "SELECT COUNT(*) FROM species WHERE "
+                'SELECT COUNT(*) FROM species WHERE '
                 "(phase = 'gas' AND phase_detail != 'gas') OR "
                 "(phase = 'condensed' AND phase_detail NOT IN ('liquid', 'solid'))"
             )
             if inconsistent:
                 errors.append(
-                    f'{inconsistent} species have phase inconsistent '
-                    'with phase_detail'
+                    f'{inconsistent} species have phase inconsistent with phase_detail'
                 )
             counts['phase_detail_gas'] = _scalar(
                 "SELECT COUNT(*) FROM species WHERE phase_detail = 'gas'"

@@ -39,7 +39,11 @@ class NASACoefficients:
 
 @dataclass(frozen=True)
 class SpeciesInfo:
-    """Basic metadata for a single species (no interval or coefficient data)."""
+    """Basic metadata for a single species (no interval or coefficient data).
+
+    ``phase_detail`` refines ``phase`` with ``'gas'``, ``'liquid'``, or
+    ``'solid'``, derived from the NASA CEA ``(L)`` name marker.
+    """
 
     id: int
     name: str

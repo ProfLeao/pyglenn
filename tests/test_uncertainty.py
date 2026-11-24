@@ -75,11 +75,11 @@ def db_path() -> Generator[Path, None, None]:
         """
     )
     cur.execute(
-        "INSERT INTO species (name, phase, phase_detail, num_intervals) "
+        'INSERT INTO species (name, phase, phase_detail, num_intervals) '
         "VALUES ('CH4', 'gas', 'gas', 2)"
     )
     cur.execute(
-        "INSERT INTO species (name, phase, phase_detail, num_intervals) "
+        'INSERT INTO species (name, phase, phase_detail, num_intervals) '
         "VALUES ('Ar', 'gas', 'gas', 1)"
     )
     cur.execute(
