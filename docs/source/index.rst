@@ -15,6 +15,7 @@ FORTRAN ``thermo.inp`` files.
    api
    database
    validation
+   blog/index
 
 ----------------
 Quick Start
