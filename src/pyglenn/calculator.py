@@ -146,7 +146,10 @@ class ThermochemicalCalculator:
     # Species lookup
     # ------------------------------------------------------------------
     def get_available_species(
-        self, search_pattern: str = '', exact_match: bool = False
+        self,
+        search_pattern: str = '',
+        exact_match: bool = False,
+        phase_detail: str | None = None,
     ) -> list[SpeciesInfo]:
         """
         Return a list of available species, optionally filtered by name.
@@ -157,18 +160,22 @@ class ThermochemicalCalculator:
                          (e.g. ``'N2'`` returns only N2, not Be3N2).
                          Defaults to False (substring search) for
                          backward compatibility.
+            phase_detail: Optional 'gas'|'liquid'|'solid' filter.
 
         Returns:
-            List of SpeciesInfo with id, name, phase, molecular_weight.
+            List of SpeciesInfo with id, name, phase, phase_detail,
+            molecular_weight.
         """
         if not self._connected:
             logger.warning('get_available_species called without connection')
             return []
 
         if search_pattern:
-            return self.db.find_species(search_pattern, exact_match=exact_match)
+            return self.db.find_species(
+                search_pattern, exact_match=exact_match, phase_detail=phase_detail
+            )
 
-        return self.db.list_all_species()
+        return self.db.list_all_species(phase_detail=phase_detail)
 
     # ------------------------------------------------------------------
     # Core calculations

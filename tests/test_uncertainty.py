@@ -40,6 +40,7 @@ def db_path() -> Generator[Path, None, None]:
             comments TEXT,
             reference_code TEXT,
             phase TEXT CHECK(phase IN ('gas', 'condensed')),
+            phase_detail TEXT CHECK(phase_detail IN ('gas', 'liquid', 'solid')),
             molecular_weight REAL,
             heat_of_formation_298K REAL,
             num_intervals INTEGER,

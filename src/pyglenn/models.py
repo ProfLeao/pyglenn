@@ -45,6 +45,7 @@ class SpeciesInfo:
     name: str
     formula: str | None = None
     phase: str | None = None
+    phase_detail: str | None = None
     molecular_weight: float | None = None
     heat_of_formation_298K: float | None = None
     num_intervals: int | None = None
@@ -66,6 +67,7 @@ class SpeciesInfo:
             name=_get('name'),
             formula=_get('formula'),
             phase=_get('phase'),
+            phase_detail=_get('phase_detail'),
             molecular_weight=_get('molecular_weight'),
             heat_of_formation_298K=_get('heat_of_formation_298K'),
             num_intervals=_get('num_intervals'),
@@ -131,6 +133,7 @@ class SpeciesData:
     name: str
     formula: str | None = None
     phase: str | None = None
+    phase_detail: str | None = None
     molecular_weight: float | None = None
     heat_of_formation_298K: float | None = None
     num_intervals: int | None = None

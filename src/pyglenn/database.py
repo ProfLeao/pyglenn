@@ -462,13 +462,19 @@ class ThermoDBQuery:
     # ------------------------------------------------------------------
     # Species lookup
     # ------------------------------------------------------------------
-    def find_species(self, name: str, exact_match: bool = False) -> list[SpeciesInfo]:
-        """Find species by name.
+    def find_species(
+        self,
+        name: str,
+        exact_match: bool = False,
+        phase_detail: str | None = None,
+    ) -> list[SpeciesInfo]:
+        """Find species by name, optionally filtered by phase_detail.
 
         Args:
             name: Search pattern.
             exact_match: If True, use case-insensitive exact match.
                          If False (default), use substring match (LIKE).
+            phase_detail: Optional 'gas'|'liquid'|'solid' filter.
 
         Returns:
             List of matching SpeciesInfo (max 20).
@@ -476,35 +482,39 @@ class ThermoDBQuery:
         if self.cursor is None:
             raise RuntimeError('Database not connected')
 
+        detail_clause = ' AND phase_detail = ?' if phase_detail is not None else ''
+
         if exact_match:
-            # Case-insensitive exact match — returns only the
-            # species whose name matches the pattern exactly.
+            params: tuple = (name,) if phase_detail is None else (name, phase_detail)
             self.cursor.execute(
-                """
-                SELECT id, name, formula, phase, molecular_weight,
+                f"""
+                SELECT id, name, formula, phase, phase_detail, molecular_weight,
                        heat_of_formation_298K, num_intervals, comments
                 FROM species
-                WHERE UPPER(name) = UPPER(?)
+                WHERE UPPER(name) = UPPER(?){detail_clause}
                 ORDER BY name
                 LIMIT 20
                 """,
-                (name,),
+                params,
             )
         else:
-            # Substring search with exact matches prioritised first,
-            # followed by alphabetical ordering of the remainder.
+            params = (
+                (f'%{name}%', f'%{name}%', name)
+                if phase_detail is None
+                else (f'%{name}%', f'%{name}%', phase_detail, name)
+            )
             self.cursor.execute(
-                """
-                SELECT id, name, formula, phase, molecular_weight,
+                f"""
+                SELECT id, name, formula, phase, phase_detail, molecular_weight,
                        heat_of_formation_298K, num_intervals, comments
                 FROM species
-                WHERE name LIKE ? OR formula LIKE ?
+                WHERE (name LIKE ? OR formula LIKE ?){detail_clause}
                 ORDER BY
                     CASE WHEN UPPER(name) = UPPER(?) THEN 0 ELSE 1 END,
                     name
                 LIMIT 20
                 """,
-                (f'%{name}%', f'%{name}%', name),
+                params,
             )
 
         return [SpeciesInfo.from_mapping(row) for row in self.cursor.fetchall()]
@@ -567,6 +577,7 @@ class ThermoDBQuery:
             name=species_info.name,
             formula=species_info.formula,
             phase=species_info.phase,
+            phase_detail=species_info.phase_detail,
             molecular_weight=species_info.molecular_weight,
             heat_of_formation_298K=species_info.heat_of_formation_298K,
             num_intervals=species_info.num_intervals,
@@ -588,7 +599,7 @@ class ThermoDBQuery:
             raise RuntimeError('Database not connected')
         self.cursor.execute(
             """
-            SELECT id, name, formula, phase, molecular_weight,
+            SELECT id, name, formula, phase, phase_detail, molecular_weight,
                    heat_of_formation_298K, num_intervals, comments,
                    reference_code
             FROM species
@@ -700,7 +711,7 @@ class ThermoDBQuery:
         offset = (page - 1) * page_size
         self.cursor.execute(
             """
-            SELECT id, name, phase, molecular_weight,
+            SELECT id, name, phase, phase_detail, molecular_weight,
                    heat_of_formation_298K, num_intervals
             FROM species
             ORDER BY name
@@ -714,21 +725,27 @@ class ThermoDBQuery:
         total_pages = (total + page_size - 1) // page_size
         return species, total_pages
 
-    def list_all_species(self) -> list[SpeciesInfo]:
+    def list_all_species(self, phase_detail: str | None = None) -> list[SpeciesInfo]:
         """List every species in a single ordered query.
+
+        Args:
+            phase_detail: Optional 'gas'|'liquid'|'solid' filter.
 
         Returns:
             List of all SpeciesInfo ordered by name.
         """
         if self.cursor is None:
             raise RuntimeError('Database not connected')
+        detail_clause = 'WHERE phase_detail = ?' if phase_detail is not None else ''
         self.cursor.execute(
-            """
-            SELECT id, name, formula, phase, molecular_weight,
+            f"""
+            SELECT id, name, formula, phase, phase_detail, molecular_weight,
                    heat_of_formation_298K, num_intervals, comments
             FROM species
+            {detail_clause}
             ORDER BY name
-            """
+            """,
+            () if phase_detail is None else (phase_detail,),
         )
         return [SpeciesInfo.from_mapping(row) for row in self.cursor.fetchall()]
 
