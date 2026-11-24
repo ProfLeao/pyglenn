@@ -37,7 +37,7 @@ Since `pyglenn` uses a *src-layout*, `pip install -e .` is what makes
 
 | Notebook | Description |
 |----------|-------------|
-| [`01_basic_usage.ipynb`](01_basic_usage.ipynb) | First steps: look up species and compute $C_p$, $H^\circ$, $S^\circ$. |
-| [`02_fuel_comparison.ipynb`](02_fuel_comparison.ipynb) | Compares CH4, ethanol, and propane with plots of $C_p(T)$, $S^\circ(T)$ and sensible enthalpy (requires matplotlib). |
+| [`01_basic_usage.ipynb`](01_basic_usage.ipynb) | First steps: look up species, compute $C_p$, $H^\circ$, $S^\circ$, and filter by physical state with `phase_detail`. |
+| [`02_fuel_comparison.ipynb`](02_fuel_comparison.ipynb) | Compares CH4, ethanol, and propane with plots of $C_p(T)$, $S^\circ(T)$ and sensible enthalpy, plus the per-species error budget from `uncertainty` (requires matplotlib). |
 | [`03_mixture_properties.ipynb`](03_mixture_properties.ipynb) | Mixtures (air, combustion products): `Mixture`, `mixture_properties`, molar vs mass basis. |
 | [`04_fitting.ipynb`](04_fitting.ipynb) | Generate NASA-7 coefficients from Cp(T) data: `fit_nasa7` (single interval) and `fit_nasa7_multi` (multi-interval with continuity). |
