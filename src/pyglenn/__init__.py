@@ -5,7 +5,7 @@ Computes Cp(T), H°(T), S°(T) from NASA polynomial coefficients
 stored in a SQLite database, converted from FORTRAN thermo.inp files.
 """
 
-__version__ = '0.4.0'
+__version__ = '0.5.0'
 __author__ = 'Dr. Reginaldo G. Leão Jr.'
 
 from .builder import ThermoDBBuilder

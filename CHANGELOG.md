@@ -7,6 +7,26 @@ and the versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-25
+
+### Added
+
+- `ThermochemicalCalculator.uncertainty(species_id, temperature)`: per-species
+  thermochemical error budget (Cp/H/S) validated against NIST-JANAF tables,
+  backed by a `species_uncertainty` SQLite table populated by
+  `scripts/populate_uncertainty.py`.
+- `phase_detail` field (`gas`, `liquid`, `solid`) on `SpeciesInfo` and
+  `SpeciesData`, derived from the raw `thermo.inp` phase code.
+- `phase_detail=` filter on `get_available_species`, `find_species` and
+  `list_all_species`.
+- Trilingual release blog (pt/en/es) and extended example notebooks covering
+  `uncertainty` and `phase_detail`.
+
+### Changed
+
+- Rebuilt the bundled `thermo.db` with `phase_detail` populated for all 2 035
+  species (1 266 gas, 296 liquid, 473 solid).
+
 ## [0.4.0] - 2026-11-14
 
 ### Added

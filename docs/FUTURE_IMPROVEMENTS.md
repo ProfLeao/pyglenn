@@ -5,14 +5,14 @@ escopo definido. Itens de **baixa prioridade** não bloqueiam a release corrente
 
 ---
 
-## Metas da próxima versão
+## Metas da 0.5.0 (concluídas)
 
 - **UQ-1** — Orçamento de erro termoquímico por espécie (envelope de erro em
-  Cp/H/S(T) validado contra NIST-JANAF).
+  Cp/H/S(T) validado contra NIST-JANAF). Resolvido na 0.5.0.
 - **FI-1** — Granularidade de fase (sólido vs líquido) via `phase_detail`
-  derivada do código bruto do `thermo.inp`.
+  derivada do código bruto do `thermo.inp`. Resolvido na 0.5.0.
 - **DOC-1** — Documentação: revisão e extensão dos notebooks de exemplo e
-  criação de um blog de atualizações trilingue (pt/en/es).
+  criação de um blog de atualizações trilingue (pt/en/es). Resolvido na 0.5.0.
 
 ---
 
@@ -20,7 +20,7 @@ escopo definido. Itens de **baixa prioridade** não bloqueiam a release corrente
 
 **Prioridade:** Média (meta da próxima versão)
 **Origem:** manutenção da documentação de usuário
-**Estado:** não iniciado
+**Estado:** resolvido na 0.5.0
 
 ### Contexto
 
@@ -50,7 +50,7 @@ atualizações de cada versão em um blog trilingue.
 
 **Prioridade:** Baixa (meta da próxima versão)
 **Origem:** item de auditoria A4
-**Estado:** não iniciado
+**Estado:** resolvido na 0.5.0
 
 ### Contexto
 
@@ -367,7 +367,7 @@ numérica contra o arquivo de origem.
 
 **Prioridade:** Média (meta da próxima versão)
 **Origem:** comentário externo de revisão (nov/2026)
-**Estado:** não iniciado
+**Estado:** resolvido na 0.5.0
 
 ### Contexto
 
