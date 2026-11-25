@@ -3,8 +3,7 @@
 
 Reads the UQ-1 error budget (``docs/audit/species_error.csv``), the Shomate
 reference (``docs/audit/shomate_reference.json``) and the bundled database,
-then writes localized PNG figures into ``docs/source/_static/blog/<lang>/``
-for the three blog languages (pt, en, es).
+then writes English PNG figures into ``docs/source/_static/blog/en/``.
 
 Charts produced per language:
 
@@ -32,18 +31,6 @@ SHOMATE_JSON = REPO_ROOT / 'docs' / 'audit' / 'shomate_reference.json'
 OUT_DIR = REPO_ROOT / 'docs' / 'source' / '_static' / 'blog'
 
 LABELS: dict[str, dict[str, object]] = {
-    'pt': {
-        'cp_bias_title': 'Concordância Cp: pyglenn vs NIST-JANAF',
-        'cp_bias_xlabel': 'Cp bias relativo médio (%)',
-        'phase_title': 'Espécies por estado físico (phase_detail)',
-        'phase_ylabel': 'Número de espécies',
-        'phase_categories': ['Gás', 'Líquido', 'Sólido'],
-        'ch4_title': 'Cp do CH4: dois conjuntos de dados',
-        'ch4_xlabel': 'Temperatura (K)',
-        'ch4_ylabel': 'Cp (J/(mol·K))',
-        'ch4_pyglenn': 'pyglenn (NASA-7)',
-        'ch4_nist': 'NIST-JANAF (Shomate)',
-    },
     'en': {
         'cp_bias_title': 'Cp agreement: pyglenn vs NIST-JANAF',
         'cp_bias_xlabel': 'Mean relative Cp bias (%)',
@@ -52,18 +39,6 @@ LABELS: dict[str, dict[str, object]] = {
         'phase_categories': ['Gas', 'Liquid', 'Solid'],
         'ch4_title': 'Cp of CH4: two datasets',
         'ch4_xlabel': 'Temperature (K)',
-        'ch4_ylabel': 'Cp (J/(mol·K))',
-        'ch4_pyglenn': 'pyglenn (NASA-7)',
-        'ch4_nist': 'NIST-JANAF (Shomate)',
-    },
-    'es': {
-        'cp_bias_title': 'Concordancia de Cp: pyglenn frente a NIST-JANAF',
-        'cp_bias_xlabel': 'Sesgo relativo medio de Cp (%)',
-        'phase_title': 'Especies por estado físico (phase_detail)',
-        'phase_ylabel': 'Número de especies',
-        'phase_categories': ['Gas', 'Líquido', 'Sólido'],
-        'ch4_title': 'Cp del CH4: dos conjuntos de datos',
-        'ch4_xlabel': 'Temperatura (K)',
         'ch4_ylabel': 'Cp (J/(mol·K))',
         'ch4_pyglenn': 'pyglenn (NASA-7)',
         'ch4_nist': 'NIST-JANAF (Shomate)',
