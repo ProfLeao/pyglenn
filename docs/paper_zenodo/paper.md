@@ -306,7 +306,7 @@ cross-validation audit; fixed-composition mixture properties; analytical
 derivatives (dCp/dT and Cp/Cv); and NASA-7 coefficient fitting.
 
 The package has a single runtime dependency (NumPy), is installable from PyPI,
-supports Python 3.9–3.12, and provides both an intuitive Python API and a
+supports Python 3.10–3.12, and provides both an intuitive Python API and a
 command-line interface. Future work may include support for the NASA-9
 polynomial format, integration with chemical-equilibrium solvers, and a
 web-based interactive species browser.

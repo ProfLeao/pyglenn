@@ -7,6 +7,10 @@ and the versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Removed
+
+- Python 3.9 support (end of life). The minimum supported version is now 3.10.
+
 ## [0.5.0] - 2026-11-25
 
 ### Added
