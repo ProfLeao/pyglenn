@@ -1,6 +1,6 @@
 # pyglenn — Cheat Sheet
 
-> **v0.3.0** · 2,035 species · 3,779 intervals · NumPy ≥ 1.21
+> **v0.5.0** · 2,035 species · 3,795 intervals · NumPy ≥ 1.21
 > **Author:** Dr. Reginaldo G. Leão Jr. · [ProfLeao/pyglenn](https://github.com/ProfLeao/pyglenn)
 
 ---
@@ -39,6 +39,9 @@ calc.get_available_species('CH4')
 
 # Full alphabetical listing (single query)
 calc.list_all_species()
+
+# Filter by phase_detail — 'gas' | 'liquid' | 'solid'
+calc.get_available_species(phase_detail='solid')
 ```
 
 ### 🔥 Single-point properties

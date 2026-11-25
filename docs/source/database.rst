@@ -16,6 +16,7 @@ The database contains three linked tables:
 - ``name`` — species name (e.g., ``'CH4'``, ``'CO2'``)
 - ``formula`` — chemical formula
 - ``phase`` — ``'gas'`` or ``'condensed'``
+- ``phase_detail`` — ``'gas'``, ``'liquid'``, or ``'solid'``
 - ``molecular_weight`` — in g/mol
 - ``heat_of_formation_298K`` — ΔH°f at 298.15 K in J/mol
 - ``num_intervals`` — number of temperature intervals
@@ -45,6 +46,16 @@ The database contains three linked tables:
 Newly built NASA Glenn/CEA databases store ``gas_constant_ref = 8.314510`` and
 its provenance in this table. Legacy databases without this table remain
 readable and use the universal fallback constant.
+
+``phase_detail`` refines ``phase`` for condensed species.  The raw NASA CEA
+phase indicator only distinguishes gas (``0``) from condensed (``1``-``5``);
+solid vs liquid is recovered from the species name, where ``(L)`` marks a
+liquid.  ``phase`` remains the backward-compatible grouping (``gas`` vs
+``condensed``).  Pass ``phase_detail`` to
+:meth:`~pyglenn.ThermochemicalCalculator.get_available_species` (or to
+:meth:`~pyglenn.ThermoDBQuery.find_species` /
+:meth:`~pyglenn.ThermoDBQuery.list_all_species`) to filter by ``'gas'``,
+``'liquid'``, or ``'solid'``.
 
 NASA Polynomial Format
 =======================

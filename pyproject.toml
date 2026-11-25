@@ -93,6 +93,9 @@ select = [
 [tool.ruff.lint.per-file-ignores]
 "cli.py" = ["T201"]   # allow print() in CLI module
 "scripts/rebuild_database.py" = ["T201"]  # allow print() in rebuild script
+"scripts/populate_uncertainty.py" = ["T201"]  # allow print() in CLI script
+"scripts/generate_blog_charts.py" = ["T201"]  # allow print() in CLI script
+"docs/audit/error_budget.py" = ["T201"]  # allow print() in audit CLI script
 
 [tool.ruff.format]
 quote-style = "single"

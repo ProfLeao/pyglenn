@@ -76,6 +76,7 @@ class ThermoDBBuilder:
                 comments TEXT,
                 reference_code TEXT,
                 phase TEXT CHECK(phase IN ('gas', 'condensed')),
+                phase_detail TEXT CHECK(phase_detail IN ('gas', 'liquid', 'solid')),
                 molecular_weight REAL,
                 heat_of_formation_298K REAL,
                 num_intervals INTEGER,
@@ -187,6 +188,23 @@ class ThermoDBBuilder:
         comments = line[18:80].strip() if len(line) > 18 else ''
         return name, comments
 
+    @staticmethod
+    def classify_phase_detail(name: str, phase_code: str) -> str:
+        """Derive ``phase_detail`` (gas/liquid/solid) from code + name.
+
+        The NASA CEA phase indicator (cols 51-52) only distinguishes gas
+        (``0``) from condensed (``1``-``5``); see ``docs/logicofthermo.md``.
+        Solid vs liquid is carried by the species name: ``(L)`` marks a
+        liquid. Condensed species without a phase suffix (e.g. the liquid
+        fuels ``IRFNA``/``JP-4``/``RP-1``) have zero temperature intervals
+        and are not loaded into the database.
+        """
+        if phase_code == '0':
+            return 'gas'
+        if '(L)' in name:
+            return 'liquid'
+        return 'solid'
+
     def parse_general_info_record(self, line: str) -> dict[str, Any]:
         """Parse RECORD 2 – general information.
 
@@ -194,8 +212,8 @@ class ThermoDBBuilder:
             line: RECORD 2 line from thermo.inp.
 
         Returns:
-            Dict with num_intervals, ref_code, phase, molecular_weight,
-            heat_of_formation.
+            Dict with num_intervals, ref_code, phase_code, phase,
+            molecular_weight, heat_of_formation.
         """
         data: dict[str, Any] = {}
 
@@ -206,6 +224,7 @@ class ThermoDBBuilder:
             data['ref_code'] = line[3:9].strip()
 
             phase_code = line[50:52].strip()
+            data['phase_code'] = phase_code
             data['phase'] = 'condensed' if phase_code and phase_code != '0' else 'gas'
 
             data['molecular_weight'] = self.parse_float(line[52:65])
@@ -592,19 +611,23 @@ class ThermoDBBuilder:
 
                 existing_id = self._find_species_id(species_name)
                 if existing_id is None:
+                    phase_detail = ThermoDBBuilder.classify_phase_detail(
+                        species_name, general_info.get('phase_code', '')
+                    )
                     self.cursor.execute(
                         """
                         INSERT INTO species
-                            (name, comments, reference_code, phase,
+                            (name, comments, reference_code, phase, phase_detail,
                              molecular_weight, heat_of_formation_298K,
                              num_intervals)
-                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                         """,
                         (
                             species_name,
                             comments,
                             general_info.get('ref_code'),
                             general_info.get('phase'),
+                            phase_detail,
                             general_info.get('molecular_weight'),
                             general_info.get('heat_of_formation'),
                             num_intervals,

@@ -5,11 +5,52 @@ escopo definido. Itens de **baixa prioridade** não bloqueiam a release corrente
 
 ---
 
+## Metas da 0.5.0 (concluídas)
+
+- **UQ-1** — Orçamento de erro termoquímico por espécie (envelope de erro em
+  Cp/H/S(T) validado contra NIST-JANAF). Resolvido na 0.5.0.
+- **FI-1** — Granularidade de fase (sólido vs líquido) via `phase_detail`
+  derivada do código bruto do `thermo.inp`. Resolvido na 0.5.0.
+- **DOC-1** — Documentação: revisão e extensão dos notebooks de exemplo e
+  criação de um blog de atualizações trilingue (pt/en/es). Resolvido na 0.5.0.
+
+---
+
+## DOC-1 — Documentação, notebooks e blog de atualizações
+
+**Prioridade:** Média (meta da próxima versão)
+**Origem:** manutenção da documentação de usuário
+**Estado:** resolvido na 0.5.0
+
+### Contexto
+
+A documentação de usuário (site Sphinx, em inglês) e os notebooks de exemplo
+são a principal porta de entrada do pyglenn. Eles precisam (1) ser revisados
+para clareza científica e linguagem natural (com a skill `avoid-ai-writing`),
+(2) demonstrar as novas funcionalidades da 0.5.0 e (3) registrar as
+atualizações de cada versão em um blog trilingue.
+
+### Abordagem
+
+1. Revisar os notebooks de `examples/` (fonte única da verdade; as cópias sob
+   `docs/source/examples/` são geradas no build).
+2. Estender os notebooks com `uncertainty` (UQ-1) e `phase_detail` (FI-1)
+   quando as funcionalidades estiverem prontas.
+3. Criar `docs/source/blog/` com posts por versão em pt/en/es.
+
+### Critérios de aceite
+
+- Notebooks sem marcas de redação automatizada, com clareza científica.
+- Notebooks cobrem as novidades da 0.5.0.
+- Blog com a entrada da 0.5.0 em pt/en/es publicado no site.
+
+---
+
 ## FI-1 — Granularidade de fase (sólido vs líquido) perdida no esquema
 
-**Prioridade:** Baixa
+**Prioridade:** Baixa (meta da próxima versão)
 **Origem:** item de auditoria A4
-**Estado:** não iniciado
+**Estado:** resolvido na 0.5.0
 
 ### Contexto
 
@@ -159,8 +200,9 @@ nada".
 
 ### Veredito
 
-- `docs/README.txt` recomenda `idx_species_name` e `idx_intervals_species`, mas
-  `create_tables` não os cria explicitamente. Porém:
+- Uma documentação legada (removida) recomendava `idx_species_name` e
+  `idx_intervals_species`, mas `create_tables` não os cria explicitamente.
+  Porém:
   - `species.name` é `UNIQUE` → autoíndice `sqlite_autoindex_species_1`;
   - `temperature_intervals` tem `UNIQUE(species_id, interval_number)` →
     autoíndice `sqlite_autoindex_temperature_intervals_1`.
@@ -174,8 +216,7 @@ nada".
 ### Decisão
 
 - **Não criar** os índices propostos (redundantes com os autoíndices).
-- Atualizar `docs/README.txt` para explicar os autoíndices em vez de sugerir
-  `CREATE INDEX` redundante.
+- Nada a documentar — a doc legada que sugeria os índices foi removida.
 - Opcional (micro-otimização para 2.035 linhas):
   `CREATE INDEX idx_species_name_upper ON species(UPPER(name));` — baixo valor.
 
@@ -319,6 +360,97 @@ numérica contra o arquivo de origem.
 - ❌ Copiar `a1..a7, b1, b2` direto para as colunas Chemkin — inverte o
   significado de `a6`/`a7` e corrompe H/S.
 - ❌ Anunciar "exportação Chemkin" sem teste de round-trip.
+
+---
+
+## UQ-1 — Orçamento de erro termoquímico por espécie (curto prazo)
+
+**Prioridade:** Média (meta da próxima versão)
+**Origem:** comentário externo de revisão (nov/2026)
+**Estado:** resolvido na 0.5.0
+
+### Contexto
+
+Os coeficientes NASA-7 do `thermo.inp` são publicados **sem incerteza**. Um
+revisor apontou que ninguém propaga esse erro até composição de equilíbrio ou
+temperatura de chama adiabática de forma sistemática e aberta, e que um
+"orçamento de erro validado sobre a base inteira seria excelente".
+
+Este item cobre a parte **factível no curto prazo**: um **envelope de erro
+empírico por espécie** em Cp/H/S(T), derivado de comparação com referência
+independente — **não** a covariância dos coeficientes (ver UQ-2).
+
+### Abordagem (método)
+
+1. **Referência fixada:** NIST-JANAF (Chase 1998), equação de Shomate,
+   versionada em `docs/audit/` como JSON (Shomate é aninhado: N faixas × 8
+   coeficientes — CSV não representa bem).
+2. **Casamento de espécies:** mapear `pyglenn: H2O (gas)` ↔ `NIST: H₂O(g)`,
+   com cuidado especial com fases condensadas (`Cr(cr)`, `Fe(a)`, …).
+3. **Amostragem e comparação:** N temperaturas por espécie, dentro do range
+   válido, calculando Cp/H/S nos dois lados.
+4. **Agregação por espécie:** viés médio, erro máximo, RMS e perfil erro-vs-T
+   (bordas de intervalo, T alta).
+5. **Modelo de erro:** tabela por espécie + classificação em tiers por
+   fase/classe, calibrada no subconjunto validado.
+6. **Validação e publicação:** orçamento validado e versionado abertamente,
+   com metodologia documentada.
+
+### Formatos
+
+| Dado | Formato | Onde |
+|---|---|---|
+| Shomate de referência (entrada) | JSON | `docs/audit/` (versionado) |
+| Estatísticas de erro (publicação) | CSV | `docs/audit/` (convenção atual) |
+| Incerteza em runtime (futuro) | tabela `species_uncertainty` no `thermo.db` | SQLite (additiva, como `metadata`) |
+
+A tabela `species_uncertainty` deve ter colunas de proveniência (`source` ∈
+`nist-janaf` | `extrapolated`, `n_ref_points`) para separar valores validados
+de extrapolados.
+
+### Limitação explícita
+
+O NIST-JANAF **não cobre as 2 035 espécies** do `thermo.inp`. O orçamento será
+**validado** para o subconjunto com referência e **extrapolado** para o resto
+via modelo por fase/classe, com a extrapolação documentada (não inventada).
+
+### O que NÃO fazer
+
+- ❌ Apresentar covariância de coeficientes como se existisse (ver UQ-2).
+- ❌ Extrapolar sem documentar o modelo e sua calibração.
+- ❌ Publicar números sem pino de versão da referência e do dataset.
+
+---
+
+## UQ-2 — Covariância e propagação até equilíbrio/chama (longo prazo)
+
+**Prioridade:** Baixa (indefinida)
+**Origem:** comentário externo de revisão (nov/2026)
+**Estado:** não iniciado (indefinido)
+
+### Contexto
+
+A parte de longo prazo do mesmo comentário: propagar a incerteza termoquímica
+até **composição de equilíbrio** e **temperatura de chama adiabática**.
+
+### Por que é longo prazo
+
+1. **O dado não existe:** não há matriz de covariância publicada para os
+   coeficientes NASA-7 (`a1..a7, b1, b2`). Estimá-la é um problema de pesquisa,
+   não de código.
+2. **O pyglenn não resolve equilíbrio:** a API de misturas trata a composição
+   como **entrada**. Propagar até equilíbrio exige antes um solver de equilíbrio
+   (trabalho futuro já citado no paper).
+
+### Pré-requisitos
+
+- UQ-1 concluído (envelope de erro por espécie como ponto de partida).
+- Solver de equilíbrio químico.
+
+### O que NÃO fazer
+
+- ❌ Anunciar propagação de incerteza sem o orçamento UQ-1 validado.
+- ❌ Tratar covariância como "soma de variâncias independentes" sem justificativa.
 
 ---
 

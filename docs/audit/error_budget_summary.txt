@@ -1,0 +1,111 @@
+================================================================================
+pyglenn — Error Budget (UQ-1, short-term) — Methodology & Pilot Summary
+================================================================================
+
+This document describes the short-term uncertainty-quantification deliverable
+for pyglenn (UQ-1 in docs/FUTURE_IMPROVEMENTS.md): a **per-species empirical
+error envelope** for Cp/H/S(T), obtained by comparing the NASA-7 evaluation
+against an independent reference (NIST-JANAF, Chase 1998, Shomate equation).
+
+This is NOT coefficient covariance (that is UQ-2, long-term). It is a
+property-level error estimate, openly versioned.
+
+--------------------------------------------------------------------------------
+1. Method
+--------------------------------------------------------------------------------
+
+Reference : NIST-JANAF (Chase, 1998), NIST Chemistry WebBook SRD 69.
+            Coefficients stored in ``shomate_reference.json`` (versioned).
+
+Matching  : pyglenn species name (exact match) -> NIST species/phase. For
+            condensed species the pyglenn name already encodes the phase
+            (e.g. ``Cr(cr)``), so exact match suffices.
+
+Sampling  : ``N_POINTS`` log-spaced temperatures over the overlap of the
+            pyglenn valid range and the Shomate range, from no lower than 300 K.
+
+Metrics   : Cp  -> relative error in percent.
+            H   -> sensible enthalpy ΔH(298.15 -> T), absolute error in J/mol.
+            S   -> absolute error in J/(mol*K).
+
+Per species, the CSV stores: bias (mean), max absolute, and RMS.
+
+Script    : ``docs/audit/error_budget.py``  ->  ``docs/audit/species_error.csv``
+
+Reproduce ::
+
+    python docs/audit/error_budget.py
+
+--------------------------------------------------------------------------------
+2. Current pilot (snapshot, 18 species)
+--------------------------------------------------------------------------------
+
+    species         range (K)      Cp bias%   Cp max%    S bias (J/mol·K)
+    -------------   -------------  ---------  ---------  ----------------
+    AL2O3(a)        300 - 2327     +0.582     5.124      +0.158
+    C2H2,acetylene  300 - 6000     -0.493     1.127      -0.533
+    C2H4            300 - 6000     +0.013     0.246      +0.012
+    CH4             300 - 6000     +8.823     37.412     +5.122
+    CO              300 - 6000     +0.024     0.277      +0.006
+    CO2             300 - 6000     +0.187     2.758      +0.003
+    Cr(cr)          300 - 2130     +0.050     0.721      +0.002
+    Fe(a)           300 - 1184     +0.669     20.022     -0.012
+    H2O             500 - 6000     +1.102     3.245      +0.349
+    H2S             300 - 6000     +1.260     4.868      +0.530
+    N2              300 - 6000     +0.026     0.350      +0.001
+    NH3             300 - 6000     +0.561     7.587      -0.163
+    NO              300 - 6000     +0.299     2.551      +0.027
+    NO2             300 - 6000     +5.040     22.378     +1.901
+    Ni(cr)          300 - 1728     -0.963     12.398     +0.096
+    O2              300 - 6000     +0.096     0.986      +0.044
+    SO2             300 - 6000     -0.247     1.072      -0.233
+    SiO2(a-qz)      300 - 848      +1.767     23.137     +0.033
+
+--------------------------------------------------------------------------------
+3. Interpretation
+--------------------------------------------------------------------------------
+
+Three distinct behaviours emerge:
+
+- **Good agreement (< ~1-2% Cp bias).** Simple gases (N2, CO, O2, CO2),
+  small organics (C2H4, C2H2,acetylene), small inorganics (NO, SO2) and the
+  condensed Cr(cr), AL2O3(a) agree with NIST-JANAF within ~1%.
+
+- **Systematic high-temperature divergence.** CH4 (+8.8% bias, +37% max) and
+  NO2 (+5.0%, +22%) diverge monotonically beyond ~2000 K: the bundled
+  NASA/Gurvich polynomials keep rising faster than the Chase (1998) Shomate
+  fit. The bundled thermo.inp uses Gurvich (1991) for CH4, not the standard
+  NASA-CEA fit, and both sources are extrapolations above ~3000 K where the
+  undissociated molecule is unphysical. This is a dataset difference, not a
+  parser bug (the raw coefficients reproduce Cp consistently).
+
+- **Localized phase/magnetic-transition peaks.** Fe(a) (max 20% at the Curie
+  point ~1042 K), Ni(cr) (max 12% at the Curie point ~630 K) and SiO2(a-qz)
+  (max 23% at the alpha->beta transition ~847 K) show large but *local* Cp
+  deviations: each dataset models the sharp transition peak differently.
+  Their mean bias remains small (+0.67%, -0.96%, +1.77%).
+
+--------------------------------------------------------------------------------
+4. Limitations (explicit)
+--------------------------------------------------------------------------------
+
+- NIST-JANAF does NOT cover all 2 035 species of the bundled thermo.inp. This
+  budget is therefore **validated** for the matched subset and will be
+  **extrapolated** to the rest by phase/class (to be calibrated on this
+  subset). The extrapolation is NOT yet implemented.
+- Several planned pilot species have no Shomate table on the NIST WebBook
+  (ethane, ethanol, propane, graphite, methanol expose only point Cp values)
+  and were dropped; organics are represented by CH4 / C2H4 / C2H2,acetylene.
+- Coefficients were transcribed from the NIST WebBook: the first 9 species
+  were re-verified against the live WebBook (2026-11-19); the remaining 9
+  were read directly from the live WebBook tables (2026-11-23).
+
+--------------------------------------------------------------------------------
+5. Next steps
+--------------------------------------------------------------------------------
+
+- Fit the tier model (gas / condensed / organic / inorganic) on this
+  validated 18-species subset and document the calibration (U5).
+- Expose the budget at runtime (U5): an additive ``species_uncertainty``
+  table in ``thermo.db`` + a query API, with ``source`` in
+  ('nist-janaf', 'extrapolated').

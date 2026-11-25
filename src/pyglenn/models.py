@@ -39,12 +39,17 @@ class NASACoefficients:
 
 @dataclass(frozen=True)
 class SpeciesInfo:
-    """Basic metadata for a single species (no interval or coefficient data)."""
+    """Basic metadata for a single species (no interval or coefficient data).
+
+    ``phase_detail`` refines ``phase`` with ``'gas'``, ``'liquid'``, or
+    ``'solid'``, derived from the NASA CEA ``(L)`` name marker.
+    """
 
     id: int
     name: str
     formula: str | None = None
     phase: str | None = None
+    phase_detail: str | None = None
     molecular_weight: float | None = None
     heat_of_formation_298K: float | None = None
     num_intervals: int | None = None
@@ -66,6 +71,7 @@ class SpeciesInfo:
             name=_get('name'),
             formula=_get('formula'),
             phase=_get('phase'),
+            phase_detail=_get('phase_detail'),
             molecular_weight=_get('molecular_weight'),
             heat_of_formation_298K=_get('heat_of_formation_298K'),
             num_intervals=_get('num_intervals'),
@@ -131,6 +137,7 @@ class SpeciesData:
     name: str
     formula: str | None = None
     phase: str | None = None
+    phase_detail: str | None = None
     molecular_weight: float | None = None
     heat_of_formation_298K: float | None = None
     num_intervals: int | None = None

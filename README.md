@@ -14,13 +14,15 @@ Computes **Cp(T)**, **H°(T)**, **S°(T)** from NASA polynomial coefficients sto
 
 - Parse NASA-format `thermo.inp` (FORTRAN Appendix C) → SQLite3 database
 - Query species by name, phase, molecular weight
+- Filter condensed species by solid vs liquid (`phase_detail`)
 - Calculate Cp(T), H°(T), S°(T) at any valid temperature
 - Sensible enthalpy, analytical dCp/dT and Cp/Cv (γ)
 - Mixture properties (molar and mass basis) for a fixed composition
 - Enthalpy of formation lookup
+- Per-species uncertainty estimates validated against NIST-JANAF
 - Enthalpy change between two temperatures
 - Command-line interface
-- 2,035 species, 3,779 temperature intervals
+- 2,035 species, 3,795 temperature intervals
 
 ## Installation
 

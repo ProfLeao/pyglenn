@@ -9,6 +9,7 @@ from __future__ import annotations
 import logging
 import math
 import sqlite3
+from collections.abc import Sequence
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any
@@ -175,6 +176,110 @@ class ThermoDBQuery:
         self.conn.commit()
 
     # ------------------------------------------------------------------
+    # Species uncertainty (UQ-1, additive)
+    # ------------------------------------------------------------------
+    def _uncertainty_table_exists(self) -> bool:
+        """Return whether this database has the additive uncertainty table."""
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        self.cursor.execute(
+            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?",
+            ('species_uncertainty',),
+        )
+        return self.cursor.fetchone() is not None
+
+    def migrate_uncertainty(self) -> None:
+        """Create the additive ``species_uncertainty`` table if absent.
+
+        Idempotent: existing rows are never touched. The table is optional,
+        like ``metadata``, so a legacy database without it remains valid.
+        """
+        if self.cursor is None or self.conn is None:
+            raise RuntimeError('Database not connected')
+
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS species_uncertainty (
+                species_id INTEGER PRIMARY KEY
+                    REFERENCES species(id) ON DELETE CASCADE,
+                cp_rel_bias REAL,
+                cp_rel_2sigma REAL,
+                h_rel_bias REAL,
+                h_rel_2sigma REAL,
+                s_abs_2sigma REAL,
+                n_ref_points INTEGER,
+                source TEXT CHECK(source IN ('nist-janaf', 'extrapolated')),
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
+        self.conn.commit()
+
+    def populate_uncertainty(self, rows: Sequence[dict[str, Any]]) -> int:
+        """Insert or replace per-species uncertainty envelopes.
+
+        Args:
+            rows: Mappings keyed by the ``species_uncertainty`` columns;
+                ``species_id`` is required and must reference a species.
+
+        Returns:
+            Number of rows written.
+        """
+        if self.cursor is None or self.conn is None:
+            raise RuntimeError('Database not connected')
+        if not self._uncertainty_table_exists():
+            self.migrate_uncertainty()
+
+        columns = (
+            'species_id',
+            'cp_rel_bias',
+            'cp_rel_2sigma',
+            'h_rel_bias',
+            'h_rel_2sigma',
+            's_abs_2sigma',
+            'n_ref_points',
+            'source',
+        )
+        self.cursor.executemany(
+            f"""
+            INSERT INTO species_uncertainty ({', '.join(columns)})
+            VALUES ({', '.join('?' for _ in columns)})
+            ON CONFLICT(species_id) DO UPDATE SET
+                cp_rel_bias = excluded.cp_rel_bias,
+                cp_rel_2sigma = excluded.cp_rel_2sigma,
+                h_rel_bias = excluded.h_rel_bias,
+                h_rel_2sigma = excluded.h_rel_2sigma,
+                s_abs_2sigma = excluded.s_abs_2sigma,
+                n_ref_points = excluded.n_ref_points,
+                source = excluded.source,
+                updated_at = CURRENT_TIMESTAMP
+            """,
+            [tuple(row[c] for c in columns) for row in rows],
+        )
+        self.conn.commit()
+        return len(rows)
+
+    def get_uncertainty(self, species_id: int) -> dict[str, Any] | None:
+        """Return the stored uncertainty envelope for a species, if present.
+
+        Args:
+            species_id: Database ID of the species.
+
+        Returns:
+            Dict of the ``species_uncertainty`` row, or None when the table
+            is absent or the species has no entry.
+        """
+        if self.cursor is None:
+            raise RuntimeError('Database not connected')
+        if not self._uncertainty_table_exists():
+            return None
+        self.cursor.execute(
+            'SELECT * FROM species_uncertainty WHERE species_id = ?', (species_id,)
+        )
+        row = self.cursor.fetchone()
+        return dict(row) if row is not None else None
+
+    # ------------------------------------------------------------------
     # Database validation
     # ------------------------------------------------------------------
     def validate_database(self) -> dict[str, Any]:
@@ -288,6 +393,62 @@ class ThermoDBQuery:
                 f'{bad_mw} species have NULL or non-positive molecular weight'
             )
 
+        # phase_detail integrity (FI-1).  Only checked when the column exists
+        # (databases built before 0.5.0 lack it and must be rebuilt).
+        cur.execute('PRAGMA table_info(species)')
+        species_cols = {row[1] for row in cur.fetchall()}
+        if 'phase_detail' in species_cols:
+            null_pd = _scalar('SELECT COUNT(*) FROM species WHERE phase_detail IS NULL')
+            if null_pd:
+                errors.append(
+                    f'{null_pd} species have NULL phase_detail '
+                    '(rebuild the database from thermo.inp)'
+                )
+            bad_pd = _scalar(
+                'SELECT COUNT(*) FROM species '
+                "WHERE phase_detail NOT IN ('gas', 'liquid', 'solid')"
+            )
+            if bad_pd:
+                errors.append(f'{bad_pd} species have an invalid phase_detail')
+            inconsistent = _scalar(
+                'SELECT COUNT(*) FROM species WHERE '
+                "(phase = 'gas' AND phase_detail != 'gas') OR "
+                "(phase = 'condensed' AND phase_detail NOT IN ('liquid', 'solid'))"
+            )
+            if inconsistent:
+                errors.append(
+                    f'{inconsistent} species have phase inconsistent with phase_detail'
+                )
+            counts['phase_detail_gas'] = _scalar(
+                "SELECT COUNT(*) FROM species WHERE phase_detail = 'gas'"
+            )
+            counts['phase_detail_liquid'] = _scalar(
+                "SELECT COUNT(*) FROM species WHERE phase_detail = 'liquid'"
+            )
+            counts['phase_detail_solid'] = _scalar(
+                "SELECT COUNT(*) FROM species WHERE phase_detail = 'solid'"
+            )
+
+        if self._uncertainty_table_exists():
+            counts['uncertainty_rows'] = _scalar(
+                'SELECT COUNT(*) FROM species_uncertainty'
+            )
+            orphans = _scalar(
+                'SELECT COUNT(*) FROM species_uncertainty su '
+                'LEFT JOIN species s ON su.species_id = s.id '
+                'WHERE s.id IS NULL'
+            )
+            if orphans:
+                errors.append(
+                    f'{orphans} uncertainty row(s) reference a missing species'
+                )
+            bad_source = _scalar(
+                'SELECT COUNT(*) FROM species_uncertainty '
+                "WHERE source NOT IN ('nist-janaf', 'extrapolated')"
+            )
+            if bad_source:
+                errors.append(f'{bad_source} uncertainty row(s) have an invalid source')
+
         return {
             'valid': not errors,
             'errors': errors,
@@ -337,13 +498,19 @@ class ThermoDBQuery:
     # ------------------------------------------------------------------
     # Species lookup
     # ------------------------------------------------------------------
-    def find_species(self, name: str, exact_match: bool = False) -> list[SpeciesInfo]:
-        """Find species by name.
+    def find_species(
+        self,
+        name: str,
+        exact_match: bool = False,
+        phase_detail: str | None = None,
+    ) -> list[SpeciesInfo]:
+        """Find species by name, optionally filtered by phase_detail.
 
         Args:
             name: Search pattern.
             exact_match: If True, use case-insensitive exact match.
                          If False (default), use substring match (LIKE).
+            phase_detail: Optional 'gas'|'liquid'|'solid' filter.
 
         Returns:
             List of matching SpeciesInfo (max 20).
@@ -351,35 +518,39 @@ class ThermoDBQuery:
         if self.cursor is None:
             raise RuntimeError('Database not connected')
 
+        detail_clause = ' AND phase_detail = ?' if phase_detail is not None else ''
+
         if exact_match:
-            # Case-insensitive exact match — returns only the
-            # species whose name matches the pattern exactly.
+            params: tuple = (name,) if phase_detail is None else (name, phase_detail)
             self.cursor.execute(
-                """
-                SELECT id, name, formula, phase, molecular_weight,
+                f"""
+                SELECT id, name, formula, phase, phase_detail, molecular_weight,
                        heat_of_formation_298K, num_intervals, comments
                 FROM species
-                WHERE UPPER(name) = UPPER(?)
+                WHERE UPPER(name) = UPPER(?){detail_clause}
                 ORDER BY name
                 LIMIT 20
                 """,
-                (name,),
+                params,
             )
         else:
-            # Substring search with exact matches prioritised first,
-            # followed by alphabetical ordering of the remainder.
+            params = (
+                (f'%{name}%', f'%{name}%', name)
+                if phase_detail is None
+                else (f'%{name}%', f'%{name}%', phase_detail, name)
+            )
             self.cursor.execute(
-                """
-                SELECT id, name, formula, phase, molecular_weight,
+                f"""
+                SELECT id, name, formula, phase, phase_detail, molecular_weight,
                        heat_of_formation_298K, num_intervals, comments
                 FROM species
-                WHERE name LIKE ? OR formula LIKE ?
+                WHERE (name LIKE ? OR formula LIKE ?){detail_clause}
                 ORDER BY
                     CASE WHEN UPPER(name) = UPPER(?) THEN 0 ELSE 1 END,
                     name
                 LIMIT 20
                 """,
-                (f'%{name}%', f'%{name}%', name),
+                params,
             )
 
         return [SpeciesInfo.from_mapping(row) for row in self.cursor.fetchall()]
@@ -442,6 +613,7 @@ class ThermoDBQuery:
             name=species_info.name,
             formula=species_info.formula,
             phase=species_info.phase,
+            phase_detail=species_info.phase_detail,
             molecular_weight=species_info.molecular_weight,
             heat_of_formation_298K=species_info.heat_of_formation_298K,
             num_intervals=species_info.num_intervals,
@@ -463,7 +635,7 @@ class ThermoDBQuery:
             raise RuntimeError('Database not connected')
         self.cursor.execute(
             """
-            SELECT id, name, formula, phase, molecular_weight,
+            SELECT id, name, formula, phase, phase_detail, molecular_weight,
                    heat_of_formation_298K, num_intervals, comments,
                    reference_code
             FROM species
@@ -575,7 +747,7 @@ class ThermoDBQuery:
         offset = (page - 1) * page_size
         self.cursor.execute(
             """
-            SELECT id, name, phase, molecular_weight,
+            SELECT id, name, phase, phase_detail, molecular_weight,
                    heat_of_formation_298K, num_intervals
             FROM species
             ORDER BY name
@@ -589,21 +761,27 @@ class ThermoDBQuery:
         total_pages = (total + page_size - 1) // page_size
         return species, total_pages
 
-    def list_all_species(self) -> list[SpeciesInfo]:
+    def list_all_species(self, phase_detail: str | None = None) -> list[SpeciesInfo]:
         """List every species in a single ordered query.
+
+        Args:
+            phase_detail: Optional 'gas'|'liquid'|'solid' filter.
 
         Returns:
             List of all SpeciesInfo ordered by name.
         """
         if self.cursor is None:
             raise RuntimeError('Database not connected')
+        detail_clause = 'WHERE phase_detail = ?' if phase_detail is not None else ''
         self.cursor.execute(
-            """
-            SELECT id, name, formula, phase, molecular_weight,
+            f"""
+            SELECT id, name, formula, phase, phase_detail, molecular_weight,
                    heat_of_formation_298K, num_intervals, comments
             FROM species
+            {detail_clause}
             ORDER BY name
-            """
+            """,
+            () if phase_detail is None else (phase_detail,),
         )
         return [SpeciesInfo.from_mapping(row) for row in self.cursor.fetchall()]
 

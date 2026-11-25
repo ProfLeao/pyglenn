@@ -48,6 +48,7 @@ def sample_db_path() -> Generator[Path, None, None]:
             comments TEXT,
             reference_code TEXT,
             phase TEXT CHECK(phase IN ('gas', 'condensed')),
+            phase_detail TEXT CHECK(phase_detail IN ('gas', 'liquid', 'solid')),
             molecular_weight REAL,
             heat_of_formation_298K REAL,
             num_intervals INTEGER,
@@ -80,9 +81,9 @@ def sample_db_path() -> Generator[Path, None, None]:
 
     # Insert O2 with known NASA-7 coefficients (two intervals: 200-1000, 1000-6000)
     cur.execute(
-        'INSERT INTO species (name, formula, phase, molecular_weight, '
-        'heat_of_formation_298K, num_intervals) '
-        "VALUES ('O2', 'O2', 'gas', 31.9988, 0.0, 2)"
+        'INSERT INTO species (name, formula, phase, phase_detail, '
+        'molecular_weight, heat_of_formation_298K, num_intervals) '
+        "VALUES ('O2', 'O2', 'gas', 'gas', 31.9988, 0.0, 2)"
     )
     o2_id = cur.lastrowid
 
