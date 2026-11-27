@@ -5,7 +5,17 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the versioning follows [SemVer](https://semver.org/).
 
-## [Unreleased]
+## [0.5.1] - 2026-11-27
+
+### Added
+
+- `CONTRIBUTING.md` guide covering development setup, checks, tests,
+  documentation, the database rebuild, and the release process.
+
+### Changed
+
+- Release blog restructured: English only, with posts inlined on the page
+  (newest first) and a permalink per post.
 
 ### Removed
 
