@@ -159,6 +159,11 @@ If you use pyglenn in your research, please cite it as:
 - NumPy ≥ 1.21
 - SQLite3 (stdlib)
 
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the
+development setup, checks, and release process.
+
 ## License
 
 MIT — see [LICENSE](LICENSE) file.
